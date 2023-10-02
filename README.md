@@ -1,5 +1,9 @@
 # Projet 
 
+### Membres du projet : 
+* GHANNAY Nesrine 
+
+
 Modèle basique de projet gradle pour interface graphique avec `swing`.
 
 Les commandes gradle les plus utiles :
