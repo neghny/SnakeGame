@@ -3,6 +3,7 @@
 ### Membres du projet : 
 * GHANNAY Nesrine 
 * LEFEVRE Julien
+* GOUMAIDI Kawthar
 
 
 Modèle basique de projet gradle pour interface graphique avec `swing`.
