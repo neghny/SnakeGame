@@ -44,4 +44,7 @@ public class MyJavaPanel extends JPanel {
     super.paintComponent(g);
     g.drawImage(image, 50, 50, null);
   }
+
+
+
 }
