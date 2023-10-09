@@ -5,7 +5,7 @@
 * LEFEVRE Julien
 * GOUMAIDI Kawthar
 * DI SALVO-CILIA Pauline
-* COMTI Mattéo
+* Mamadou Sellou Diallo
 
 
 Modèle basique de projet gradle pour interface graphique avec `swing`.

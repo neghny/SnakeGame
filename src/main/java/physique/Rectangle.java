@@ -1,10 +1,10 @@
 package physique;
 
 public class Rectangle implements IForme {
-    private int longu;
-    private int haut;
+    private final double longu;
+    private final double haut;
 
-    public Rectangle(int longueur, int hauteur) {
+    public Rectangle(double longueur, double hauteur) {
         longu = longueur;
         haut = hauteur;
     }
@@ -23,6 +23,10 @@ public class Rectangle implements IForme {
             // https://stackoverflow.com/questions/31022269/collision-detection-between-two-rectangles-in-java
             return sx1 < ox2 && sx2 > ox1 && sy1 < oy1 && sy2 > oy2;
         }
+        if (oShape.getClass().equals(Cercle.class))
+            return IForme.percuteCercleRect(self, other, (Cercle) oShape, this);
+        if (oShape.getClass().equals(Ligne.class))
+            return IForme.percuteLigneRect(self, other, (Ligne) oShape, this);
         return false;
     }
 
