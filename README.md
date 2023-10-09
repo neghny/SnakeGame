@@ -4,6 +4,7 @@
 * GHANNAY Nesrine 
 * LEFEVRE Julien
 * GOUMAIDI Kawthar
+* DI SALVO-CILIA Pauline
 
 
 Modèle basique de projet gradle pour interface graphique avec `swing`.
