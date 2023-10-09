@@ -5,4 +5,5 @@ public class Objet {
     double y = 0;
     double speed = 0;
     double direction = 0;
+    IForme forme;
 }
