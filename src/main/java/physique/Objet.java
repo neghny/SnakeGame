@@ -3,8 +3,8 @@ package physique;
 public class Objet {
     double x = 0;
     double y = 0;
-    double speed = 0; //vitesse
-    double direction = 0; //Angle en radian
+    double speed ; //vitesse
+    double direction; //Angle en radian
 
 
     IForme forme;
