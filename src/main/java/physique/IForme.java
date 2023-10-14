@@ -32,7 +32,7 @@ public interface IForme {
         return distanceSquared < Math.pow(c.r, 2);
     }
     static boolean percuteCercleLigne(Objet oc, Objet ol, Cercle c, Ligne l) {
-        return false;
+        return doesCircleIntersectLine(oc.x + c.r, oc.y + c.r, c.r, ol.x, ol.y, ol.x + l.l, ol.y + l.h);
     }
     static boolean percuteLigneRect(Objet ol, Objet or, Ligne l, Rectangle r) {
         double lx1 = ol.x;
@@ -59,5 +59,42 @@ public interface IForme {
         double ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denom;
         double ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denom;
         return ua >= 0.0f && ua <= 1.0f && ub >= 0.0f && ub <= 1.0f;
+    }
+
+    // http://www.java2s.com/example/java/java.lang/intersection-between-line-determined-for-two-points-and-a-circle-wit.html
+    // https://www.geeksforgeeks.org/check-line-touches-intersects-circle/
+    static boolean doesCircleIntersectLine(double x, double y, double radius, double x1, double y1, double x2, double y2) {
+        // Calculate the squared distance between the circle center and the line segment
+        double distance = squaredDistanceToLineSegment(x, y, x1, y1, x2, y2);
+
+        // Check if the squared distance is less than or equal to the square of the radius
+        return distance <= (radius * radius);
+    }
+
+    static double squaredDistanceToLineSegment(double x, double y, double x1, double y1, double x2, double y2) {
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+
+        // Check if the line segment is a point (zero length)
+        if (dx == 0 && dy == 0) {
+            double dxToPoint = x - x1;
+            double dyToPoint = y - y1;
+            return dxToPoint * dxToPoint + dyToPoint * dyToPoint;
+        }
+
+        // Calculate the parametric value t for the closest point on the line segment
+        double t = ((x - x1) * dx + (y - y1) * dy) / (dx * dx + dy * dy);
+
+        // Clamp t to the range [0, 1]
+        t = Math.max(0, Math.min(1, t));
+
+        // Calculate the coordinates of the closest point on the line segment
+        double closestX = x1 + t * dx;
+        double closestY = y1 + t * dy;
+
+        // Calculate the squared distance from the circle center to the closest point on the line
+        double dxToClosest = x - closestX;
+        double dyToClosest = y - closestY;
+        return dxToClosest * dxToClosest + dyToClosest * dyToClosest;
     }
 }
