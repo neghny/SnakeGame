@@ -61,6 +61,7 @@ public class Objet extends JPanel {
         }
         this.sizeImageX = sizeImageX;
         this.sizeImageY = sizeImageY;
+        System.out.println();
     }
 
     @Override
