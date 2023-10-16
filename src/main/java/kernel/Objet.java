@@ -1,4 +1,6 @@
-package physique;
+package kernel;
+
+import physique.IForme;
 
 public class Objet {
     public double x = 0;
