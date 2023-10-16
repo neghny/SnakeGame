@@ -4,16 +4,16 @@ public class Objet {
     double x = 0;
     double y = 0;
 
-    String pathImage;
-
-    double speed = 0; //vitesse
-    double direction = 0; //Angle en radian
-
     public String getPathImage() {
         return pathImage;
     }
 
+    String pathImage;
+
+    double speed = 0; //vitesse
+    double direction = 0; //Angle en radian
     IForme forme;
+
 
     public Objet(double initialX, double initialY, IForme forme) {
         this.x = initialX;
@@ -27,7 +27,7 @@ public class Objet {
 
     public void updatePosition() {
         x += getHSpeed();
-        y += getVSpeed();
+        y += speed * Math.sin(direction);
     }
 
     //methode pour modifier la direction de l'objet*
@@ -54,13 +54,9 @@ public class Objet {
     public double getHSpeed() {
         return speed * Math.cos(direction);
     }
-    public double getVSpeed() {
-        return speed * Math.sin(direction);
-    }
 
     // Collisions
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
-
 }

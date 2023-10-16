@@ -3,7 +3,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import physique.Cercle;
 import physique.Ligne;
-import physique.Objet;
+import kernel.Objet;
 import physique.Rectangle;
 
 public class TestCollision {

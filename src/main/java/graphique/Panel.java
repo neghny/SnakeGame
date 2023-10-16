@@ -2,16 +2,19 @@ package graphique;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import physique.Objet;
+import kernel.Objet;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Objects;
+import java.util.jar.JarEntry;
 
 
-public class Panel {
+public class Panel extends JPanel {
 
     private BufferedImage image;
     private Objet objet;
@@ -31,6 +34,12 @@ public class Panel {
             logger.error(message, ex);
         }
         this.objet = null;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 50, 50, null);
     }
 
 }

@@ -1,5 +1,7 @@
 package physique;
 
+import kernel.Objet;
+
 public interface IForme {
     boolean percute(Objet self, Objet other);
     double avoirLong();
