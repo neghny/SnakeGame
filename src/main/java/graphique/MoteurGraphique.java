@@ -1,29 +1,22 @@
 package graphique;
 
-
+import kernel.Objet;
 
 import java.io.IOException;
 import java.util.List;
 
 public class MoteurGraphique {
     Frame mainFrame;
-    List<Panel> displayedObjects;
 
-    public void createPanelToDisplay(Object o){
-
-    }
-    public void removePanelFromDisplay(Object o){
-
+    public MoteurGraphique(Frame mainFrame) {
+        this.mainFrame = mainFrame;
     }
 
-    public Panel getPanel(Object o) throws IOException {
-        return new Panel();
-    }
-    public void displayPanel(Panel p){
+    public void displayObject(Object o){ // affiche un objet
 
     }
 
-    public void display(){
+    public void display(List<Object> objects){ // affiche tout
 
     }
 
