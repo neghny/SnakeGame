@@ -1,8 +1,8 @@
 package physique;
 
 public class Objet {
-    double x = 0;
-    double y = 0;
+    public double x = 0;
+    public double y = 0;
 
     public String getPathImage() {
         return pathImage;
@@ -12,7 +12,7 @@ public class Objet {
 
     double speed = 0; //vitesse
     double direction = 0; //Angle en radian
-    IForme forme;
+    public IForme forme;
 
 
     public Objet(double initialX, double initialY, IForme forme) {
