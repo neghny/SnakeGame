@@ -69,12 +69,6 @@ public class Objet extends JPanel {
         g.drawImage(image, sizeImageX, sizeImageY, null);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(image, sizeImageX, sizeImageY, null);
-    }
-
 
     //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
 
