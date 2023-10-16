@@ -3,7 +3,9 @@ package kernel;
 import graphique.MoteurGraphique;
 import physique.Cercle;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Control {
     boolean running = true;
@@ -23,7 +25,7 @@ public class Control {
                     if (o1 != o2 && o1.percute(o2))
                         o1.eventCollision(o2);
             // Dessiner
-            mg.display();
+            mg.display(new ArrayList<>());
             long endTime = System.currentTimeMillis();
             if (endTime < expectedRestart)
                 try { Thread.sleep(expectedRestart - endTime); } catch (InterruptedException e) { throw new RuntimeException(e); }
