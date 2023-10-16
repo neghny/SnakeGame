@@ -61,7 +61,12 @@ public class Objet extends JPanel {
         }
         this.sizeImageX = sizeImageX;
         this.sizeImageY = sizeImageY;
-        System.out.println();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, sizeImageX, sizeImageY, null);
     }
 
     @Override
@@ -101,6 +106,10 @@ public class Objet extends JPanel {
 
     public double getHSpeed() {
         return speed * Math.cos(direction);
+    }
+
+    public double getVSpeed(){
+        return speed * Math.sin(direction);
     }
 
     // Collisions
