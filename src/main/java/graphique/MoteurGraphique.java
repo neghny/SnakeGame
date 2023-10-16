@@ -23,7 +23,7 @@ public class MoteurGraphique {
 
     }
 
-    public void displayObjects(){
+    public void display(){
 
     }
 
