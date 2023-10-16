@@ -5,5 +5,12 @@ public class Objet {
     double y = 0;
     double speed = 0;
     double direction = 0;
+
+    public String getPathImage() {
+        return pathImage;
+    }
+
+    String pathImage;
+
     IForme forme;
 }
