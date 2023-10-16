@@ -21,7 +21,7 @@ public class Rectangle implements IForme {
         double sy2 = sy1 + avoirHaut();
         if (oShape.getClass().equals(Rectangle.class)) {
             // https://stackoverflow.com/questions/31022269/collision-detection-between-two-rectangles-in-java
-            return sx1 < ox2 && sx2 > ox1 && sy1 < oy1 && sy2 > oy2;
+            return sx1 < ox2 && sx2 > ox1 && sy1 < oy2 && sy2 > oy1;
         }
         if (oShape.getClass().equals(Cercle.class))
             return IForme.percuteCercleRect(self, other, (Cercle) oShape, this);
