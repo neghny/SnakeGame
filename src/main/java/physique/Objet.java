@@ -3,24 +3,22 @@ package physique;
 public class Objet {
     double x = 0;
     double y = 0;
-    double speed ; //vitesse
-    double direction; //Angle en radian
-
-
+    double speed = 0; //vitesse
+    double direction = 0; //Angle en radian
     IForme forme;
 
 
-    public Objet(double initialDirection, double initialSpeed) {
-        this.direction = initialDirection;
-        this.speed = initialSpeed;
+    public Objet(double initialX, double initialY, IForme forme) {
+        this.x = initialX;
+        this.y = initialY;
+        this.forme = forme;
     }
 
     //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
 
     public void updatePosition() {
-        x = speed * Math.cos(direction);
-        y = speed * Math.sin(direction);
-
+        x += getHSpeed();
+        y += speed * Math.sin(direction);
     }
 
     //methode pour modifier la direction de l'objet*
@@ -44,12 +42,9 @@ public class Objet {
         return speed;
     }
 
-
-
-
-
-
-
+    public double getHSpeed() {
+        return speed * Math.cos(direction);
+    }
 }
 
 
