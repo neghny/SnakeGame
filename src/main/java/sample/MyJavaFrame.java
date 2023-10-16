@@ -14,7 +14,6 @@ public class MyJavaFrame extends JFrame {
   /**
    * Constructs a new visible frame.
    */
-
   public MyJavaFrame() {
     setTitle("Main window");
     setSize(400, 400);

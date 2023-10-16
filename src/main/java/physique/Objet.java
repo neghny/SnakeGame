@@ -3,6 +3,13 @@ package physique;
 public class Objet {
     double x = 0;
     double y = 0;
+
+    public String getPathImage() {
+        return pathImage;
+    }
+
+    String pathImage;
+
     double speed = 0; //vitesse
     double direction = 0; //Angle en radian
     IForme forme;
@@ -12,7 +19,9 @@ public class Objet {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
+        System.out.println("Objet");
     }
+
 
     //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
 
@@ -51,5 +60,3 @@ public class Objet {
         return forme.percute(this, other);
     }
 }
-
-
