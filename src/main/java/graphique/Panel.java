@@ -23,6 +23,7 @@ public class Panel {
         if (logger.isDebugEnabled()) {
             String message = MessageFormat.format("Loading image at path {0}", path);
             logger.debug(message);
+            System.out.println("");
 
         }
         try {

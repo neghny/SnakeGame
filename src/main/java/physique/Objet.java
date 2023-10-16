@@ -19,7 +19,9 @@ public class Objet {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
+        System.out.println("Objet");
     }
+
 
     //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
 
