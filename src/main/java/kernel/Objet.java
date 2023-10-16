@@ -1,10 +1,21 @@
 package kernel;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import physique.IForme;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Objet {
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Objects;
+
+public class Objet extends JPanel {
     public double x = 0;
     public double y = 0;
 
@@ -18,12 +29,44 @@ public class Objet {
     double direction = 0; //Angle en radian
     public IForme forme;
 
+    BufferedImage image;
+    Objet objet;
+    int sizeImageX;
+    int sizeImageY;
+
 
     public Objet(double initialX, double initialY, IForme forme) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
-        System.out.println("Objet");
+    }
+    public Objet(double initialX, double initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) throws IOException {
+        this.x = initialX;
+        this.y = initialY;
+        this.forme = forme;
+        this.pathImage = pathImage;
+
+        Logger logger = LogManager.getLogger(this.getClass());
+        logger.debug("Construct a MyJavaPanel");
+        String path = pathImage;
+        if (logger.isDebugEnabled()) {
+            String message = MessageFormat.format("Loading image at path {0}", path);
+            logger.debug(message);
+        }
+        try {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResource(path)));
+        } catch (Exception ex) {
+            String message = MessageFormat.format("Error: Cannot load image at path: {0}", path);
+            logger.error(message, ex);
+        }
+        this.sizeImageX = sizeImageX;
+        this.sizeImageY = sizeImageY;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, sizeImageX, sizeImageY, null);
     }
 
 
@@ -31,7 +74,7 @@ public class Objet {
 
     public void updatePosition() {
         x += getHSpeed();
-        y += speed * Math.sin(direction);
+        y += getVSpeed();
     }
 
     //methode pour modifier la direction de l'objet*
@@ -59,11 +102,15 @@ public class Objet {
         return speed * Math.cos(direction);
     }
 
+    public double getVSpeed(){
+        return speed * Math.sin(direction);
+    }
+
     // Collisions
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
-    public LinkedList<Objet> detectCollisions(LinkedList<Objet> objs) {
+    public LinkedList<Objet> detectCollisions(ArrayList<Objet> objs) {
         LinkedList<Objet> res = new LinkedList<>();
         for (Objet o : objs)
             if (percute(o))
@@ -73,4 +120,6 @@ public class Objet {
 
     // Evénements
     public void eventCollision(Objet other) {}
+
+
 }
