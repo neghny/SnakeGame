@@ -2,6 +2,7 @@ package graphique;
 
 import kernel.Objet;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MoteurGraphique {
@@ -14,7 +15,18 @@ public class MoteurGraphique {
     public void removePanelFromDisplay(Objet o){
 
     }
-    public void displayObject(Objet p){
+
+    public Panel getPanel(Objet o) throws IOException {
+        return new Panel();
+    }
+    public void displayPanel(Panel p){
 
     }
+
+    public void displayObjects(){
+
+    }
+
+
+
 }
