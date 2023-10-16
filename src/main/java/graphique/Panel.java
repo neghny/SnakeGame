@@ -32,7 +32,6 @@ public class Panel extends JPanel {
         } catch (Exception ex) {
             String message = MessageFormat.format("Error: Cannot load image at path: {0}", path);
             logger.error(message, ex);
-            System.out.println();
         }
         this.objet = null;
     }
