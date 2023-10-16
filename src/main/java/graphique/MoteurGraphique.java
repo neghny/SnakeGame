@@ -1,7 +1,6 @@
 package graphique;
 
-import kernel.Objet;
-
+import java.util.List;
 import java.util.LinkedList;
 
 public class MoteurGraphique {
@@ -16,7 +15,9 @@ public class MoteurGraphique {
     }
 
     public void display(LinkedList<Objet> objects){ // affiche tout
-
+        for (Objet o : objects){
+            displayObject(o);
+        }
     }
 
 

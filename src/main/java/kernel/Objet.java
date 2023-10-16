@@ -74,7 +74,7 @@ public class Objet extends JPanel {
 
     public void updatePosition() {
         x += getHSpeed();
-        y += getVSpeed();
+        y += speed * Math.sin(direction);
     }
 
     //methode pour modifier la direction de l'objet*
