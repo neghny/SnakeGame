@@ -2,6 +2,9 @@ package kernel;
 
 import physique.IForme;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class Objet {
     public double x = 0;
     public double y = 0;
@@ -61,4 +64,14 @@ public class Objet {
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
+    public LinkedList<Objet> detectCollisions(ArrayList<Objet> objs) {
+        LinkedList<Objet> res = new LinkedList<>();
+        for (Objet o : objs)
+            if (percute(o))
+                res.add(o);
+        return res;
+    }
+
+    // Evénements
+    public void eventCollision(Objet other) {}
 }
