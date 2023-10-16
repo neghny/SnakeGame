@@ -1,5 +1,6 @@
 package kernel;
 
+import graphique.Frame;
 import graphique.MoteurGraphique;
 import physique.Cercle;
 
@@ -7,7 +8,7 @@ import java.util.LinkedList;
 
 public class Control {
     boolean running = true;
-    MoteurGraphique mg = new MoteurGraphique();
+    MoteurGraphique mg = new MoteurGraphique(new Frame(1280, 720, "Test", true));
     LinkedList<Objet> objs = new LinkedList<>();
     public Control() {
         while (running) {
@@ -23,7 +24,7 @@ public class Control {
                     if (o1 != o2 && o1.percute(o2))
                         o1.eventCollision(o2);
             // Dessiner
-            mg.display();
+            mg.display(objs);
             long endTime = System.currentTimeMillis();
             if (endTime < expectedRestart)
                 try { Thread.sleep(expectedRestart - endTime); } catch (InterruptedException e) { throw new RuntimeException(e); }

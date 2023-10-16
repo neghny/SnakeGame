@@ -2,8 +2,7 @@ package graphique;
 
 import kernel.Objet;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.LinkedList;
 
 public class MoteurGraphique {
     Frame mainFrame;
@@ -12,11 +11,11 @@ public class MoteurGraphique {
         this.mainFrame = mainFrame;
     }
 
-    public void displayObject(Object o){ // affiche un objet
+    public void displayObject(Objet o){ // affiche un objet
 
     }
 
-    public void display(List<Object> objects){ // affiche tout
+    public void display(LinkedList<Objet> objects){ // affiche tout
 
     }
 
