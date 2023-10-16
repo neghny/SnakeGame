@@ -1,6 +1,7 @@
 package graphique;
 
-import java.util.List;
+import kernel.Objet;
+
 import java.util.LinkedList;
 
 public class MoteurGraphique {
