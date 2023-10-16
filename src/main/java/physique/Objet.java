@@ -45,6 +45,11 @@ public class Objet {
     public double getHSpeed() {
         return speed * Math.cos(direction);
     }
+
+    // Collisions
+    public boolean percute(Objet other) {
+        return forme.percute(this, other);
+    }
 }
 
 
