@@ -1,5 +1,7 @@
 package physique;
 
+import kernel.Objet;
+
 public class Cercle implements IForme {
     double r;
 
