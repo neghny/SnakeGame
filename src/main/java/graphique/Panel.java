@@ -2,7 +2,7 @@ package graphique;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import physique.Objet;
+import kernel.Objet;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

@@ -1,5 +1,7 @@
 package physique;
 
+import kernel.Objet;
+
 public class Ligne implements IForme {
     double l;
     double h;

@@ -1,5 +1,7 @@
 package physique;
 
+import kernel.Objet;
+
 public class Rectangle implements IForme {
     private final double longu;
     private final double haut;
