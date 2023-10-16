@@ -18,7 +18,7 @@ public class Ligne implements IForme {
         if (of.getClass().equals(Ligne.class))
             return IForme.percuteLigneLigne(self.x, self.y, self.x + l, self.y + h, other.x, other.y, other.x + of.avoirLong(), other.y + of.avoirHaut());
         if (of.getClass().equals(Cercle.class))
-            return IForme.percuteCercleLigne(self, other, (Cercle) of, this);
+            return IForme.percuteCercleLigne(other, self, (Cercle) of, this);
         return false;
     }
 

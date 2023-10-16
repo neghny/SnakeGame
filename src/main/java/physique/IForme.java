@@ -15,8 +15,8 @@ public interface IForme {
     }
 
     static boolean percuteCercleRect(Objet oc, Objet or, Cercle c, Rectangle r) {
-        double sx = oc.x + c.avoirLong();
-        double sy = oc.y + c.avoirHaut();
+        double sx = oc.x + c.avoirLong() / 2;
+        double sy = oc.y + c.avoirHaut() / 2;
         double rx1 = or.x;
         double ry1 = or.y;
         double rx2 = rx1 + r.avoirLong();
@@ -46,11 +46,34 @@ public interface IForme {
         double rx2 = rx1 + r.avoirLong();
         double ry2 = ry1 + r.avoirHaut();
         return (lx1 >= rx1 && ly1 >= ry1 && lx1 <= rx2 && ly1 <= ry2)
-                || percuteLigneLigne(lx1, ly1, rx1, ry1, lx2, ly2, rx1, ry2)
-                || percuteLigneLigne(lx1, ly1, rx1, ry2, lx2, ly2, rx2, ry2)
-                || percuteLigneLigne(lx1, ly1, rx2, ry2, lx2, ly2, rx2, ry1)
-                || percuteLigneLigne(lx1, ly1, rx2, ry1, lx2, ly2, rx1, ry1);
+                || percuteLigneLigne(lx1, ly1, lx2, ly2, rx1, ry1, rx1, ry2)
+                || percuteLigneLigne(lx1, ly1, lx2, ly2, rx1, ry2, rx2, ry2)
+                || percuteLigneLigne(lx1, ly1, lx2, ly2, rx2, ry2, rx2, ry1)
+                || percuteLigneLigne(lx1, ly1, lx2, ly2, rx2, ry1, rx1, ry1);
     }
+
+    /**
+            * This will check if two lines collide. It will return the collision point
+     * which is null if their is no collision.
+            *
+            * @param x1
+     *            the x position of the first line firsts point.
+     * @param y1
+     *            the y position of the first line firsts point.
+     * @param x2
+     *            the x position of the first line second point.
+     * @param y2
+     *            the y position of the first line second point.
+     * @param x3
+     *            the x position of the second line firsts point.
+     * @param y3
+     *            the y position of the second line firsts point.
+     * @param x4
+     *            the x position of the second line second point.
+     * @param y4
+     *            the y position of the second line second point.
+     * @return the collision point which can be null.
+            */
     static boolean percuteLigneLigne(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
         // http://www.java2s.com/example/java/java.lang/this-will-check-if-two-lines-collide.html
         double denom = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);

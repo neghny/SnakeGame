@@ -26,9 +26,9 @@ public class Rectangle implements IForme {
             return sx1 < ox2 && sx2 > ox1 && sy1 < oy2 && sy2 > oy1;
         }
         if (oShape.getClass().equals(Cercle.class))
-            return IForme.percuteCercleRect(self, other, (Cercle) oShape, this);
+            return IForme.percuteCercleRect(other, self, (Cercle) oShape, this);
         if (oShape.getClass().equals(Ligne.class))
-            return IForme.percuteLigneRect(self, other, (Ligne) oShape, this);
+            return IForme.percuteLigneRect(other, self, (Ligne) oShape, this);
         return false;
     }
 
