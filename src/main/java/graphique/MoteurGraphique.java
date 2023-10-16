@@ -16,8 +16,10 @@ public class MoteurGraphique {
 
     }
 
-    public void display(List<Object> objects){ // affiche tout
-
+    public void display(List<Objet> objects){ // affiche tout
+        for (Objet o : objects){
+            displayObject(o);
+        }
     }
 
 
