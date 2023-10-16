@@ -1,4 +1,6 @@
 package graphique;
+import sample.MyJavaFrame;
+
 import javax.swing.*;
 
 public class Frame extends JFrame{
@@ -23,4 +25,11 @@ public class Frame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(this.isVisible);
     }
+
+    /*public static void main(String[] args) {
+        Frame frame = new Frame(20, 20, "Frame", true);
+        frame.display();
+    }*/
+
+
 }
