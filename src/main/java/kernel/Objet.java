@@ -47,7 +47,7 @@ public class Objet extends JPanel {
         this.pathImage = pathImage;
 
         Logger logger = LogManager.getLogger(this.getClass());
-        logger.debug("Construct a MyJavaPanel");
+        logger.debug("Construct a JPanel");
         String path = pathImage;
         if (logger.isDebugEnabled()) {
             String message = MessageFormat.format("Loading image at path {0}", path);
@@ -122,4 +122,21 @@ public class Objet extends JPanel {
     public void eventCollision(Objet other) {}
 
 
+
+    public double getXposition() {
+        return x;
+    }
+
+
+    public double getYposition() {
+        return y;
+    }
+
+    public int getSizeImageX() {
+        return sizeImageX;
+    }
+
+    public int getSizeImageY() {
+        return sizeImageY;
+    }
 }

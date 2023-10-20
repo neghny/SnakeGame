@@ -6,6 +6,11 @@ import physique.Cercle;
 
 import java.util.LinkedList;
 
+/**
+ * Control est le contrôle-commande du jeu-vidéo.
+ * Il permet de mettre ensemble les différentes parties du jeu (physique, graphique).
+ * Il est responsable de faire tourner le jeu.
+ */
 public class Control {
     boolean running = true;
     MoteurGraphique mg = new MoteurGraphique(new Frame(1280, 720, "Test", true));
