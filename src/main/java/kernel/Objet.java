@@ -122,4 +122,21 @@ public class Objet extends JPanel {
     public void eventCollision(Objet other) {}
 
 
+
+    public double getXposition() {
+        return x;
+    }
+
+
+    public double getYposition() {
+        return y;
+    }
+
+    public int getSizeImageX() {
+        return sizeImageX;
+    }
+
+    public int getSizeImageY() {
+        return sizeImageY;
+    }
 }

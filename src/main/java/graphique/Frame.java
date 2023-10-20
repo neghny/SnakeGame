@@ -1,6 +1,5 @@
 package graphique;
 import sample.MyJavaFrame;
-
 import javax.swing.*;
 
 public class Frame extends JFrame{
@@ -21,6 +20,7 @@ public class Frame extends JFrame{
     public void display(){
         setTitle(this.title);
         setSize(this.width, this.height);
+        setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(this.isVisible);
