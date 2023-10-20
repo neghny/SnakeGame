@@ -47,7 +47,7 @@ public class Objet extends JPanel {
         this.pathImage = pathImage;
 
         Logger logger = LogManager.getLogger(this.getClass());
-        logger.debug("Construct a MyJavaPanel");
+        logger.debug("Construct a JPanel");
         String path = pathImage;
         if (logger.isDebugEnabled()) {
             String message = MessageFormat.format("Loading image at path {0}", path);
