@@ -4,15 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import physique.IForme;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class Objet extends JPanel {
@@ -34,12 +33,13 @@ public class Objet extends JPanel {
     int sizeImageX;
     int sizeImageY;
 
-
+    // Constructeur pour tests collision.
     public Objet(double initialX, double initialY, IForme forme) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
     }
+    // Constructeur général.
     public Objet(double initialX, double initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) throws IOException {
         this.x = initialX;
         this.y = initialY;
@@ -47,7 +47,7 @@ public class Objet extends JPanel {
         this.pathImage = pathImage;
 
         Logger logger = LogManager.getLogger(this.getClass());
-        logger.debug("Construct a MyJavaPanel");
+        logger.debug("Construct a JPanel");
         String path = pathImage;
         if (logger.isDebugEnabled()) {
             String message = MessageFormat.format("Loading image at path {0}", path);
@@ -74,7 +74,7 @@ public class Objet extends JPanel {
 
     public void updatePosition() {
         x += getHSpeed();
-        y += speed * Math.sin(direction);
+        y += getVSpeed();
     }
 
     //methode pour modifier la direction de l'objet*
@@ -122,4 +122,21 @@ public class Objet extends JPanel {
     public void eventCollision(Objet other) {}
 
 
+
+    public double getXposition() {
+        return x;
+    }
+
+
+    public double getYposition() {
+        return y;
+    }
+
+    public int getSizeImageX() {
+        return sizeImageX;
+    }
+
+    public int getSizeImageY() {
+        return sizeImageY;
+    }
 }

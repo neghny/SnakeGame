@@ -3,7 +3,6 @@ package sample;
 import java.io.Serial;
 import javax.swing.JFrame;
 
-
 /**
  * An extended version of javax.swing.JFrame containing a panel to draw images.
  */
