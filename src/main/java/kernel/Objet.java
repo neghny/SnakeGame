@@ -28,7 +28,8 @@ public class Objet extends JPanel {
     double direction = 0; //Angle en radian
     public IForme forme;
 
-    BufferedImage image;
+    BufferedImage bufferedImage;
+    Image image;
     int sizeImageX;
     int sizeImageY;
 
@@ -53,22 +54,24 @@ public class Objet extends JPanel {
             logger.debug(message);
         }
         try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResource(pathImage)));
+            bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(pathImage)));
             //image = ImageIO.read(new File(pathImage));
 
         } catch (Exception ex) {
             String message = MessageFormat.format("Error: Cannot load image at path: {0}", pathImage);
             logger.error(message, ex);
         }
-        this.setPreferredSize(new Dimension(sizeImageX, sizeImageY));
+        //this.setSize(new Dimension(sizeImageX, sizeImageY));
         this.sizeImageX = sizeImageX;
         this.sizeImageY = sizeImageY;
+        image = bufferedImage.getScaledInstance(sizeImageX, sizeImageY, Image.SCALE_DEFAULT);
+//        this.setPreferredSize(new Dimension(sizeImageX, sizeImageY));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, (int) this.x, (int) this.y, null);
+        g.drawImage(image, (int) this.x, (int) this.y, this.sizeImageX, this.sizeImageY, null);
     }
 
 
