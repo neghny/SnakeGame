@@ -29,7 +29,6 @@ public class Objet extends JPanel {
     public IForme forme;
 
     BufferedImage image;
-    Objet objet;
     int sizeImageX;
     int sizeImageY;
 
@@ -48,17 +47,20 @@ public class Objet extends JPanel {
 
         Logger logger = LogManager.getLogger(this.getClass());
         logger.debug("Construct a JPanel");
-        String path = pathImage;
+        //String path = pathImage;
         if (logger.isDebugEnabled()) {
-            String message = MessageFormat.format("Loading image at path {0}", path);
+            String message = MessageFormat.format("Loading image at path {0}", pathImage);
             logger.debug(message);
         }
         try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResource(path)));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResource(pathImage)));
+            //image = ImageIO.read(new File(pathImage));
+
         } catch (Exception ex) {
-            String message = MessageFormat.format("Error: Cannot load image at path: {0}", path);
+            String message = MessageFormat.format("Error: Cannot load image at path: {0}", pathImage);
             logger.error(message, ex);
         }
+        this.setPreferredSize(new Dimension(sizeImageX, sizeImageY));
         this.sizeImageX = sizeImageX;
         this.sizeImageY = sizeImageY;
     }
@@ -66,7 +68,7 @@ public class Objet extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, sizeImageX, sizeImageY, null);
+        g.drawImage(image, (int) this.x, (int) this.y, null);
     }
 
 
