@@ -46,8 +46,18 @@ public class Control {
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
         c.addObj(pacman);
         pacman.setSpeed(3);
-        Objet monstre = new Objet(250, 0, new Rectangle(300, 300), "pink_ghost.png", 300, 300);
-        c.addObj(monstre);
+        for (int i = 710; i < 1000; i+=50){
+            c.addObj(new Objet(i+100, 500, new Cercle(10), "ball.png", 20, 20));
+            c.addObj(new Objet(i, 20, new Cercle(10), "ball.png", 20, 20));
+            c.addObj(new Objet(100, i-150, new Cercle(10), "ball.png", 20, 20));
+            c.addObj(new Objet(i-700, 300, new Cercle(10), "ball.png", 20, 20));
+        }
+        Objet monstreRose = new Objet(250, 0, new Rectangle(120, 120), "pink_ghost.png", 120, 120);
+        c.addObj(monstreRose);
+        Objet monstreBleu = new Objet(800, 300, new Rectangle(120, 120), "blue_ghost.png", 120, 120);
+        c.addObj(monstreBleu);
+        Objet monstreRouge = new Objet(400, 550, new Rectangle(120, 120), "red_ghost.png", 120, 120);
+        c.addObj(monstreRouge);
         c.mg.init_display(c.objs);
         c.run();
     }
