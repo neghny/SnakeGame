@@ -32,7 +32,7 @@ public class Objet extends JPanel {
     Image image;
     int sizeImageX;
     int sizeImageY;
-    double rotation = 0; //Angle in degrees
+    double rotation = 0; //Angle in radians
 
     // Constructeur général.
 
@@ -86,7 +86,7 @@ public class Objet extends JPanel {
         AffineTransform transform = new AffineTransform();
 
         transform.translate(sizeImageX/2, sizeImageY/2);
-        transform.rotate(Math.toRadians(rotation));
+        transform.rotate(rotation);
         transform.translate(-sizeImageX/2, -sizeImageY/2);
 
         //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
@@ -118,7 +118,7 @@ public class Objet extends JPanel {
 
     public void setDirection(double newDirection) {
         this.direction = newDirection;
-
+        this.rotation = newDirection;
     }
 
     public void setSpeed(double newSpeed){
@@ -167,8 +167,8 @@ public class Objet extends JPanel {
     }
     public double getRotation() {return rotation;}
 
-    public void setRotation(double degrees){
-        rotation = degrees;
+    public void setRotation(double radians){
+        rotation = radians;
     }
 
     public int getSizeImageX() {
