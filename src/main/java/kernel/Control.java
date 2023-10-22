@@ -54,8 +54,8 @@ public class Control {
         var c = new Control();
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
         c.addObj(pacman);
-        pacman.setSpeed(3);
-        Objet monstre = new Objet(250, 0, new Rectangle(300, 300), "pink_ghost.png", 300, 300);
+        pacman.setSpeed(10);
+        Objet monstre = new Objet(250, 0, new Rectangle(120, 120), "pink_ghost.png", 120, 120);
         c.addObj(monstre);
         c.mg.init_display(c.objs);
         c.run();
