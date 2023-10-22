@@ -22,10 +22,19 @@ public class Control {
             // 33 pour 30 frames par seconde.
             long expectedRestart = startTime + 33;
             // Gérer collisions
-            for (Objet o1 : objs)
-                for (Objet o2 : objs)
-                    if (o1 != o2 && o1.percute(o2))
+            for (Objet o1 : objs) {
+                if (o1.getXposition() + o1.sizeImageX > 1000 || o1.getXposition() < 0){ // todo mettre width et height de la fenêtre dans des attributs
+                    System.out.println("dépassement sur l'axe X");
+                }
+                if (o1.getYposition() + o1.sizeImageY > 1000 || o1.getYposition() < 0){
+                    System.out.println("dépassement sur l'axe y");
+                }
+                for (Objet o2 : objs) {
+                    if (o1 != o2 && o1.percute(o2)) {
                         o1.eventCollision(o2);
+                    }
+                }
+            }
             // Dessiner
             mg.display(objs);
             long endTime = System.currentTimeMillis();
