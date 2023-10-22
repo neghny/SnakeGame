@@ -16,22 +16,31 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
 
         for (Objet objet : objets) {
             if (keyPressed == KeyEvent.VK_RIGHT) {
-                objet.moveRight();
+                objet.hspeed = 3;
             } else if (keyPressed == KeyEvent.VK_LEFT) {
-                objet.moveLeft();
+                objet.hspeed = -3;
             } else if (keyPressed == KeyEvent.VK_UP) {
-                objet.moveUp();
+                objet.vspeed = -3;
             } else if (keyPressed == KeyEvent.VK_DOWN) {
-                objet.moveDown();
+                objet.vspeed = 3;
             }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int keyTyped = e.getKeyCode();
+        int keyReleased = e.getKeyCode();
 
-        if (keyTyped == KeyEvent.VK_ESCAPE) {
+        for (Objet objet : objets) {
+            if (keyReleased == KeyEvent.VK_RIGHT || keyReleased == KeyEvent.VK_LEFT) {
+                objet.hspeed = 0;
+            }
+            if (keyReleased == KeyEvent.VK_UP || keyReleased == KeyEvent.VK_DOWN) {
+                objet.vspeed = 0;
+            }
+        }
+
+        if (keyReleased == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         }
     }

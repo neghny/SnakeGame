@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 
+import static java.lang.Math.*;
+
 public class Objet extends JPanel {
-    public double x;
-    public double y;
+    public int x;
+    public int y;
 
     public String getPathImage() {
         return pathImage;
@@ -23,8 +25,8 @@ public class Objet extends JPanel {
 
     String pathImage;
 
-    double speed = 0; //vitesse
-    double direction = 0; //Angle en radian
+    int hspeed = 0;
+    int vspeed = 0;
     public IForme forme;
 
     BufferedImage bufferedImage;
@@ -33,13 +35,13 @@ public class Objet extends JPanel {
     int sizeImageY;
 
     // Constructeur pour tests collision.
-    public Objet(double initialX, double initialY, IForme forme) {
+    public Objet(int initialX, int initialY, IForme forme) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
     }
     // Constructeur général.
-    public Objet(double initialX, double initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
+    public Objet(int initialX, int initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
@@ -74,7 +76,7 @@ public class Objet extends JPanel {
         g.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
     }
 
-    public void setPosition(double x, double y){
+    public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -82,53 +84,41 @@ public class Objet extends JPanel {
     //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
 
     public void updatePosition() {
-        x += getHSpeed();
-        y += getVSpeed();
-    }
-
-    public void moveRight() {
-        x += getSpeed();
-    }
-
-    public void moveLeft() {
-        x -= getSpeed();
-    }
-
-    public void moveUp() {
-        y -= getSpeed();
-    }
-
-    public void moveDown() {
-        y += getSpeed();
+        x += hspeed;
+        y += vspeed;
     }
 
     //methode pour modifier la direction de l'objet*
 
-    public void setDirection(double newDirection) {
-        this.direction = newDirection;
-
+    public void setDirection(double dir) {
+        setDirSpd(getSpeed(), dir);
     }
 
-    public void setSpeed(double newSpeed){
-        this.speed = newSpeed;
+    public void setSpeed(double spd){
+        setDirSpd(spd, getDirection());
+    }
+
+    public void setDirSpd(double dir, double spd) {
+        hspeed = (int) floor(cos(dir) * spd);
+        vspeed = (int) floor(sin(dir) * spd);
     }
 
     //Pour obtenir la vitesse actuelle
 
-    public double getDirection(){
-        return direction;
+    public double getDirection() {
+        if (hspeed > 0 && vspeed > 0)
+            return atan((double) vspeed / hspeed);
+        if (hspeed < 0 && vspeed > 0)
+            return atan((double) vspeed / -hspeed);
+        if (hspeed < 0 && vspeed < 0)
+            return atan((double) vspeed / hspeed);
+        if (hspeed > 0 && vspeed < 0)
+            return atan((double) -vspeed / hspeed);
+        return 0.;
     }
 
-    public double getSpeed(){
-        return speed;
-    }
-
-    public double getHSpeed() {
-        return speed * Math.cos(direction);
-    }
-
-    public double getVSpeed(){
-        return speed * Math.sin(direction);
+    public double getSpeed() {
+        return sqrt(hspeed * hspeed + vspeed * vspeed);
     }
 
     // Collisions
@@ -144,16 +134,15 @@ public class Objet extends JPanel {
     }
 
     // Evénements
-    public void eventCollision(Objet other) { System.out.println(other.y); }
+    public void eventCollision(Objet other) {  }
 
 
 
-    public double getXposition() {
+    public int getXposition() {
         return x;
     }
 
-
-    public double getYposition() {
+    public int getYposition() {
         return y;
     }
 
