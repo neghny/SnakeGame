@@ -1,6 +1,5 @@
 package kernel;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class KeyListenerKernel implements java.awt.event.KeyListener {
@@ -36,20 +35,5 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-    }
-
-    // For testing purposes, will have to addKeyListener to the main game frame
-    public static void main(String[] args) {
-
-        Frame f = new Frame("Demo");
-        f.setLayout(new FlowLayout());
-        f.setSize(200, 200);
-        Label l = new Label();
-        l.setText("KeyListener Test");
-        f.add(l);
-        f.setVisible(true);
-
-        KeyListenerKernel keyListener = new KeyListenerKernel();
-        f.addKeyListener(keyListener);
     }
 }

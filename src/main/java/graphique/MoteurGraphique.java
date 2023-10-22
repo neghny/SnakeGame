@@ -1,5 +1,6 @@
 package graphique;
 
+import kernel.KeyListenerKernel;
 import kernel.Objet;
 import physique.IForme;
 import physique.Rectangle;
@@ -13,6 +14,7 @@ public class MoteurGraphique {
 
     public MoteurGraphique(Frame mainFrame) {
         this.mainFrame = mainFrame;
+        mainFrame.addKeyListener(new KeyListenerKernel());
     }
 
 
