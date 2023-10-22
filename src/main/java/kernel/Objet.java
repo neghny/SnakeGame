@@ -18,14 +18,9 @@ public class Objet extends JPanel {
     public double x;
     public double y;
 
-    public String getPathImage() {
-        return pathImage;
-    }
-
     String pathImage;
 
     double speed = 0; //vitesse
-    double direction = 0; //Angle en radian
     public IForme forme;
 
     BufferedImage bufferedImage;
