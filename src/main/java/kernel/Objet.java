@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -40,7 +39,7 @@ public class Objet extends JPanel {
         this.forme = forme;
     }
     // Constructeur général.
-    public Objet(double initialX, double initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) throws IOException {
+    public Objet(double initialX, double initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
