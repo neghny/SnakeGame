@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class KeyListenerKernel implements java.awt.event.KeyListener {
     private final LinkedList<Objet> objets;
+    private boolean left,up,down,right;
 
     public KeyListenerKernel(LinkedList<Objet> objets) {
         this.objets = objets;
@@ -16,23 +17,36 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
 
         for (Objet objet : objets) {
             if (keyPressed == KeyEvent.VK_RIGHT) {
-                objet.moveRight();
+                right = true;
             } else if (keyPressed == KeyEvent.VK_LEFT) {
-                objet.moveLeft();
+                left = true;
             } else if (keyPressed == KeyEvent.VK_UP) {
-                objet.moveUp();
+                up = true;
             } else if (keyPressed == KeyEvent.VK_DOWN) {
-                objet.moveDown();
+                down = true;
             }
+            objet.move(left,up,down,right);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int keyTyped = e.getKeyCode();
-
-        if (keyTyped == KeyEvent.VK_ESCAPE) {
+        int keyReleased = e.getKeyCode();
+        if (keyReleased == KeyEvent.VK_ESCAPE) {
             System.exit(0);
+        }
+
+        for (Objet objet : objets) {
+            if (keyReleased == KeyEvent.VK_RIGHT) {
+                right = false;
+            } else if (keyReleased == KeyEvent.VK_LEFT) {
+                left = false;
+            } else if (keyReleased == KeyEvent.VK_UP) {
+                up = false;
+            } else if (keyReleased == KeyEvent.VK_DOWN) {
+                down = false;
+            }
+            objet.move(left,up,down,right);
         }
     }
 

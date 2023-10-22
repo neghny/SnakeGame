@@ -85,17 +85,12 @@ public class Objet extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         AffineTransform transform = new AffineTransform();
 
-        transform.translate(sizeImageX/2, sizeImageY/2);
+        transform.translate((double) sizeImageX /2, (double) sizeImageY /2);
         transform.rotate(rotation);
-        transform.translate(-sizeImageX/2, -sizeImageY/2);
+        transform.translate((double) -sizeImageX /2, (double) -sizeImageY /2);
 
         //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
         g2d.drawImage(image, transform, this);
-    }
-
-    public void updatePosition() {
-        x += getHSpeed();
-        y += getVSpeed();
     }
 
     public void moveRight() {
@@ -114,39 +109,35 @@ public class Objet extends JPanel {
         y += getSpeed();
     }
 
-    //methode pour modifier la direction de l'objet*
-
-    public void setDirection(double newDirection) {
-        this.direction = newDirection;
-        this.rotation = newDirection;
+    public void move(boolean left, boolean up, boolean down, boolean right) {
+        if (left) {
+            moveLeft();
+        }
+        if (up) {
+            moveUp();
+        }
+        if (down) {
+            moveDown();
+        }
+        if (right) {
+            moveRight();
+        }
     }
 
     public void setSpeed(double newSpeed){
         this.speed = newSpeed;
     }
 
-    //Pour obtenir la vitesse actuelle
-
-    public double getDirection(){
-        return direction;
-    }
-
     public double getSpeed(){
         return speed;
     }
 
-    public double getHSpeed() {
-        return speed * Math.cos(direction);
-    }
-
-    public double getVSpeed(){
-        return speed * Math.sin(direction);
-    }
 
     // Collisions
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
+    
     public LinkedList<Objet> detectCollisions(ArrayList<Objet> objs) {
         LinkedList<Objet> res = new LinkedList<>();
         for (Objet o : objs)
@@ -161,10 +152,10 @@ public class Objet extends JPanel {
         return x;
     }
 
-
     public double getYposition() {
         return y;
     }
+
     public double getRotation() {return rotation;}
 
     public void setRotation(double radians){
