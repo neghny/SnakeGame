@@ -86,6 +86,22 @@ public class Objet extends JPanel {
         y += getVSpeed();
     }
 
+    public void moveRight() {
+        x += getSpeed();
+    }
+
+    public void moveLeft() {
+        x -= getSpeed();
+    }
+
+    public void moveUp() {
+        y -= getSpeed();
+    }
+
+    public void moveDown() {
+        y += getSpeed();
+    }
+
     //methode pour modifier la direction de l'objet*
 
     public void setDirection(double newDirection) {

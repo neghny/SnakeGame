@@ -13,7 +13,7 @@ import java.util.LinkedList;
 public class MoteurGraphique {
     JFrame mainFrame;
 
-    public MoteurGraphique(int width, int height, String title) {
+    public MoteurGraphique(int width, int height, String title, KeyListenerKernel keyListener) {
         this.mainFrame = new JFrame(title);
         mainFrame.setLayout(null);
         mainFrame.setSize(width, height);
@@ -25,7 +25,7 @@ public class MoteurGraphique {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainFrame.addKeyListener(new KeyListenerKernel());
+        mainFrame.addKeyListener(keyListener);
     }
 
 
@@ -59,7 +59,8 @@ public class MoteurGraphique {
     }
 
     public static void main(String[] args) throws IOException{
-        MoteurGraphique myMG = new MoteurGraphique(1000,1000,"Frame");
+        //null keyListener because the constructor doesn't work otherwise, just ignore
+        MoteurGraphique myMG = new MoteurGraphique(1000,1000,"Frame", new KeyListenerKernel(null));
         //IForme rectangle = new Rectangle(800, 800);
         //Objet myO = new Objet(500, 500, rectangle, "pacman.png", 800, 800);
         IForme rGhost = new Rectangle(300, 300);

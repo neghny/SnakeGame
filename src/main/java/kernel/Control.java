@@ -13,17 +13,14 @@ import java.util.LinkedList;
  */
 public class Control {
     boolean running = true;
-    MoteurGraphique mg = new MoteurGraphique(1000,1000,"Frame");
     LinkedList<Objet> objs = new LinkedList<>();
+    MoteurGraphique mg = new MoteurGraphique(1000,1000,"Frame", new KeyListenerKernel(objs));
     public Control() {}
     public void run() {
         while (running) {
             long startTime = System.currentTimeMillis();
             // 33 pour 30 frames par seconde.
             long expectedRestart = startTime + 33;
-            // Update positions
-            for (Objet o : objs)
-                o.updatePosition();
             // Gérer collisions
             for (Objet o1 : objs)
                 for (Objet o2 : objs)
@@ -43,6 +40,7 @@ public class Control {
     public void stop() {
         running = false;
     }
+
     public static void main(String[] args) {
         var c = new Control();
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
