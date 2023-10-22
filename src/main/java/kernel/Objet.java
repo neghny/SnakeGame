@@ -71,7 +71,8 @@ public class Objet extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, (int) this.x, (int) this.y, this.sizeImageX, this.sizeImageY, null);
+        setOpaque(false);
+        g.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
     }
 
 

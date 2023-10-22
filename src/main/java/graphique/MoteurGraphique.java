@@ -61,11 +61,13 @@ public class MoteurGraphique {
         IForme rPacman = new Cercle(60);
         Objet pacman = new Objet(25, 25, rPacman, "pacman.png", 120, 120);
         Objet pinkGhost = new Objet(0, 0, rGhost, "pink_ghost.png", 300, 300);
-        Objet blueGhost = new Objet(50, 30, rGhost, "blue_ghost.png", 300, 300);
+        Objet blueGhost = new Objet(250, 450, rGhost, "blue_ghost.png", 300, 300);
+        Objet redGhost = new Objet(600, 500, rGhost, "red_ghost.png", 300, 300);
         LinkedList<Objet> myObjets = new LinkedList<>();
         myObjets.add(pacman);
         myObjets.add(pinkGhost);
         myObjets.add(blueGhost);
+        myObjets.add(redGhost);
         myMG.display(myObjets);
         //IForme rPacman = new Cercle(300);
         /*Objet pacman1 = new Objet(500, 500, rPacman, "pacman.png", 300, 300);
