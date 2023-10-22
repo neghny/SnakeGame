@@ -30,7 +30,6 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int keyTyped = e.getKeyCode();
-
         if (keyTyped == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         }

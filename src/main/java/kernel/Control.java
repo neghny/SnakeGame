@@ -4,10 +4,10 @@ import graphique.MoteurGraphique;
 import physique.Cercle;
 import physique.Rectangle;
 
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 
-/**
- * Control est le contrôle-commande du jeu-vidéo.
+ /* Control est le contrôle-commande du jeu-vidéo.
  * Il permet de mettre ensemble les différentes parties du jeu (physique, graphique).
  * Il est responsable de faire tourner le jeu.
  */
@@ -21,6 +21,8 @@ public class Control {
             long startTime = System.currentTimeMillis();
             // 33 pour 30 frames par seconde.
             long expectedRestart = startTime + 33;
+            for (Objet o : objs)
+                o.updatePosition();
             // Gérer collisions
             for (Objet o1 : objs)
                 for (Objet o2 : objs)
