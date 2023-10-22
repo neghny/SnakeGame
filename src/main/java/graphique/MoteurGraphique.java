@@ -30,8 +30,8 @@ public class MoteurGraphique {
 
 
     /**
-     * Affiche l'objet dans la fenêtre à une position donné (position de l'objet) et ajuste l'affichage salon la taille de l'objet (recensé dans la classe objet également)
-     * @param o objet que l'on veut afficher
+     * Ajoute un objet à la fenêtre
+     * @param o objet à ajouter
      */
     public void addObjet(Objet o){ // affiche un objet
         mainFrame.add(o);
@@ -41,8 +41,11 @@ public class MoteurGraphique {
     }
 
 
-    public void display(LinkedList<Objet> objects){ // affiche tout
-        //mainFrame.setLayout(null);
+    /**
+     * Affiche tous les objets de la liste dans l'ordre inverse d'ajout à la liste, prenant en compte leurs tailles et positions
+     * @param objects liste d'objets à afficher
+     */
+    public void display(LinkedList<Objet> objects){
         for (Objet o : objects){
             o.setBounds((int) o.getXposition(), (int) o.getYposition(), o.getSizeImageX(), o.getSizeImageY());
         }
@@ -54,7 +57,7 @@ public class MoteurGraphique {
         mainFrame.setVisible(true);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         MoteurGraphique myMG = new MoteurGraphique(1000,1000,"Frame");
         //IForme rectangle = new Rectangle(800, 800);
         //Objet myO = new Objet(500, 500, rectangle, "pacman.png", 800, 800);
