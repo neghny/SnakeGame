@@ -85,7 +85,7 @@ public class Objet extends JPanel {
         AffineTransform transform = new AffineTransform();
 
         transform.translate(sizeImageX/2, sizeImageY/2);
-        transform.rotate(Math.toRadians(rotation));
+        transform.rotate(Math.toRadians(rotationImage));
         transform.translate(-sizeImageX/2, -sizeImageY/2);
 
         //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
