@@ -26,8 +26,9 @@ public class Objet extends JPanel {
 
     String pathImage;
 
-    int hspeed = 0;
-    int vspeed = 0;
+    double speed = 0; //vitesse
+    double direction = 0; //Angle en radian
+
     public IForme forme;
 
     BufferedImage bufferedImage;
@@ -93,44 +94,56 @@ public class Objet extends JPanel {
     }
 
     public void updatePosition() {
-        x += hspeed;
-        y += vspeed;
+        x += getHSpeed();
+        y += getVSpeed();
     }
 
-    //methode pour modifier la direction de l'objet*
-
-    public void setDirection(double dir) {
-        setDirSpd(getSpeed(), dir);
+    public void moveRight() {
+        x += getSpeed();
     }
 
-    public void setSpeed(double spd){
-        setDirSpd(spd, getDirection());
+    public void moveLeft() {
+        x -= getSpeed();
     }
 
-    public void setDirSpd(double dir, double spd) {
-        hspeed = (int) floor(cos(dir) * spd);
-        vspeed = (int) floor(sin(dir) * spd);
+    public void moveUp() {
+        y -= getSpeed();
+    }
+
+    public void moveDown() {
+        y += getSpeed();
+    }
+
+
+        //methode pour modifier la direction de l'objet*
+
+    public void setDirection(double newDirection) {
+        this.direction = newDirection;
+
+    }
+
+    public void setSpeed(double newSpeed){
+        this.speed = newSpeed;
+    }
+
+    public double getDirection(){
+        return direction;
     }
 
     //Pour obtenir la vitesse actuelle
-
-    public double getDirection() {
-        if (hspeed > 0 && vspeed > 0)
-            return atan((double) vspeed / hspeed);
-        if (hspeed < 0 && vspeed > 0)
-            return atan((double) vspeed / -hspeed);
-        if (hspeed < 0 && vspeed < 0)
-            return atan((double) vspeed / hspeed);
-        if (hspeed > 0 && vspeed < 0)
-            return atan((double) -vspeed / hspeed);
-        return 0.;
+    public double getSpeed(){
+        return speed;
     }
 
-    public double getSpeed() {
-        return sqrt(hspeed * hspeed + vspeed * vspeed);
+    public double getHSpeed() {
+        return speed * Math.cos(direction);
     }
 
-    // Collisions
+    public double getVSpeed() {
+        return speed * Math.sin(direction);
+    }
+
+        // Collisions
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }

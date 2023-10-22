@@ -56,6 +56,8 @@ public class MoteurGraphique {
     }
 
     public static void main(String[] args) {
+        //null keyListener because the constructor doesn't work otherwise, just ignore
+        MoteurGraphique myMG = new MoteurGraphique(1000,1000,"Frame", new KeyListenerKernel(null));
         //IForme rectangle = new Rectangle(800, 800);
         //Objet myO = new Objet(500, 500, rectangle, "pacman.png", 800, 800);
         IForme rGhost = new Rectangle(300, 300);
@@ -74,7 +76,6 @@ public class MoteurGraphique {
         myObjets.add(redGhost);
         myObjets.add(b1);
         myObjets.add(b2);
-        MoteurGraphique myMG = new MoteurGraphique(1000,1000,"Frame", new KeyListenerKernel(myObjets));
         pinkGhost.setRotation(90);
         myMG.init_display(myObjets);
         pinkGhost.setPosition(20, 10);
