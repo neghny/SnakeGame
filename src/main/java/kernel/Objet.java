@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 
-import static java.lang.Math.*;
-
 public class Objet extends JPanel {
     public int x;
     public int y;
@@ -33,6 +31,7 @@ public class Objet extends JPanel {
     Image image;
     int sizeImageX;
     int sizeImageY;
+    double rotation = 0; //Angle in degrees
 
     // Constructeur pour tests collision.
     public Objet(int initialX, int initialY, IForme forme) {
@@ -76,12 +75,27 @@ public class Objet extends JPanel {
         g.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
     }
 
+
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
-
     //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        setOpaque(false);
+        Graphics2D g2d = (Graphics2D) g.create();
+        AffineTransform transform = new AffineTransform();
+
+        transform.translate(sizeImageX/2, sizeImageY/2);
+        transform.rotate(Math.toRadians(rotation));
+        transform.translate(-sizeImageX/2, -sizeImageY/2);
+
+        //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
+        g2d.drawImage(image, transform, this);
+    }
 
     public void updatePosition() {
         x += hspeed;
@@ -144,6 +158,11 @@ public class Objet extends JPanel {
 
     public int getYposition() {
         return y;
+    }
+    public double getRotation() {return rotation;}
+
+    public void setRotation(double degrees){
+        rotation = degrees;
     }
 
     public int getSizeImageX() {

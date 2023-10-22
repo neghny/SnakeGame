@@ -7,8 +7,7 @@ import physique.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 
-/**
- * Control est le contrôle-commande du jeu-vidéo.
+ /* Control est le contrôle-commande du jeu-vidéo.
  * Il permet de mettre ensemble les différentes parties du jeu (physique, graphique).
  * Il est responsable de faire tourner le jeu.
  */
