@@ -65,8 +65,8 @@ public class MoteurGraphique {
         Objet pinkGhost = new Objet(0, 0, rGhost, "pink_ghost.png", 300, 300);
         Objet blueGhost = new Objet(250, 450, rGhost, "blue_ghost.png", 300, 300);
         Objet redGhost = new Objet(600, 500, rGhost, "red_ghost.png", 300, 300);
-        Objet b1 = new Objet(100, 100, cBall, "ball.png", 20, 20);
-        Objet b2 = new Objet(200, 100, cBall, "ball.png", 20, 20);
+        Objet b1 = new Objet(100, 600, cBall, "ball.png", 20, 20);
+        Objet b2 = new Objet(200, 700, cBall, "ball.png", 20, 20);
         LinkedList<Objet> myObjets = new LinkedList<>();
         myObjets.add(pacman);
         myObjets.add(pinkGhost);
