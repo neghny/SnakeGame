@@ -1,15 +1,14 @@
 package graphique;
 
+import kernel.KeyListenerKernel;
 import kernel.Objet;
 import physique.Cercle;
 import physique.IForme;
 import physique.Rectangle;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedList;
-
 
 public class MoteurGraphique {
     JFrame mainFrame;
@@ -25,6 +24,8 @@ public class MoteurGraphique {
         // Position de la fenêtre par défaut
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        mainFrame.addKeyListener(new KeyListenerKernel());
     }
 
 
@@ -58,16 +59,21 @@ public class MoteurGraphique {
         //IForme rectangle = new Rectangle(800, 800);
         //Objet myO = new Objet(500, 500, rectangle, "pacman.png", 800, 800);
         IForme rGhost = new Rectangle(300, 300);
-        IForme rPacman = new Cercle(60);
-        Objet pacman = new Objet(25, 25, rPacman, "pacman.png", 120, 120);
+        IForme cPacman = new Cercle(60);
+        IForme cBall = new Cercle(10);
+        Objet pacman = new Objet(25, 25, cPacman, "pacman.png", 120, 120);
         Objet pinkGhost = new Objet(0, 0, rGhost, "pink_ghost.png", 300, 300);
         Objet blueGhost = new Objet(250, 450, rGhost, "blue_ghost.png", 300, 300);
         Objet redGhost = new Objet(600, 500, rGhost, "red_ghost.png", 300, 300);
+        Objet b1 = new Objet(100, 100, cBall, "ball.png", 20, 20);
+        Objet b2 = new Objet(200, 100, cBall, "ball.png", 20, 20);
         LinkedList<Objet> myObjets = new LinkedList<>();
         myObjets.add(pacman);
         myObjets.add(pinkGhost);
         myObjets.add(blueGhost);
         myObjets.add(redGhost);
+        myObjets.add(b1);
+        myObjets.add(b2);
         myMG.display(myObjets);
         //IForme rPacman = new Cercle(300);
         /*Objet pacman1 = new Objet(500, 500, rPacman, "pacman.png", 300, 300);
