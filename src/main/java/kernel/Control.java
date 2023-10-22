@@ -2,6 +2,7 @@ package kernel;
 
 import graphique.MoteurGraphique;
 import physique.Cercle;
+import physique.Rectangle;
 
 import java.util.LinkedList;
 
@@ -17,7 +18,6 @@ public class Control {
     public Control() {}
     public void run() {
         while (running) {
-            System.out.println(objs.get(0).x);
             long startTime = System.currentTimeMillis();
             // 33 pour 30 frames par seconde.
             long expectedRestart = startTime + 33;
@@ -48,6 +48,9 @@ public class Control {
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
         c.addObj(pacman);
         pacman.setSpeed(3);
+        Objet monstre = new Objet(250, 0, new Rectangle(300, 300), "pink_ghost.png", 300, 300);
+        c.addObj(monstre);
+        c.mg.init_display(c.objs);
         c.run();
     }
 }

@@ -128,7 +128,7 @@ public class Objet extends JPanel {
     }
 
     // Evénements
-    public void eventCollision(Objet other) {}
+    public void eventCollision(Objet other) { System.out.println(other.y); }
 
 
 

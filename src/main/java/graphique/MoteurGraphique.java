@@ -45,16 +45,17 @@ public class MoteurGraphique {
      * Affiche tous les objets de la liste dans l'ordre inverse d'ajout à la liste, prenant en compte leurs tailles et positions
      * @param objects liste d'objets à afficher
      */
-    public void display(LinkedList<Objet> objects){
-        for (Objet o : objects){
-            o.setBounds((int) o.getXposition(), (int) o.getYposition(), o.getSizeImageX(), o.getSizeImageY());
-        }
+    public void init_display(LinkedList<Objet> objects) {
         for (Objet o : objects){
             addObjet(o);
             System.out.println("cc");
         }
-
         mainFrame.setVisible(true);
+    }
+    public void display(LinkedList<Objet> objects){
+        for (Objet o : objects){
+            o.setBounds((int) o.getXposition(), (int) o.getYposition(), o.getSizeImageX(), o.getSizeImageY());
+        }
     }
 
     public static void main(String[] args) throws IOException{
@@ -77,7 +78,7 @@ public class MoteurGraphique {
         myObjets.add(redGhost);
         myObjets.add(b1);
         myObjets.add(b2);
-        myMG.display(myObjets);
+        myMG.init_display(myObjets);
         pinkGhost.setPosition(20, 10);
         myMG.display(myObjets);
         //IForme rPacman = new Cercle(300);
