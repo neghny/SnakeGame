@@ -26,13 +26,13 @@ public class Objet extends JPanel {
 
     double speed = 0; //vitesse
     double direction = 0; //Angle en radian
+    double rotationImage = 0; //Angle en radian
     public IForme forme;
 
     BufferedImage bufferedImage;
     Image image;
     int sizeImageX;
     int sizeImageY;
-    double rotation = 0; //Angle in degrees
 
     // Constructeur général.
 
@@ -70,7 +70,6 @@ public class Objet extends JPanel {
         this.y = initialY;
         this.forme = forme;
     }
-
 
     public void setPosition(double x, double y){
         this.x = x;
@@ -118,7 +117,7 @@ public class Objet extends JPanel {
 
     public void setDirection(double newDirection) {
         this.direction = newDirection;
-
+        this.rotationImage = newDirection;
     }
 
     public void setSpeed(double newSpeed){
@@ -165,10 +164,10 @@ public class Objet extends JPanel {
     public double getYposition() {
         return y;
     }
-    public double getRotation() {return rotation;}
+    public double getRotation() {return rotationImage;}
 
     public void setRotation(double degrees){
-        rotation = degrees;
+        rotationImage = degrees;
     }
 
     public int getSizeImageX() {
