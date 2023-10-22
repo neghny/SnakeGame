@@ -22,10 +22,19 @@ public class Control {
             // 33 pour 30 frames par seconde.
             long expectedRestart = startTime + 33;
             // Gérer collisions
-            for (Objet o1 : objs)
-                for (Objet o2 : objs)
-                    if (o1 != o2 && o1.percute(o2))
+            for (Objet o1 : objs) {
+                if (o1.getXposition() + o1.sizeImageX > 1000 || o1.getXposition() < 0){ // todo mettre width et height de la fenêtre dans des attributs
+                    System.out.println("dépassement sur l'axe X");
+                }
+                if (o1.getYposition() + o1.sizeImageY > 1000 || o1.getYposition() < 0){
+                    System.out.println("dépassement sur l'axe y");
+                }
+                for (Objet o2 : objs) {
+                    if (o1 != o2 && o1.percute(o2)) {
                         o1.eventCollision(o2);
+                    }
+                }
+            }
             // Dessiner
             mg.display(objs);
             long endTime = System.currentTimeMillis();
@@ -45,6 +54,9 @@ public class Control {
         var c = new Control();
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
         c.addObj(pacman);
+        pacman.setSpeed(10);
+        Objet monstre = new Objet(250, 0, new Rectangle(120, 120), "pink_ghost.png", 120, 120);
+        c.addObj(monstre);
         pacman.setSpeed(3);
         for (int i = 710; i < 1000; i+=50){
             c.addObj(new Objet(i+100, 500, new Cercle(10), "ball.png", 20, 20));
