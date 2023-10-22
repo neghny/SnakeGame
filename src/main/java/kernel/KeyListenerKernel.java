@@ -1,11 +1,10 @@
 package kernel;
 
 import java.awt.event.KeyEvent;
-import java.sql.SQLOutput;
 import java.util.LinkedList;
 
 public class KeyListenerKernel implements java.awt.event.KeyListener {
-    private LinkedList<Objet> objets;
+    private final LinkedList<Objet> objets;
 
     public KeyListenerKernel(LinkedList<Objet> objets) {
         this.objets = objets;

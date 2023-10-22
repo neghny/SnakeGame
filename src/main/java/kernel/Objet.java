@@ -14,8 +14,8 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Objet extends JPanel {
-    public double x = 0;
-    public double y = 0;
+    public double x;
+    public double y;
 
     public String getPathImage() {
         return pathImage;

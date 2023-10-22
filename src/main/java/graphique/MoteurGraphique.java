@@ -58,7 +58,7 @@ public class MoteurGraphique {
         }
     }
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) {
         //null keyListener because the constructor doesn't work otherwise, just ignore
         MoteurGraphique myMG = new MoteurGraphique(1000,1000,"Frame", new KeyListenerKernel(null));
         //IForme rectangle = new Rectangle(800, 800);
