@@ -79,6 +79,7 @@ public class MoteurGraphique {
         myObjets.add(redGhost);
         myObjets.add(b1);
         myObjets.add(b2);
+        pinkGhost.setRotationImage(1.5);
         myMG.init_display(myObjets);
         pinkGhost.setPosition(20, 10);
         myMG.display(myObjets);
