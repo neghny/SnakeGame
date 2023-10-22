@@ -24,7 +24,9 @@ public class Control {
             // 33 pour 30 frames par seconde.
             long expectedRestart = startTime + 33;
             // Gérer collisions
-            for (Objet o1 : objs) {
+            //for (Objet o1 : objs) {
+            for (int i = 0; i < objs.size(); i ++) {
+                Objet o1 = objs.get(i);
                 if (o1.getXposition() + o1.sizeImageX > width){ // todo mettre width et height de la fenêtre dans des attributs
                     System.out.println("dépassement sur la droite de l'axe X");
                     o1.setPosition(width-o1.sizeImageX, o1.getYposition());
@@ -41,7 +43,9 @@ public class Control {
                     System.out.println("dépassement sur le haut de l'axe Y");
                     o1.setPosition(o1.getXposition(), 0);
                 }
-                for (Objet o2 : objs) {
+                //for (Objet o2 : objs) {
+                for (int j = i + 1; j < objs.size(); j++) {
+                    Objet o2 = objs.get(j);
                     if (o1 != o2 && o1.percute(o2)) {
                         o1.eventCollision(o2);
                     }
@@ -70,8 +74,8 @@ public class Control {
         /*Objet monstre = new Objet(250, 0, new Rectangle(120, 120), "pink_ghost.png", 120, 120);
         c.addObj(monstre);*/
         for (int i = 710; i < 1000; i+=50){
-            c.addObj(new Objet(i+100, 500, new Cercle(10), "ball.png", 20, 20));
-            c.addObj(new Objet(i, 20, new Cercle(10), "ball.png", 20, 20));
+            c.addObj(new Objet(i, 500, new Cercle(10), "ball.png", 20, 20));
+            c.addObj(new Objet(i-100, 20, new Cercle(10), "ball.png", 20, 20));
             c.addObj(new Objet(100, i-150, new Cercle(10), "ball.png", 20, 20));
             c.addObj(new Objet(i-700, 300, new Cercle(10), "ball.png", 20, 20));
         }

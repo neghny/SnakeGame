@@ -179,7 +179,9 @@ public class Objet extends JPanel {
         return sizeImageY;
     }
 
-    public void eventCollision(Objet other) { System.out.println(other.y); }
+    public void eventCollision(Objet other) {
+        System.out.println(other.pathImage + " (" + other.getXposition() + "," + other.getYposition() + ")");
+    }
 
 }
 
