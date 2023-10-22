@@ -74,6 +74,10 @@ public class Objet extends JPanel {
         g.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
     }
 
+    public void setPosition(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
 
     //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
 
