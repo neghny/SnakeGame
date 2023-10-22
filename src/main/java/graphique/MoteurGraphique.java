@@ -78,6 +78,8 @@ public class MoteurGraphique {
         myObjets.add(b1);
         myObjets.add(b2);
         myMG.display(myObjets);
+        pinkGhost.setPosition(20, 10);
+        myMG.display(myObjets);
         //IForme rPacman = new Cercle(300);
         /*Objet pacman1 = new Objet(500, 500, rPacman, "pacman.png", 300, 300);
         Objet pacman2 = new Objet(0, 500, rPacman, "pacman.png", 300, 300);
