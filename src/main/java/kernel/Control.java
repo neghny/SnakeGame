@@ -6,11 +6,11 @@ import physique.Rectangle;
 
 import java.util.LinkedList;
 
-/**
- * Control est le contrôle-commande du jeu-vidéo.
+/* Control est le contrôle-commande du jeu-vidéo.
  * Il permet de mettre ensemble les différentes parties du jeu (physique, graphique).
  * Il est responsable de faire tourner le jeu.
  */
+
 public class Control {
     boolean running = true;
     LinkedList<Objet> objs = new LinkedList<>();
