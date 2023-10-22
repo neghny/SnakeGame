@@ -182,3 +182,4 @@ public class Objet extends JPanel {
     public void eventCollision(Objet other) { System.out.println(other.y); }
 
 }
+
