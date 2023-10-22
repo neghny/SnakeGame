@@ -7,7 +7,6 @@ import physique.IForme;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ public class Objet extends JPanel {
 
     double speed = 0; //vitesse
     double direction = 0; //Angle en radian
-    double rotationImage = 0; //Angle en radian
     public IForme forme;
 
     BufferedImage bufferedImage;
@@ -73,21 +71,7 @@ public class Objet extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         setOpaque(false);
-        Graphics2D g2d = (Graphics2D) g.create();
-        AffineTransform transform = new AffineTransform();
-
-        transform.translate(sizeImageX/2, sizeImageY/2);
-        transform.rotate(rotationImage);
-        transform.translate(-sizeImageX/2, -sizeImageY/2);
-
-        //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
-        g2d.drawImage(image, transform, this);
-    }
-
-    public double getRotationImage() {return rotationImage;}
-
-    public void setRotationImage(double radians){
-        rotationImage = radians;
+        g.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
     }
 
     public void setPosition(double x, double y){
@@ -122,7 +106,7 @@ public class Objet extends JPanel {
 
     public void setDirection(double newDirection) {
         this.direction = newDirection;
-        this.rotationImage = newDirection;
+
     }
 
     public void setSpeed(double newSpeed){
@@ -181,3 +165,4 @@ public class Objet extends JPanel {
         return sizeImageY;
     }
 }
+
