@@ -137,7 +137,7 @@ public class Objet extends JPanel {
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
-    
+
     public LinkedList<Objet> detectCollisions(ArrayList<Objet> objs) {
         LinkedList<Objet> res = new LinkedList<>();
         for (Objet o : objs)
