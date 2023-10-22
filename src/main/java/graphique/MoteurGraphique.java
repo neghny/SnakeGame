@@ -7,7 +7,6 @@ import physique.IForme;
 import physique.Rectangle;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.LinkedList;
 
 public class MoteurGraphique {
@@ -46,10 +45,8 @@ public class MoteurGraphique {
      * @param objects liste d'objets à afficher
      */
     public void init_display(LinkedList<Objet> objects) {
-        for (Objet o : objects){
+        for (Objet o : objects)
             addObjet(o);
-            System.out.println("cc");
-        }
         mainFrame.setVisible(true);
     }
     public void display(LinkedList<Objet> objects){
@@ -59,8 +56,6 @@ public class MoteurGraphique {
     }
 
     public static void main(String[] args) {
-        //null keyListener because the constructor doesn't work otherwise, just ignore
-        MoteurGraphique myMG = new MoteurGraphique(1000,1000,"Frame", new KeyListenerKernel(null));
         //IForme rectangle = new Rectangle(800, 800);
         //Objet myO = new Objet(500, 500, rectangle, "pacman.png", 800, 800);
         IForme rGhost = new Rectangle(300, 300);

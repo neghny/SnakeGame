@@ -12,6 +12,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.awt.geom.AffineTransform;
+
+import static java.lang.Math.*;
 
 public class Objet extends JPanel {
     public int x;
@@ -67,14 +70,6 @@ public class Objet extends JPanel {
         image = bufferedImage.getScaledInstance(sizeImageX, sizeImageY, Image.SCALE_DEFAULT);
 //        this.setPreferredSize(new Dimension(sizeImageX, sizeImageY));
     }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        setOpaque(false);
-        g.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
-    }
-
 
     public void setPosition(int x, int y) {
         this.x = x;
