@@ -99,19 +99,19 @@ public class Objet extends JPanel {
     }
 
     public void move(boolean left, boolean up, boolean down, boolean right) {
-        if (left && up) {
+        if (left && up && !down && !right) {
             moveLeft();
             moveUp();
             setRotation(5*Math.PI/4);
-        } else if (left && down) {
+        } else if (left && down && !up && !right) {
             moveLeft();
             moveDown();
             setRotation(3*Math.PI/4);
-        } else if (right && up) {
+        } else if (right && up && !left && !down) {
             moveRight();
             moveUp();
             setRotation(7*Math.PI/4);
-        } else if (right && down) {
+        } else if (right && down && !left && !up) {
             moveRight();
             moveDown();
             setRotation(Math.PI/4);
