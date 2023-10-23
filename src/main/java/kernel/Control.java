@@ -26,10 +26,10 @@ public class Control {
         int width = 1000;
         int height = 1000;
 
-        long startTime = System.currentTimeMillis();
-        long expectedRestart = startTime + 33;
+        long startTime;
+        long expectedRestart;
 
-        while (running && startTime < expectedRestart) {
+        while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 33;
 
@@ -58,6 +58,11 @@ public class Control {
                         o1.eventCollision(o2);
                     }
                 }
+            }
+            if (expectedRestart > System.currentTimeMillis()) {
+                try {
+                    //noinspection BusyWait
+                    Thread.sleep(expectedRestart - System.currentTimeMillis()); } catch (InterruptedException ignored) {}
             }
             moteurGraphique.display(objets);
         }
