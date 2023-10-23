@@ -18,12 +18,16 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
         for (Objet objet : objets) {
             if (keyPressed == KeyEvent.VK_RIGHT) {
                 right = true;
+                objet.setRotation(2*Math.PI);
             } else if (keyPressed == KeyEvent.VK_LEFT) {
                 left = true;
+                objet.setRotation(Math.PI);
             } else if (keyPressed == KeyEvent.VK_UP) {
                 up = true;
+                objet.setRotation(3*Math.PI/2);
             } else if (keyPressed == KeyEvent.VK_DOWN) {
                 down = true;
+                objet.setRotation(Math.PI/2);
             }
             objet.move(left,up,down,right);
         }
