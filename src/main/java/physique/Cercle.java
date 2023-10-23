@@ -10,16 +10,16 @@ public class Cercle implements IForme {
     }
 
     public boolean percute(Objet self, Objet other) {
-        IForme oShape = other.forme;
+        IForme oShape = other.getForme();
         if (oShape.getClass().equals(Rectangle.class))
             return IForme.percuteCercleRect(self, other, this, (Rectangle) oShape);
         if (oShape.getClass().equals(Ligne.class))
             return IForme.percuteCercleLigne(self, other, this, (Ligne) oShape);
         if (oShape.getClass().equals(Cercle.class)) {
-            double sx = self.x + avoirLong();
-            double sy = self.y + avoirHaut();
-            double ox = other.x + oShape.avoirLong();
-            double oy = other.y + oShape.avoirHaut();
+            double sx = self.getXposition() + avoirLong();
+            double sy = self.getYposition() + avoirHaut();
+            double ox = other.getXposition() + oShape.avoirLong();
+            double oy = other.getYposition() + oShape.avoirHaut();
             double sr = r;
             double or = ((Cercle) oShape).r;
             return Math.pow(sx - ox, 2) + Math.pow(sy - oy, 2) <= Math.pow(sr + or, 2);

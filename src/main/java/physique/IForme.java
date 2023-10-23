@@ -15,10 +15,10 @@ public interface IForme {
     }
 
     static boolean percuteCercleRect(Objet oc, Objet or, Cercle c, Rectangle r) {
-        double sx = oc.x + c.avoirLong() / 2;
-        double sy = oc.y + c.avoirHaut() / 2;
-        double rx1 = or.x;
-        double ry1 = or.y;
+        double sx = oc.getXposition() + c.avoirLong() / 2;
+        double sy = oc.getYposition() + c.avoirHaut() / 2;
+        double rx1 = or.getXposition();
+        double ry1 = or.getYposition();
         double rx2 = rx1 + r.avoirLong();
         double ry2 = ry1 + r.avoirHaut();
         // Find the closest point to the circle within the rectangle
@@ -34,13 +34,13 @@ public interface IForme {
         return distanceSquared < Math.pow(c.r, 2);
     }
     static boolean percuteCercleLigne(Objet oc, Objet ol, Cercle c, Ligne l) {
-        return doesCircleIntersectLine(oc.x + c.r, oc.y + c.r, c.r, ol.x, ol.y, ol.x + l.l, ol.y + l.h);
+        return doesCircleIntersectLine(oc.getXposition() + c.r, oc.getYposition() + c.r, c.r, ol.getXposition(), ol.getYposition(), ol.getXposition() + l.l, ol.getYposition() + l.h);
     }
     static boolean percuteLigneRect(Objet ol, Objet or, Ligne l, Rectangle r) {
-        double lx1 = ol.x;
-        double ly1 = ol.y;
-        double rx1 = or.x;
-        double ry1 = or.y;
+        double lx1 = ol.getXposition();
+        double ly1 = ol.getYposition();
+        double rx1 = or.getXposition();
+        double ry1 = or.getYposition();
         double lx2 = lx1 + l.avoirLong();
         double ly2 = ly1 + l.avoirHaut();
         double rx2 = rx1 + r.avoirLong();

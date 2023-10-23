@@ -12,11 +12,11 @@ public class Rectangle implements IForme {
     }
 
     public boolean percute(Objet self, Objet other) {
-        double sx1 = self.x;
-        double sy1 = self.y;
-        double ox1 = other.x;
-        double oy1 = other.y;
-        IForme oShape = other.forme;
+        double sx1 = self.getXposition();
+        double sy1 = self.getYposition();
+        double ox1 = other.getXposition();
+        double oy1 = other.getYposition();
+        IForme oShape = other.getForme();
         double ox2 = ox1 + oShape.avoirLong();
         double oy2 = oy1 + oShape.avoirHaut();
         double sx2 = sx1 + avoirLong();

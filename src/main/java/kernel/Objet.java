@@ -3,7 +3,6 @@ package kernel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import physique.IForme;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -15,22 +14,22 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Objet extends JPanel {
-    public double x;
-    public double y;
+    private double x;
+    private double y;
 
-    String pathImage;
+    private String pathImage;
 
-    double speed = 0; //vitesse
-    public IForme forme;
+    private double speed;
 
-    BufferedImage bufferedImage;
-    Image image;
-    int sizeImageX;
-    int sizeImageY;
-    double rotation = 0; //Angle in radians
+    private final IForme forme;
+
+    private BufferedImage bufferedImage;
+    private Image image;
+    private int sizeImageX;
+    private int sizeImageY;
+    private double rotation;
 
     // Constructeur général.
-
     public Objet(double initialX, double initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
         this.x = initialX;
         this.y = initialY;
@@ -71,7 +70,6 @@ public class Objet extends JPanel {
         this.x = x;
         this.y = y;
     }
-    //mettre à jour la position de l'objet en fonction de la direction et de la vitesse
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -88,20 +86,20 @@ public class Objet extends JPanel {
         g2d.drawImage(image, transform, this);
     }
 
-    public void moveRight() {
-        x += getSpeed();
+    private void moveRight() {
+        x += speed;
     }
 
-    public void moveLeft() {
-        x -= getSpeed();
+    private void moveLeft() {
+        x -= speed;
     }
 
-    public void moveUp() {
-        y -= getSpeed();
+    private void moveUp() {
+        y -= speed;
     }
 
-    public void moveDown() {
-        y += getSpeed();
+    private void moveDown() {
+        y += speed;
     }
 
     public void move(boolean left, boolean up, boolean down, boolean right) {
@@ -136,16 +134,6 @@ public class Objet extends JPanel {
         }
     }
 
-    public void setSpeed(double newSpeed){
-        this.speed = newSpeed;
-    }
-
-    public double getSpeed(){
-        return speed;
-    }
-
-
-    // Collisions
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
@@ -158,7 +146,9 @@ public class Objet extends JPanel {
         return res;
     }
 
-    // Evénements
+    public void eventCollision(Objet other) {
+        System.out.println(other.pathImage + " (" + other.getXposition() + "," + other.getYposition() + ")");
+    }
 
     public double getXposition() {
         return x;
@@ -167,8 +157,6 @@ public class Objet extends JPanel {
     public double getYposition() {
         return y;
     }
-
-    public double getRotation() {return rotation;}
 
     public void setRotation(double radians){
         rotation = radians;
@@ -182,9 +170,12 @@ public class Objet extends JPanel {
         return sizeImageY;
     }
 
-    public void eventCollision(Objet other) {
-        System.out.println(other.pathImage + " (" + other.getXposition() + "," + other.getYposition() + ")");
+    public IForme getForme() {
+        return forme;
     }
 
+    public void setSpeed(double newSpeed){
+        this.speed = newSpeed;
+    }
 }
 
