@@ -1,6 +1,5 @@
 package graphique;
 
-import kernel.KeyListenerKernel;
 import kernel.Objet;
 import physique.Cercle;
 import physique.IForme;

@@ -19,15 +19,17 @@ public class Control {
     public Control() {
         running = true;
         objets = new LinkedList<>();
-        moteurGraphique = new MoteurGraphique(1000, 1000, "Frame");;
+        moteurGraphique = new MoteurGraphique(1000, 1000, "Frame");
         moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(objets));
     }
     public void run() {
-        while (running) {
-            long startTime = System.currentTimeMillis();
-            // 33 pour 30 frames par seconde.
-            long expectedRestart = startTime + 33;
-            // Gérer collisions
+        long startTime = System.currentTimeMillis();
+        long expectedRestart = startTime + 33;
+
+        while (running && startTime < expectedRestart) {
+            startTime = System.currentTimeMillis();
+            expectedRestart = startTime + 33;
+
             for (Objet o1 : objets) {
                 if (o1.getXposition() + o1.getSizeImageX() > 1000 || o1.getXposition() < 0){ // todo mettre width et height de la fenêtre dans des attributs
                     System.out.println("dépassement sur l'axe X");
@@ -43,10 +45,8 @@ public class Control {
             }
             // Dessiner
             moteurGraphique.display(objets);
-            long endTime = System.currentTimeMillis();
-            if (endTime < expectedRestart)
-                try { Thread.sleep(expectedRestart - endTime); } catch (InterruptedException e) { throw new RuntimeException(e); }
         }
+        System.exit(0);
     }
     public void addObjet(Objet o) {
         objets.add(o);
