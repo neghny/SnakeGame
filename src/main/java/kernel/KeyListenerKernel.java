@@ -37,7 +37,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
     public void keyReleased(KeyEvent e) {
         int keyReleased = e.getKeyCode();
         if (keyReleased == KeyEvent.VK_ESCAPE) {
-            System.exit(0);
+            Control.setRunning(false);
         }
 
         for (Objet objet : objets) {

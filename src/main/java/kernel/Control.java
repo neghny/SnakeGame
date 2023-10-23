@@ -12,52 +12,66 @@ import java.util.LinkedList;
  */
 
 public class Control {
-    boolean running = true;
-    LinkedList<Objet> objs = new LinkedList<>();
-    MoteurGraphique mg = new MoteurGraphique(1000,1000,"Frame", new KeyListenerKernel(objs));
-    public Control() {}
+    private static boolean running;
+    private final LinkedList<Objet> objets;
+    private final MoteurGraphique moteurGraphique;
+
+    public Control() {
+        running = true;
+        objets = new LinkedList<>();
+        moteurGraphique = new MoteurGraphique(1000, 1000, "Frame");;
+        moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(objets));
+    }
     public void run() {
         while (running) {
             long startTime = System.currentTimeMillis();
             // 33 pour 30 frames par seconde.
             long expectedRestart = startTime + 33;
             // Gérer collisions
-            for (Objet o1 : objs) {
-                if (o1.getXposition() + o1.sizeImageX > 1000 || o1.getXposition() < 0){ // todo mettre width et height de la fenêtre dans des attributs
+            for (Objet o1 : objets) {
+                if (o1.getXposition() + o1.getSizeImageX() > 1000 || o1.getXposition() < 0){ // todo mettre width et height de la fenêtre dans des attributs
                     System.out.println("dépassement sur l'axe X");
                 }
-                if (o1.getYposition() + o1.sizeImageY > 1000 || o1.getYposition() < 0){
+                if (o1.getYposition() + o1.getSizeImageY() > 1000 || o1.getYposition() < 0){
                     System.out.println("dépassement sur l'axe y");
                 }
-                for (Objet o2 : objs) {
+                for (Objet o2 : objets) {
                     if (o1 != o2 && o1.percute(o2)) {
                         o1.eventCollision(o2);
                     }
                 }
             }
             // Dessiner
-            mg.display(objs);
+            moteurGraphique.display(objets);
             long endTime = System.currentTimeMillis();
             if (endTime < expectedRestart)
                 try { Thread.sleep(expectedRestart - endTime); } catch (InterruptedException e) { throw new RuntimeException(e); }
         }
     }
-    public void addObj(Objet o) {
-        objs.add(o);
+    public void addObjet(Objet o) {
+        objets.add(o);
     }
 
-    public void stop() {
-        running = false;
+    public LinkedList<Objet> getObjets() {
+        return objets;
+    }
+
+    public MoteurGraphique getMoteurGraphique() {
+        return moteurGraphique;
+    }
+
+    public static void setRunning(boolean running) {
+        Control.running = running;
     }
 
     public static void main(String[] args) {
         var c = new Control();
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
-        c.addObj(pacman);
+        c.addObjet(pacman);
         pacman.setSpeed(10);
         Objet monstre = new Objet(250, 0, new Rectangle(120, 120), "pink_ghost.png", 120, 120);
-        c.addObj(monstre);
-        c.mg.init_display(c.objs);
+        c.addObjet(monstre);
+        c.getMoteurGraphique().init_display(c.getObjets());
         c.run();
     }
 }
