@@ -9,21 +9,17 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class Objet extends JPanel {
     private double x;
     private double y;
-
-    private String pathImage;
-
     private double speed;
 
     private final IForme forme;
 
     private BufferedImage bufferedImage;
+    private String pathImage;
     private Image image;
     private int sizeImageX;
     private int sizeImageY;
@@ -136,14 +132,6 @@ public class Objet extends JPanel {
 
     public boolean percute(Objet other) {
         return forme.percute(this, other);
-    }
-
-    public LinkedList<Objet> detectCollisions(ArrayList<Objet> objs) {
-        LinkedList<Objet> res = new LinkedList<>();
-        for (Objet o : objs)
-            if (percute(o))
-                res.add(o);
-        return res;
     }
 
     public void eventCollision(Objet other) {
