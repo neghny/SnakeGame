@@ -120,6 +120,24 @@ public class Objet extends JPanel {
         return forme.percute(this, other);
     }
 
+    public void detectCollision(int width, int height) {
+        if (x + sizeImageX > width) { // todo mettre width et height de la fenêtre dans des attributs
+            System.out.println("dépassement sur la droite de l'axe X");
+            setPosition(width - sizeImageX, y);
+        }
+        if (x < 0) {
+            System.out.println("dépassement sur la gauche de l'axe X");
+            setPosition(0, y);
+        }
+        if (y + sizeImageY > height) {
+            System.out.println("dépassement sur le bas de l'axe Y");
+            setPosition(x, height - sizeImageY);
+        }
+        if (y < 0) {
+            System.out.println("dépassement sur le haut de l'axe Y");
+            setPosition(x, 0);
+        }
+    }
 
     public void eventCollision(Objet other) {
         System.out.println(other.pathImage + " (" + other.getXposition() + "," + other.getYposition() + ")");

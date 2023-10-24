@@ -20,7 +20,11 @@ public class Control {
         running = true;
         objets = new LinkedList<>();
         moteurGraphique = new MoteurGraphique(1000, 1000, "Frame");
-        moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(objets));
+        // Pacman has to be the first added object for now
+        Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
+        addObjet(pacman);
+        pacman.setSpeed(10);
+        moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(objets.get(0)));
     }
 
     public void run() {
@@ -38,22 +42,7 @@ public class Control {
                 Objet objet = objets.get(i);
                 objet.move();
 
-                if (objet.getXposition() + objet.getSizeImageX() > width) { // todo mettre width et height de la fenêtre dans des attributs
-                    System.out.println("dépassement sur la droite de l'axe X");
-                    objet.setPosition(width - objet.getSizeImageX(), objet.getYposition());
-                }
-                if (objet.getXposition() < 0) {
-                    System.out.println("dépassement sur la gauche de l'axe X");
-                    objet.setPosition(0, objet.getYposition());
-                }
-                if (objet.getYposition() + objet.getSizeImageY() > height) {
-                    System.out.println("dépassement sur le bas de l'axe Y");
-                    objet.setPosition(objet.getXposition(), height - objet.getSizeImageY());
-                }
-                if (objet.getYposition() < 0) {
-                    System.out.println("dépassement sur le haut de l'axe Y");
-                    objet.setPosition(objet.getXposition(), 0);
-                }
+               objet.detectCollision(width, height);
                 //for (Objet o2 : objs) {
                 for (int j = i + 1; j < objets.size(); j++) {
                     Objet o2 = objets.get(j);
@@ -92,9 +81,6 @@ public class Control {
 
     public static void main(String[] args) {
         var c = new Control();
-        Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
-        c.addObjet(pacman);
-        pacman.setSpeed(10);
         Objet monstre = new Objet(250, 0, new Rectangle(120, 120), "pink_ghost.png", 120, 120);
         c.addObjet(monstre);
         c.getMoteurGraphique().init_display(c.getObjets());

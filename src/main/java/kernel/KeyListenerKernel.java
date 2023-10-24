@@ -1,32 +1,29 @@
 package kernel;
 
 import java.awt.event.KeyEvent;
-import java.util.LinkedList;
 
 public class KeyListenerKernel implements java.awt.event.KeyListener {
-    private final LinkedList<Objet> objets;
+    private final Objet objet;
 
-    public KeyListenerKernel(LinkedList<Objet> objets) {
-        this.objets = objets;
+    public KeyListenerKernel(Objet objets) {
+        this.objet = objets;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int keyPressed = e.getKeyCode();
 
-        for (Objet objet : objets) {
-            if (keyPressed == KeyEvent.VK_RIGHT) {
-                objet.setDirection(Objet.Direction.RIGHT);
+        if (keyPressed == KeyEvent.VK_RIGHT) {
+            objet.setDirection(Objet.Direction.RIGHT);
 
-            } else if (keyPressed == KeyEvent.VK_LEFT) {
-                objet.setDirection(Objet.Direction.LEFT);
+        } else if (keyPressed == KeyEvent.VK_LEFT) {
+            objet.setDirection(Objet.Direction.LEFT);
 
-            } else if (keyPressed == KeyEvent.VK_UP) {
-                objet.setDirection(Objet.Direction.UP);
+        } else if (keyPressed == KeyEvent.VK_UP) {
+            objet.setDirection(Objet.Direction.UP);
 
-            } else if (keyPressed == KeyEvent.VK_DOWN) {
-                objet.setDirection(Objet.Direction.DOWN);
-            }
+        } else if (keyPressed == KeyEvent.VK_DOWN) {
+            objet.setDirection(Objet.Direction.DOWN);
         }
     }
 
