@@ -82,57 +82,26 @@ public class Objet extends JPanel {
         g2d.drawImage(image, transform, this);
     }
 
-    private void moveRight() {
+    public void moveRight() {
         x += speed;
     }
 
-    private void moveLeft() {
+    public void moveLeft() {
         x -= speed;
     }
 
-    private void moveUp() {
+    public void moveUp() {
         y -= speed;
     }
 
-    private void moveDown() {
+    public void moveDown() {
         y += speed;
-    }
-
-    public void move(boolean left, boolean up, boolean down, boolean right) {
-        if (left && up && !down && !right) {
-            moveLeft();
-            moveUp();
-            setRotation(5*Math.PI/4);
-        } else if (left && down && !up && !right) {
-            moveLeft();
-            moveDown();
-            setRotation(3*Math.PI/4);
-        } else if (right && up && !left && !down) {
-            moveRight();
-            moveUp();
-            setRotation(7*Math.PI/4);
-        } else if (right && down && !left && !up) {
-            moveRight();
-            moveDown();
-            setRotation(Math.PI/4);
-        } else if (left && !right) {
-            moveLeft();
-            setRotation(Math.PI);
-        } else if (up && !down) {
-            moveUp();
-            setRotation(3*Math.PI/2);
-        } else if (down && !up) {
-            moveDown();
-            setRotation(Math.PI/2);
-        } else if (right && !left) {
-            moveRight();
-            setRotation(0);
-        }
     }
 
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
+
 
     public void eventCollision(Objet other) {
         System.out.println(other.pathImage + " (" + other.getXposition() + "," + other.getYposition() + ")");
