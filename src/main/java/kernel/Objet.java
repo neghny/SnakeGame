@@ -17,7 +17,7 @@ public class Objet extends JPanel {
     private double y;
     private double speed;
 
-    public enum Direction {LEFT, UP, DOWN, RIGHT, STAY}
+    public enum Direction {LEFT, UP, DOWN, RIGHT}
     private Direction direction;
 
     private final IForme forme;
@@ -35,7 +35,7 @@ public class Objet extends JPanel {
         this.y = initialY;
         this.forme = forme;
         this.pathImage = pathImage;
-        this.direction = Direction.STAY;
+        this.direction = Direction.RIGHT;
 
         Logger logger = LogManager.getLogger(this.getClass());
         logger.debug("Construct a JPanel");
@@ -113,7 +113,6 @@ public class Objet extends JPanel {
             case UP -> moveUp();
             case DOWN -> moveDown();
             case RIGHT -> moveRight();
-            case STAY -> {}
         }
     }
 
