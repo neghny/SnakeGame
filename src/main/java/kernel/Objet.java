@@ -84,18 +84,22 @@ public class Objet extends JPanel {
 
     public void moveRight() {
         x += speed;
+        setRotation(0);
     }
 
     public void moveLeft() {
         x -= speed;
+        setRotation(Math.PI);
     }
 
     public void moveUp() {
         y -= speed;
+        setRotation(3*Math.PI/2);
     }
 
     public void moveDown() {
         y += speed;
+        setRotation(Math.PI/2);
     }
 
     public boolean percute(Objet other) {
