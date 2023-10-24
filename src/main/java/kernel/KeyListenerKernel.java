@@ -16,13 +16,16 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
 
         for (Objet objet : objets) {
             if (keyPressed == KeyEvent.VK_RIGHT) {
-                objet.moveRight();
+                objet.setDirection(Objet.Direction.RIGHT);
+
             } else if (keyPressed == KeyEvent.VK_LEFT) {
-                objet.moveLeft();
+                objet.setDirection(Objet.Direction.LEFT);
+
             } else if (keyPressed == KeyEvent.VK_UP) {
-                objet.moveUp();
+                objet.setDirection(Objet.Direction.UP);
+
             } else if (keyPressed == KeyEvent.VK_DOWN) {
-                objet.moveDown();
+                objet.setDirection(Objet.Direction.DOWN);
             }
         }
     }

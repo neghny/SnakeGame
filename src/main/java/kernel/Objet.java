@@ -3,6 +3,7 @@ package kernel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import physique.IForme;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,9 @@ public class Objet extends JPanel {
     private double x;
     private double y;
     private double speed;
+
+    public enum Direction {LEFT, UP, DOWN, RIGHT, STAY}
+    private Direction direction;
 
     private final IForme forme;
 
@@ -31,6 +35,7 @@ public class Objet extends JPanel {
         this.y = initialY;
         this.forme = forme;
         this.pathImage = pathImage;
+        this.direction = Direction.STAY;
 
         Logger logger = LogManager.getLogger(this.getClass());
         logger.debug("Construct a JPanel");
@@ -62,7 +67,7 @@ public class Objet extends JPanel {
     }
 
 
-    public void setPosition(double x, double y){
+    public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -74,9 +79,9 @@ public class Objet extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         AffineTransform transform = new AffineTransform();
 
-        transform.translate((double) sizeImageX /2, (double) sizeImageY /2);
+        transform.translate((double) sizeImageX / 2, (double) sizeImageY / 2);
         transform.rotate(rotation);
-        transform.translate((double) -sizeImageX /2, (double) -sizeImageY /2);
+        transform.translate((double) -sizeImageX / 2, (double) -sizeImageY / 2);
 
         //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
         g2d.drawImage(image, transform, this);
@@ -94,12 +99,22 @@ public class Objet extends JPanel {
 
     public void moveUp() {
         y -= speed;
-        setRotation(3*Math.PI/2);
+        setRotation(3 * Math.PI / 2);
     }
 
     public void moveDown() {
         y += speed;
-        setRotation(Math.PI/2);
+        setRotation(Math.PI / 2);
+    }
+
+    public void move() {
+        switch (direction) {
+            case LEFT -> moveLeft();
+            case UP -> moveUp();
+            case DOWN -> moveDown();
+            case RIGHT -> moveRight();
+            case STAY -> {}
+        }
     }
 
     public boolean percute(Objet other) {
@@ -119,7 +134,7 @@ public class Objet extends JPanel {
         return y;
     }
 
-    public void setRotation(double radians){
+    public void setRotation(double radians) {
         rotation = radians;
     }
 
@@ -135,8 +150,12 @@ public class Objet extends JPanel {
         return forme;
     }
 
-    public void setSpeed(double newSpeed){
+    public void setSpeed(double newSpeed) {
         this.speed = newSpeed;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 }
 
