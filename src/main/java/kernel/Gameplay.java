@@ -13,6 +13,14 @@ public class Gameplay {
         this.serpent = new ArrayList<Objet>();
     }
 
+    public void collisionSerpentPomme(){
+    }
+
+    public void collisionSerpent(){
+    }
+
+    public void collisionSerpentMur(){}
+
 
 
 }
