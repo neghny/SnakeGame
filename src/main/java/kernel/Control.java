@@ -24,7 +24,7 @@ public class Control {
         this.height = height;
         running = true;
         moteurGraphique = new MoteurGraphique(width, height, "Frame");
-        gp = new Gameplay(None, width, height);
+        gp = new Gameplay(width, height);
         moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(gp.objets));
     }
     public void run() {

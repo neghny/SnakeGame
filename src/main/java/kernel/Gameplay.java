@@ -16,8 +16,8 @@ public class Gameplay {
     private final int height;
 
 
-    public Gameplay(Objet pomme, int width, int height) {
-        this.pomme = pomme;
+    public Gameplay(int width, int height) {
+        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc, tailleBloc), "", tailleBloc, tailleBloc);
         this.width = width;
         this.height = height;
         this.serpent = new LinkedList<Objet>();
