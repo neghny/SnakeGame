@@ -51,7 +51,7 @@ public class Control {
                     System.out.println("dépassement sur le haut de l'axe Y");
                     o1.setPosition(o1.getXposition(), 0);
                 }
-                //for (Objet o2 : objs) {
+
                 for (int j = i + 1; j < objets.size(); j++) {
                     Objet o2 = objets.get(j);
                     if (o1 != o2 && o1.percute(o2)) {
