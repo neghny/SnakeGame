@@ -92,8 +92,10 @@ public class Gameplay {
 
     public void gameOver() {
         System.out.println("Game Over!");
+        System.out.println("Score final : " + score);
         //on réinitialise le jeu
         resetLevel();
+
 
 
     }
