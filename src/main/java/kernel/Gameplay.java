@@ -32,7 +32,6 @@ public class Gameplay {
     public void collisionSerpent(){
         gameOver();
 
-
         }
 
 
@@ -92,7 +91,7 @@ public class Gameplay {
     }
 
     public void gameOver() {
-        System.out.println("Game Over! Le serpent a collisionné avec lui-même.");
+        System.out.println("Game Over!");
         //on réinitialise le jeu
         resetLevel();
 
