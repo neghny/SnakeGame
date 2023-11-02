@@ -13,19 +13,19 @@ import java.util.LinkedList;
 
 public class Control {
     private static boolean running;
-    private final LinkedList<Objet> objets;
     private final MoteurGraphique moteurGraphique;
     private final int width;
     private final int height;
+    private Gameplay gp;
 
 
     public Control(int width, int height) {
         this.width = width;
         this.height = height;
         running = true;
-        objets = new LinkedList<>();
         moteurGraphique = new MoteurGraphique(width, height, "Frame");
-        moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(objets));
+        gp = new Gameplay(None, width, height);
+        moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(gp.objets));
     }
     public void run() {
         /*int width = 1000;
@@ -38,8 +38,8 @@ public class Control {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 33;
 
-            for (int i = 0; i < objets.size(); i ++) {
-                Objet o1 = objets.get(i);
+            for (int i = 0; i < gp.objets.size(); i ++) {
+                Objet o1 = gp.objets.get(i);
                 if (o1.getXposition() + o1.getSizeImageX() > width) { // todo mettre width et height de la fenêtre dans des attributs
                     System.out.println("dépassement sur la droite de l'axe X");
                     o1.setPosition(width - o1.getSizeImageX(), o1.getYposition());
@@ -57,8 +57,8 @@ public class Control {
                     o1.setPosition(o1.getXposition(), 0);
                 }
 
-                for (int j = i + 1; j < objets.size(); j++) {
-                    Objet o2 = objets.get(j);
+                for (int j = i + 1; j < gp.objets.size(); j++) {
+                    Objet o2 = gp.objets.get(j);
                     if (o1 != o2 && o1.percute(o2)) {
                         o1.eventCollision(o2);
                     }
@@ -69,16 +69,16 @@ public class Control {
                     //noinspection BusyWait
                     Thread.sleep(expectedRestart - System.currentTimeMillis()); } catch (InterruptedException ignored) {}
             }
-            moteurGraphique.display(objets);
+            moteurGraphique.display(gp.objets);
         }
         System.exit(0);
     }
     public void addObjet(Objet o) {
-        objets.add(o);
+        gp.addObj(o);
     }
 
     public LinkedList<Objet> getObjets() {
-        return objets;
+        return gp.objets;
     }
 
     public MoteurGraphique getMoteurGraphique() {

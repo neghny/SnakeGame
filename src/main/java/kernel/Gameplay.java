@@ -2,12 +2,13 @@ package kernel;
 
 import physique.Rectangle;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Gameplay {
 
-    ArrayList<Objet> serpent;
+    LinkedList<Objet> serpent;
+    LinkedList<Objet> objets = new LinkedList<Objet>();
     Objet pomme;
     int score = 0;
     final int tailleBloc = 20;
@@ -19,7 +20,7 @@ public class Gameplay {
         this.pomme = pomme;
         this.width = width;
         this.height = height;
-        this.serpent = new ArrayList<Objet>();
+        this.serpent = new LinkedList<Objet>();
     }
 
     public void collisionSerpentPomme(){}
@@ -34,24 +35,29 @@ public class Gameplay {
 
     public void resetLevel() {
         score = 0;
-        for (Objet s : serpent)
-            ctrl.destroy(s); // ctrl est la classe Control
+        // On réinitialise le serpent.
         Objet bloc1 = createBlocSerpent(5*tailleBloc, 5*tailleBloc);
         Objet bloc2 = createBlocSerpent(4*tailleBloc, 5*tailleBloc);
         Objet bloc3 = createBlocSerpent(3*tailleBloc, 5*tailleBloc);
-        serpent = new ArrayList<>();
-        addObj(bloc1);
-        addObj(bloc2);
-        addObj(bloc3);
+        serpent = new LinkedList<>();
+        addObjSerpent(bloc1);
+        addObjSerpent(bloc2);
+        addObjSerpent(bloc3);
+        // On réinitialise la pomme.
+        replacerPomme();
     }
 
     public Objet createBlocSerpent(int x, int y) {
         return new Objet(x, y, new Rectangle(tailleBloc, tailleBloc), "", tailleBloc, tailleBloc); // Mettre chemin de l'image.
     }
 
-    public void addObj(Objet o) {
+    public void addObjSerpent(Objet o) {
         serpent.add(o);
-        ctrl.addObj(o); // Nouvelle méthode à créer.
+        addObj(o);
+    }
+
+    public void addObj(Objet o) {
+        objets.add(o);
     }
 
     /**
