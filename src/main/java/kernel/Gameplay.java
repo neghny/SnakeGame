@@ -3,6 +3,7 @@ package kernel;
 import physique.Rectangle;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Gameplay {
 
@@ -10,9 +11,14 @@ public class Gameplay {
     Objet pomme;
     int score = 0;
     final int tailleBloc = 20;
+    private final int width;
+    private final int height;
 
-    public Gameplay(Objet pomme) {
+
+    public Gameplay(Objet pomme, int width, int height) {
         this.pomme = pomme;
+        this.width = width;
+        this.height = height;
         this.serpent = new ArrayList<Objet>();
     }
 
@@ -48,6 +54,29 @@ public class Gameplay {
         ctrl.addObj(o); // Nouvelle méthode à créer.
     }
 
-    public void replacerPomme(){}
+    /**
+     * Replace la pomme à une position aléatoire, en prenant en compte la position du serpent, la taille de la fenête
+     */
+    public void replacerPomme() {
+        boolean verifPosition;
+        int newWidth;
+        int newHeight;
+        do {
+            Random random = new Random();
+            newWidth = random.nextInt(width);
+            newHeight = random.nextInt(height);
+            verifPosition = true;
+
+            for (Objet element : serpent) {
+                if (element.getXposition() == newWidth && element.getYposition() == newHeight) {
+                    verifPosition = false;
+                }
+            }
+        }
+        while (!verifPosition);
+        pomme.setPosition(newWidth, newHeight);
+    }
+
+
 
 }
