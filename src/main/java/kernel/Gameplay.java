@@ -64,13 +64,13 @@ public class Gameplay {
      * Replace la pomme à une position aléatoire, en prenant en compte la position du serpent, la taille de la fenête
      */
     public void replacerPomme() {
-        boolean verifPosition;
         int newWidth;
         int newHeight;
+        boolean verifPosition;
         do {
             Random random = new Random();
-            newWidth = random.nextInt(width);
-            newHeight = random.nextInt(height);
+            newWidth = random.nextInt(width / tailleBloc) * tailleBloc;
+            newHeight = random.nextInt(height / tailleBloc) * tailleBloc;
             verifPosition = true;
 
             for (Objet element : serpent) {
@@ -80,9 +80,8 @@ public class Gameplay {
             }
         }
         while (!verifPosition);
-        pomme.setPosition(newWidth, newHeight);
-    }
 
+    }
 
 
 }
