@@ -23,7 +23,11 @@ public class Gameplay {
         this.serpent = new LinkedList<Objet>();
     }
 
-    public void collisionSerpentPomme(){}
+    public void collisionSerpentPomme(){
+        score += 1;
+        addObjSerpent(createBlocSerpent(pomme.getX(), pomme.getY()));
+        replacerPomme();
+    }
 
     public void collisionSerpent(){
         resetLevel();
