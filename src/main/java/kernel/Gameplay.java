@@ -31,13 +31,12 @@ public class Gameplay {
 
     public void collisionSerpent(){
         gameOver();
-
         }
 
 
 
     public void collisionSerpentMur(){
-        resetLevel();
+        gameOver();
     }
 
     public void resetLevel() {
