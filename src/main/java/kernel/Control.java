@@ -15,16 +15,21 @@ public class Control {
     private static boolean running;
     private final LinkedList<Objet> objets;
     private final MoteurGraphique moteurGraphique;
+    private final int width;
+    private final int height;
 
-    public Control() {
+
+    public Control(int width, int height) {
+        this.width = width;
+        this.height = height;
         running = true;
         objets = new LinkedList<>();
-        moteurGraphique = new MoteurGraphique(1000, 1000, "Frame");
+        moteurGraphique = new MoteurGraphique(width, height, "Frame");
         moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(objets));
     }
     public void run() {
-        int width = 1000;
-        int height = 1000;
+        /*int width = 1000;
+        int height = 1000;*/
 
         long startTime;
         long expectedRestart;
@@ -85,7 +90,7 @@ public class Control {
     }
 
     public static void main(String[] args) {
-        var c = new Control();
+        var c = new Control(1000, 1000);
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
         c.addObjet(pacman);
         pacman.setSpeed(10);
