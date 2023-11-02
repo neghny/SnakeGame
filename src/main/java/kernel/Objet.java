@@ -81,6 +81,7 @@ public class Objet extends JPanel {
         //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
         g2d.drawImage(image, transform, this);
     }
+    
 
     private void moveRight() {
         x += speed;

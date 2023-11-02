@@ -30,8 +30,12 @@ public class Gameplay {
     }
 
     public void collisionSerpent(){
-        resetLevel();
-    }
+        gameOver();
+
+
+        }
+
+
 
     public void collisionSerpentMur(){
         resetLevel();
@@ -84,6 +88,14 @@ public class Gameplay {
             }
         }
         while (!verifPosition);
+
+    }
+
+    public void gameOver() {
+        System.out.println("Game Over! Le serpent a collisionné avec lui-même.");
+        //on réinitialise le jeu
+        resetLevel();
+
 
     }
 
