@@ -27,6 +27,13 @@ public class Control {
         gp = new Gameplay(width, height);
         moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(gp.objets));
     }
+
+    public boolean depassementBords(Objet o){
+        return (o.getXposition() + o.getSizeImageX() > width)
+                || (o.getXposition() < 0)
+                || (o.getYposition() + o.getSizeImageY() > height)
+                || (o.getYposition() < 0);
+    }
     public void run() {
         /*int width = 1000;
         int height = 1000;*/
@@ -38,11 +45,12 @@ public class Control {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 33;
 
-            for (int i = 0; i < gp.objets.size(); i ++) {
+            /*for (int i = 0; i < gp.objets.size(); i ++) {
                 Objet o1 = gp.objets.get(i);
-                if (o1.getXposition() + o1.getSizeImageX() > width) { // todo mettre width et height de la fenêtre dans des attributs
+                if (o1.getXposition() + o1.getSizeImageX() > width) {
                     System.out.println("dépassement sur la droite de l'axe X");
                     o1.setPosition(width - o1.getSizeImageX(), o1.getYposition());
+
                 }
                 if (o1.getXposition() < 0) {
                     System.out.println("dépassement sur la gauche de l'axe X");
@@ -63,7 +71,12 @@ public class Control {
                         o1.eventCollision(o2);
                     }
                 }
+            }*/
+
+            if (depassementBords(gp.serpent.get(0))) { // la tête du serpent dépasse les bords
+                gp.collisionSerpentMur();
             }
+
             if (expectedRestart > System.currentTimeMillis()) {
                 try {
                     //noinspection BusyWait
