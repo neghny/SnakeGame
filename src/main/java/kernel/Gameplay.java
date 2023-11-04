@@ -11,16 +11,18 @@ public class Gameplay {
     LinkedList<Objet> objets = new LinkedList<Objet>();
     Objet pomme;
     int score = 0;
-    final int tailleBloc = 20;
+    final int tailleBloc = 50;
     private final int width;
     private final int height;
 
 
     public Gameplay(int width, int height) {
-        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc, tailleBloc), "", tailleBloc, tailleBloc);
+        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc, tailleBloc), "pomme.png", tailleBloc, tailleBloc);
+        objets.add(pomme);
         this.width = width;
         this.height = height;
-        this.serpent = new LinkedList<Objet>();
+//        this.serpent = new LinkedList<Objet>();
+        resetLevel();
     }
 
     public void collisionSerpentPomme(){
@@ -39,12 +41,15 @@ public class Gameplay {
         gameOver();
     }
 
-    public void resetLevel() {
+    public void resetLevel() { // si on a en parallele une liste objets, est ce qu'il faut pas supprimer les anciens membres du serpent de cette liste ?
         score = 0;
         // On réinitialise le serpent.
         Objet bloc1 = createBlocSerpent(5*tailleBloc, 5*tailleBloc);
         Objet bloc2 = createBlocSerpent(4*tailleBloc, 5*tailleBloc);
         Objet bloc3 = createBlocSerpent(3*tailleBloc, 5*tailleBloc);
+        /*bloc1.setSpeed(tailleBloc); c'était pour tester si le serpent bouge (c'est bien le cas mais pas correctement pour l'instant)
+        bloc2.setSpeed(tailleBloc);
+        bloc3.setSpeed(tailleBloc);*/
         serpent = new LinkedList<>();
         addObjSerpent(bloc1);
         addObjSerpent(bloc2);
@@ -54,11 +59,11 @@ public class Gameplay {
     }
 
     public Objet createBlocSerpent(int x, int y) {
-        return new Objet(x, y, new Rectangle(tailleBloc, tailleBloc), "", tailleBloc, tailleBloc); // Mettre chemin de l'image.
+        return new Objet(x, y, new Rectangle(tailleBloc, tailleBloc), "bloc.png", tailleBloc, tailleBloc); // Mettre chemin de l'image.
     }
 
     public void addObjSerpent(Objet o) {
-        serpent.add(o);
+        serpent.add(0, o);  // le nouvel élément ajouté à la place de la pomme est la nouvelle tête du serpent je pense
         addObj(o);
     }
 
@@ -84,9 +89,8 @@ public class Gameplay {
                     verifPosition = false;
                 }
             }
-        }
-        while (!verifPosition);
-
+        } while (!verifPosition);
+        pomme.setPosition(newWidth, newHeight);
     }
 
     public void gameOver() {
