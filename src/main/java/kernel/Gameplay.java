@@ -25,6 +25,33 @@ public class Gameplay {
         resetLevel();
     }
 
+    public void gestionCollisions(){
+        Objet teteSerpent = serpent.get(0);
+
+        if (teteSerpent.percute(pomme)){
+            collisionSerpentPomme();
+        }
+        else if (depassementBords(teteSerpent)) { // la tête du serpent dépasse les bords
+            collisionSerpentMur();
+        }
+        else {
+            for (int i = 1; i < serpent.size(); i++) {
+                //if (teteSerpent.percute(gp.serpent.get(i))){
+                if (teteSerpent.getXposition() == serpent.get(i).getXposition() && teteSerpent.getYposition() == serpent.get(i).getYposition()) {
+                    collisionSerpent();
+                }
+            }
+        }
+
+    }
+
+    public boolean depassementBords(Objet o){
+        return (o.getXposition() + o.getSizeImageX() > width)
+                || (o.getXposition() < 0)
+                || (o.getYposition() + o.getSizeImageY() > height)
+                || (o.getYposition() < 0);
+    }
+
     public void collisionSerpentPomme(){
         score += 1;
         addObjSerpent(createBlocSerpent(pomme.getX(), pomme.getY()));
@@ -47,9 +74,9 @@ public class Gameplay {
         Objet bloc1 = createBlocSerpent(5*tailleBloc, 5*tailleBloc);
         Objet bloc2 = createBlocSerpent(4*tailleBloc, 5*tailleBloc);
         Objet bloc3 = createBlocSerpent(3*tailleBloc, 5*tailleBloc);
-        /*bloc1.setSpeed(tailleBloc); c'était pour tester si le serpent bouge (c'est bien le cas mais pas correctement pour l'instant)
+        bloc1.setSpeed(tailleBloc); //c'était pour tester si le serpent bouge (c'est bien le cas mais pas correctement pour l'instant)
         bloc2.setSpeed(tailleBloc);
-        bloc3.setSpeed(tailleBloc);*/
+        bloc3.setSpeed(tailleBloc);
         serpent = new LinkedList<>();
         addObjSerpent(bloc1);
         addObjSerpent(bloc2);

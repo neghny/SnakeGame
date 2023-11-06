@@ -73,7 +73,7 @@ public class Control {
                     }
                 }
             }*/
-            Objet teteSerpent = gp.serpent.get(0);
+            /*Objet teteSerpent = gp.serpent.get(0);
 
             if (teteSerpent.percute(gp.pomme)){
                 gp.collisionSerpentPomme();
@@ -88,7 +88,8 @@ public class Control {
                         gp.collisionSerpent();
                     }
                 }
-            }
+            }*/
+            gp.gestionCollisions();
 
             if (expectedRestart > System.currentTimeMillis()) {
                 try {
