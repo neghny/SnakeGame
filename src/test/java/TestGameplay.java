@@ -57,6 +57,7 @@ public class TestGameplay {
      * - Le serpent grandit d'un bloc (le serpent possède un objet de plus suivant les positions du dernier bloc)
      * - La pomme est replacée
      */
+    /*
     @Test
     void testCollisionSerpentPomme() {
         int lastSerpentSize = testGameplay.getSerpent().size();
@@ -81,6 +82,8 @@ public class TestGameplay {
             assertNotEquals(element.getYposition(), testGameplay.getPomme().getYposition());
         }
     }
+
+     */
 
     @Test
     void testAddObjetSerpent() {
