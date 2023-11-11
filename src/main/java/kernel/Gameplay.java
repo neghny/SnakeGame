@@ -45,6 +45,16 @@ public class Gameplay {
 
     }
 
+    public void mvtSnake() {
+        Objet teteSerpent = serpent.get(0);
+        for (int i = 1; i < serpent.size(); i++)
+        {
+            Objet suivant = serpent.get(i + 1);
+            serpent.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
+        }
+        // Bouger la tête du serpent...
+    }
+
     public boolean depassementBords(Objet o){
         return (o.getXposition() + o.getSizeImageX() > width)
                 || (o.getXposition() < 0)
@@ -97,7 +107,7 @@ public class Gameplay {
     }
 
     /**
-     * Replace la pomme à une position aléatoire, en prenant en compte la position du serpent, la taille de la fenête
+     * Replace la pomme à une position aléatoire, en prenant en compte la position du serpent, la taille de la fenêtre
      */
     public void replacerPomme() {
         int newWidth;
