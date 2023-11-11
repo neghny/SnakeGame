@@ -62,8 +62,6 @@ public class Gameplay {
         gameOver();
         }
 
-
-
     public void collisionSerpentMur(){
         gameOver();
     }
@@ -131,4 +129,23 @@ public class Gameplay {
     }
 
 
+    public LinkedList<Objet> getSerpent() {
+        return serpent;
+    }
+
+    public LinkedList<Objet> getObjets() {
+        return objets;
+    }
+
+    public Objet getPomme() {
+        return pomme;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getTailleBloc() {
+        return tailleBloc;
+    }
 }

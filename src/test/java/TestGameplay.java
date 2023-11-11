@@ -1,12 +1,13 @@
-import kernel.Objet;
+import kernel.Gameplay;
 import org.junit.jupiter.api.Test;
-import physique.Ligne;
-import physique.Rectangle;
+
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestGameplay {
+
+    Gameplay testGameplay = new Gameplay(1000, 1000);
 
     /**
      * Permet de vérfier si le calcul du nouveau placement de la pomme est correcte. Pour cela il faut que :
@@ -15,7 +16,7 @@ public class TestGameplay {
      */
     @Test
     void testReplacerPomme(){
-
+        int lastXposition = testGameplay.pomme.getXposition()
     }
 
     /**
