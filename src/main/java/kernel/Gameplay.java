@@ -148,4 +148,12 @@ public class Gameplay {
     public int getTailleBloc() {
         return tailleBloc;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
