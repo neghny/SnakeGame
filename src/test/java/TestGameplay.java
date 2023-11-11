@@ -7,7 +7,8 @@ import physique.Rectangle;
 
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TestGameplay {
 
@@ -31,13 +32,13 @@ public class TestGameplay {
 
         testGameplay.replacerPomme();
         // Vérifie que la position a bien changé
-        Assertions.assertNotEquals(lastXposition, testGameplay.getPomme().getXposition());
-        Assertions.assertNotEquals(lastYposition, testGameplay.getPomme().getYposition());
+        assertNotEquals(lastXposition, testGameplay.getPomme().getXposition());
+        assertNotEquals(lastYposition, testGameplay.getPomme().getYposition());
 
         // Vérifie que la pomme n'est pas placé sur le serpent
         for (Objet element : testGameplay.getSerpent()) {
-            Assertions.assertNotEquals(element.getXposition(), testGameplay.getPomme().getXposition());
-            Assertions.assertNotEquals(element.getYposition(), testGameplay.getPomme().getYposition());
+            assertNotEquals(element.getXposition(), testGameplay.getPomme().getXposition());
+            assertNotEquals(element.getYposition(), testGameplay.getPomme().getYposition());
         }
 
         // Vérifier que la pomme est bien placé dans la fenêtre de jeu (et ne la dépasse pas)
@@ -70,14 +71,14 @@ public class TestGameplay {
         System.out.println("Nouveau Y Pomme : " + testGameplay.getPomme().getYposition());
 
         // Vérifie que le serpent grandit d'un bloc
-        Assertions.assertEquals(lastSerpentSize + 1, testGameplay.getSerpent().size());
+        assertEquals(lastSerpentSize + 1, testGameplay.getSerpent().size());
         // TODO : Erreur lorsqu'on lance tous les test en même temps
         // Vérifie que la pomme a été replacée (répétitif avec la méthode précédente, je l'enlève ? )
-        Assertions.assertNotEquals(lastXposition, testGameplay.getPomme().getXposition());
-        Assertions.assertNotEquals(lastYposition, testGameplay.getPomme().getYposition());
+        assertNotEquals(lastXposition, testGameplay.getPomme().getXposition());
+        assertNotEquals(lastYposition, testGameplay.getPomme().getYposition());
         for (Objet element : testGameplay.getSerpent()) {
-            Assertions.assertNotEquals(element.getXposition(), testGameplay.getPomme().getXposition());
-            Assertions.assertNotEquals(element.getYposition(), testGameplay.getPomme().getYposition());
+            assertNotEquals(element.getXposition(), testGameplay.getPomme().getXposition());
+            assertNotEquals(element.getYposition(), testGameplay.getPomme().getYposition());
         }
     }
 
@@ -91,10 +92,10 @@ public class TestGameplay {
         testGameplay.addObjSerpent(bloc);
 
         // Vérifie que le serpent a bien grandi
-        Assertions.assertEquals(serpentSizeBefore + 1, testGameplay.getSerpent().size());
+        assertEquals(serpentSizeBefore + 1, testGameplay.getSerpent().size());
         // Vérifie que le nouvel élément ajouté à la place de la pomme est la nouvelle tête du serpent
         Objet nouvelleTete = testGameplay.getSerpent().get(0);
-        Assertions.assertEquals(bloc, nouvelleTete);
+        assertEquals(bloc, nouvelleTete);
         // Vérifie que l'objet a bien été ajouté à la liste d'objets
         Assertions.assertTrue(testGameplay.getObjets().contains(bloc));
     }
