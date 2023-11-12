@@ -42,11 +42,12 @@ public class Gameplay {
                 }
             }
         }
-    }
-/*
         if (depassementBords(teteSerpent)){
             collisionSerpentMur();
         }
+    }
+/*
+
 */
 
         /*if (teteSerpent.percute(pomme)){
