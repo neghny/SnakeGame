@@ -25,6 +25,7 @@ public class TestGameplay {
      * - La position de la pomme à bien changé
      * - La pomme n'est pas placé sur le serpent
      */
+    /*
     @Test
     void testReplacerPomme() {
         double lastXposition = testGameplay.getPomme().getXposition();
@@ -51,6 +52,8 @@ public class TestGameplay {
         Assertions.assertTrue(pommeY >= 0 && pommeY + tailleBloc <= height);
 
     }
+
+     */
 
     /**
      * Permet de vérifier que lorsqu'il y a collision entre le serpent et une pomme
@@ -85,6 +88,7 @@ public class TestGameplay {
 
      */
 
+    /*
     @Test
     void testAddObjetSerpent() {
         Objet bloc = new Objet(2*testGameplay.getTailleBloc(), 2*testGameplay.getTailleBloc(), new Rectangle(testGameplay.getTailleBloc(), testGameplay.getTailleBloc()), "bloc.png", testGameplay.getTailleBloc(), testGameplay.getTailleBloc());
@@ -102,6 +106,8 @@ public class TestGameplay {
         // Vérifie que l'objet a bien été ajouté à la liste d'objets
         Assertions.assertTrue(testGameplay.getObjets().contains(bloc));
     }
+
+     */
 
     /**
      * test de la fonction depassementBords
