@@ -3,6 +3,7 @@ package kernel;
 import physique.Rectangle;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Gameplay {
@@ -25,10 +26,28 @@ public class Gameplay {
         resetLevel();
     }
 
-    public void gestionCollisions(){
+    public void gestionCollisions(List<Objet[]> collisions){
         Objet teteSerpent = serpent.get(0);
 
-        if (teteSerpent.percute(pomme)){
+        for (Objet[] collision : collisions){
+            if (collision[0] == teteSerpent || collision[1] == teteSerpent){
+                if (collision[0] == pomme || collision[1] == pomme){
+                    collisionSerpentPomme();
+                } else if (
+                        collision[0] == teteSerpent && serpent.contains(collision[1])
+                                || collision[1] == teteSerpent && serpent.contains(collision[0])
+                ) {
+                    collisionSerpent();
+                }
+            }
+        }
+
+        if (depassementBords(teteSerpent)){
+            collisionSerpentMur();
+        }
+
+
+        /*if (teteSerpent.percute(pomme)){
             collisionSerpentPomme();
         }
         else if (depassementBords(teteSerpent)) { // la tête du serpent dépasse les bords
@@ -41,7 +60,7 @@ public class Gameplay {
                     collisionSerpent();
                 }
             }
-        }
+        }*/
 
     }
 
