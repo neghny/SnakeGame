@@ -52,7 +52,7 @@ public class MoteurGraphique {
     }
     public void display(LinkedList<Objet> objects){
         for (Objet o : objects){
-            o.setBounds((int) o.getXposition(), (int) o.getYposition(), o.getSizeImageX(), o.getSizeImageY());
+            o.setBounds(o.getXposition(), o.getYposition(), o.getSizeImageX(), o.getSizeImageY());
         }
     }
 

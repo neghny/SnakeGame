@@ -2,6 +2,7 @@ package kernel;
 
 import physique.Rectangle;
 
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -9,17 +10,17 @@ import java.util.Random;
 public class Gameplay {
 
     LinkedList<Objet> serpent;
-    LinkedList<Objet> objets = new LinkedList<Objet>();
+    LinkedList<Objet> objets;
     Objet pomme;
     int score = 0;
     final int tailleBloc = 50;
     private final int width;
     private final int height;
+    private boolean growSnake = false;
 
 
     public Gameplay(int width, int height) {
-        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc, tailleBloc), "pomme.png", tailleBloc, tailleBloc);
-        objets.add(pomme);
+        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc - 2, tailleBloc - 2), "pomme.png", tailleBloc, tailleBloc);
         this.width = width;
         this.height = height;
 //        this.serpent = new LinkedList<>();
@@ -27,7 +28,7 @@ public class Gameplay {
     }
 
     public void gestionCollisions(List<Objet[]> collisions){
-        Objet teteSerpent = serpent.get(0);
+        Objet teteSerpent = getTeteSerpent();
 
         for (Objet[] collision : collisions){
             if (collision[0] == teteSerpent || collision[1] == teteSerpent){
@@ -41,11 +42,12 @@ public class Gameplay {
                 }
             }
         }
-
+    }
+/*
         if (depassementBords(teteSerpent)){
             collisionSerpentMur();
         }
-
+*/
 
         /*if (teteSerpent.percute(pomme)){
             collisionSerpentPomme();
@@ -62,16 +64,45 @@ public class Gameplay {
             }
         }*/
 
+    public Objet getTeteSerpent() {
+        return serpent.get(0);
     }
 
     public void mvtSnake() {
-        Objet teteSerpent = serpent.get(0);
-        for (int i = 1; i < serpent.size(); i++)
-        {
-            Objet suivant = serpent.get(i + 1);
-            serpent.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
+        Objet teteSerpent = getTeteSerpent();
+        if (teteSerpent.getSpeed() > 0) {
+            if (growSnake) {
+                for (Objet o : objets)
+                    System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
+                Objet dernier = serpent.getLast();
+                addObjSerpent(createBlocSerpent(dernier.getXposition(), dernier.getYposition()));
+                growSnake = false;
+            }
+            for (int i = serpent.size() - 1; i > 0; i--) {
+                Objet suivant = serpent.get(i - 1);
+                serpent.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
+            }
         }
-        // Bouger la tête du serpent...
+        // Bouger la tête du serpent avec hspeed et vspeed.
+        teteSerpent.updatePosition();
+    }
+
+    public void changerDirection(KeyEvent e) {
+        int keyPressed = e.getKeyCode();
+        Objet teteSerpent = getTeteSerpent();
+        if (keyPressed == KeyEvent.VK_RIGHT) {
+            teteSerpent.hspeed = tailleBloc;
+            teteSerpent.vspeed = 0;
+        } else if (keyPressed == KeyEvent.VK_LEFT) {
+            teteSerpent.hspeed = -tailleBloc;
+            teteSerpent.vspeed = 0;
+        } else if (keyPressed == KeyEvent.VK_UP) {
+            teteSerpent.vspeed = -tailleBloc;
+            teteSerpent.hspeed = 0;
+        } else if (keyPressed == KeyEvent.VK_DOWN) {
+            teteSerpent.vspeed = tailleBloc;
+            teteSerpent.hspeed = 0;
+        }
     }
 
     public boolean depassementBords(Objet o){
@@ -83,15 +114,18 @@ public class Gameplay {
 
     public void collisionSerpentPomme(){
         score += 1;
-        Objet dernierSerpent = serpent.get(serpent.size()-1);
-        Objet nouveauBloc = createBlocSerpent(dernierSerpent.getXposition()+50, dernierSerpent.getYposition()+50);
-        addObjSerpent(nouveauBloc);
+        //Objet dernierSerpent = serpent.get(serpent.size()-1);
+        //Objet nouveauBloc = createBlocSerpent(dernierSerpent.getXposition()+50, dernierSerpent.getYposition()+50);
+        //addObjSerpent(nouveauBloc);
+        growSnake = true;
         replacerPomme();
     }
 
     /*public void collisionSerpentPomme(){
         score += 1;
-        addObjSerpent(createBlocSerpent(pomme.getX(), pomme.getY()));
+        growSnake = true;
+        //Objet teteSerpent = getTeteSerpent();
+        //addObjSerpent(createBlocSerpent(pomme.getX() + teteSerpent.hspeed, pomme.getY() + teteSerpent.vspeed));
         replacerPomme();
     }*/
 
@@ -111,9 +145,8 @@ public class Gameplay {
         Objet bloc1 = createBlocSerpent(5*tailleBloc, 5*tailleBloc);
         Objet bloc2 = createBlocSerpent(4*tailleBloc, 5*tailleBloc);
         Objet bloc3 = createBlocSerpent(3*tailleBloc, 5*tailleBloc);
-        bloc1.setSpeed(tailleBloc); //c'était pour tester si le serpent bouge (c'est bien le cas mais pas correctement pour l'instant)
-        bloc2.setSpeed(tailleBloc);
-        bloc3.setSpeed(tailleBloc);
+        objets = new LinkedList<>();
+        addObj(pomme);
         serpent = new LinkedList<>();
         addObjSerpent(bloc1);
         addObjSerpent(bloc2);
@@ -122,12 +155,13 @@ public class Gameplay {
         replacerPomme();
     }
 
-    public Objet createBlocSerpent(double x, double y) {
-        return new Objet(x, y, new Rectangle(tailleBloc, tailleBloc), "bloc.png", tailleBloc, tailleBloc); // Mettre chemin de l'image.
+    public Objet createBlocSerpent(int x, int y) {
+        return new Objet(x, y, new Rectangle(tailleBloc - 2, tailleBloc - 2), "bloc.png", tailleBloc, tailleBloc);
     }
 
     public void addObjSerpent(Objet o) {
-        serpent.add(0, o);  // le nouvel élément ajouté à la place de la pomme est la nouvelle tête du serpent je pense
+        //serpent.add(0, o);  // le nouvel élément ajouté à la place de la pomme est la nouvelle tête du serpent je pense
+        serpent.add(o); // le nouvel élément est ajouté à la queue du serpent.
         addObj(o);
     }
 
@@ -166,9 +200,6 @@ public class Gameplay {
         System.out.println("Score final : " + score);
         //on réinitialise le jeu
         resetLevel();
-
-
-
     }
 
 

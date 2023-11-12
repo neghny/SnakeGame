@@ -1,12 +1,8 @@
 package kernel;
 
 import graphique.MoteurGraphique;
-import physique.Cercle;
-import physique.Rectangle;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /* Control est le contrôle-commande du jeu-vidéo.
  * Il permet de mettre ensemble les différentes parties du jeu (physique, graphique).
@@ -15,19 +11,19 @@ import java.util.List;
 
 public class Control {
     private static boolean running;
-    private final MoteurGraphique moteurGraphique;
+    private final MoteurGraphique mg;
     private final int width;
     private final int height;
-    private Gameplay gp;
+    private final Gameplay gp;
 
 
     public Control(int width, int height) {
         this.width = width;
         this.height = height;
         running = true;
-        moteurGraphique = new MoteurGraphique(width, height, "Frame");
+        mg = new MoteurGraphique(width, height, "Frame");
         gp = new Gameplay(width, height);
-        moteurGraphique.getMainFrame().addKeyListener(new KeyListenerKernel(gp.objets)); // est ce que ici c'est pas gp.sepent plutot ? la pomme s'en fout  du clavier ?
+        mg.getMainFrame().addKeyListener(new KeyListenerKernel(gp)); // est ce que ici c'est pas gp.sepent plutot ? la pomme s'en fout  du clavier ?
     }
 
     public boolean depassementBords(Objet o){
@@ -46,8 +42,8 @@ public class Control {
         while (running) {
             startTime = System.currentTimeMillis();
             //expectedRestart = startTime + 33;
-            expectedRestart = startTime + 100;
-
+            expectedRestart = startTime + 1000;
+            gp.mvtSnake();
             *//*for (int i = 0; i < gp.objets.size(); i ++) {
                 Objet o1 = gp.objets.get(i);
                 if (o1.getXposition() + o1.getSizeImageX() > width) {
@@ -109,7 +105,7 @@ public class Control {
                     //noinspection BusyWait
                     Thread.sleep(expectedRestart - System.currentTimeMillis()); } catch (InterruptedException ignored) {}
             }
-            moteurGraphique.display(gp.objets);
+            mg.display(gp.objets);
         }
         System.exit(0);
     }*/
@@ -121,7 +117,7 @@ public class Control {
         while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
-            gp.gestionCollisions();
+            //gp.gestionCollisions();
             System.out.println("--------------------------------");
             for (Objet k:gp.serpent){
                 System.out.println(k.getXposition() + " " + k.getYposition() + "");
@@ -131,7 +127,7 @@ public class Control {
                 try {
                     Thread.sleep(expectedRestart - System.currentTimeMillis()); } catch (InterruptedException ignored) {}
             }
-            moteurGraphique.display(gp.objets);
+            mg.display(gp.objets);
         }
         System.exit(0);
     }
@@ -145,7 +141,7 @@ public class Control {
     }
 
     public MoteurGraphique getMoteurGraphique() {
-        return moteurGraphique;
+        return mg;
     }
 
     public static void setRunning(boolean running) {

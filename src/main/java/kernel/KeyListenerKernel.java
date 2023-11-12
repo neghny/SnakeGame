@@ -1,32 +1,17 @@
 package kernel;
 
 import java.awt.event.KeyEvent;
-import java.util.LinkedList;
 
 public class KeyListenerKernel implements java.awt.event.KeyListener {
-    private final LinkedList<Objet> objets;
-    private boolean left,up,down,right;
+    Gameplay gp;
 
-    public KeyListenerKernel(LinkedList<Objet> objets) {
-        this.objets = objets;
+    public KeyListenerKernel(Gameplay gameplay) {
+        gp = gameplay;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int keyPressed = e.getKeyCode();
-
-        for (Objet objet : objets) {
-            if (keyPressed == KeyEvent.VK_RIGHT) {
-                right = true;
-            } else if (keyPressed == KeyEvent.VK_LEFT) {
-                left = true;
-            } else if (keyPressed == KeyEvent.VK_UP) {
-                up = true;
-            } else if (keyPressed == KeyEvent.VK_DOWN) {
-                down = true;
-            }
-            objet.move(left,up,down,right);
-        }
+        gp.changerDirection(e);
     }
 
     @Override
@@ -35,19 +20,6 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
 
         if (keyReleased == KeyEvent.VK_ESCAPE) {
             Control.setRunning(false);
-        }
-
-        for (Objet objet : objets) {
-            if (keyReleased == KeyEvent.VK_RIGHT) {
-                right = false;
-            } else if (keyReleased == KeyEvent.VK_LEFT) {
-                left = false;
-            } else if (keyReleased == KeyEvent.VK_UP) {
-                up = false;
-            } else if (keyReleased == KeyEvent.VK_DOWN) {
-                down = false;
-            }
-            objet.move(left,up,down,right);
         }
     }
 

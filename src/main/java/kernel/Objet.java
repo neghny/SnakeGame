@@ -3,6 +3,7 @@ package kernel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import physique.IForme;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,22 +12,25 @@ import java.awt.image.BufferedImage;
 import java.text.MessageFormat;
 import java.util.Objects;
 
+import static java.lang.Math.abs;
+
 public class Objet extends JPanel {
-    private double x;
-    private double y;
-    private double speed;
+    private int x;
+    private int y;
+    public int hspeed = 0;
+    public int vspeed = 0;
 
     private final IForme forme;
 
     private BufferedImage bufferedImage;
-    private String pathImage;
+    public String pathImage;
     private Image image;
     private int sizeImageX;
     private int sizeImageY;
     private double rotation;
 
     // Constructeur général.
-    public Objet(double initialX, double initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
+    public Objet(int initialX, int initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
@@ -55,14 +59,18 @@ public class Objet extends JPanel {
     }
 
     // Constructeur pour tests collision.
-    public Objet(double initialX, double initialY, IForme forme) {
+    public Objet(int initialX, int initialY, IForme forme) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
     }
 
+    public void updatePosition() {
+        x += hspeed;
+        y += vspeed;
+    }
 
-    public void setPosition(double x, double y){
+    public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
     }
@@ -81,55 +89,6 @@ public class Objet extends JPanel {
         //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
         g2d.drawImage(image, transform, this);
     }
-    
-
-    private void moveRight() {
-        x += speed;
-    }
-
-    private void moveLeft() {
-        x -= speed;
-    }
-
-    private void moveUp() {
-        y -= speed;
-    }
-
-    private void moveDown() {
-        y += speed;
-    }
-
-    public void move(boolean left, boolean up, boolean down, boolean right) {
-        if (left && up && !down && !right) {
-            moveLeft();
-            moveUp();
-            setRotation(5*Math.PI/4);
-        } else if (left && down && !up && !right) {
-            moveLeft();
-            moveDown();
-            setRotation(3*Math.PI/4);
-        } else if (right && up && !left && !down) {
-            moveRight();
-            moveUp();
-            setRotation(7*Math.PI/4);
-        } else if (right && down && !left && !up) {
-            moveRight();
-            moveDown();
-            setRotation(Math.PI/4);
-        } else if (left && !right) {
-            moveLeft();
-            setRotation(Math.PI);
-        } else if (up && !down) {
-            moveUp();
-            setRotation(3*Math.PI/2);
-        } else if (down && !up) {
-            moveDown();
-            setRotation(Math.PI/2);
-        } else if (right && !left) {
-            moveRight();
-            setRotation(0);
-        }
-    }
 
     public boolean percute(Objet other) {
         return forme.percute(this, other);
@@ -139,13 +98,17 @@ public class Objet extends JPanel {
         System.out.println(other.pathImage + " (" + other.getXposition() + "," + other.getYposition() + ")");
     }
 
-    public double getXposition() {
-        return x;
-    }
+    public int getXposition() { return x; }
 
-    public double getYposition() {
+    public int getYposition() {
         return y;
     }
+
+    public int getSpeed() { return abs(hspeed) + abs(vspeed); }
+
+    // public double getSpeed() { return sqrt(hspeed * hspeed + vspeed * vspeed); }
+
+    // public double getDirection : voir historique des commits
 
     public void setRotation(double radians){
         rotation = radians;
@@ -161,10 +124,6 @@ public class Objet extends JPanel {
 
     public IForme getForme() {
         return forme;
-    }
-
-    public void setSpeed(double newSpeed){
-        this.speed = newSpeed;
     }
 }
 
