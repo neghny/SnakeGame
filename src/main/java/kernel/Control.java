@@ -105,9 +105,11 @@ public class Control {
         long startTime;
         long expectedRestart;
 
+
         while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
+            gp.mvtSnake();
             List<Objet[]> collisions = new ArrayList<>();
             for (int i = 0; i < gp.objets.size(); i ++) {
                 Objet o1 = gp.objets.get(i);
@@ -120,7 +122,6 @@ public class Control {
                 }
             }
             gp.gestionCollisions(collisions);
-            //gp.gestionCollisions();
             System.out.println("--------------------------------");
             for (Objet k:gp.serpent){
                 System.out.println(k.getXposition() + " " + k.getYposition() + "");
