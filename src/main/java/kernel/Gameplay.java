@@ -22,7 +22,7 @@ public class Gameplay {
         objets.add(pomme);
         this.width = width;
         this.height = height;
-//        this.serpent = new LinkedList<Objet>();
+//        this.serpent = new LinkedList<>();
         resetLevel();
     }
 
@@ -83,15 +83,25 @@ public class Gameplay {
 
     public void collisionSerpentPomme(){
         score += 1;
-        addObjSerpent(createBlocSerpent(pomme.getX(), pomme.getY()));
+        Objet dernierSerpent = serpent.get(serpent.size()-1);
+        Objet nouveauBloc = createBlocSerpent(dernierSerpent.getXposition()+50, dernierSerpent.getYposition()+50);
+        addObjSerpent(nouveauBloc);
         replacerPomme();
     }
 
+    /*public void collisionSerpentPomme(){
+        score += 1;
+        addObjSerpent(createBlocSerpent(pomme.getX(), pomme.getY()));
+        replacerPomme();
+    }*/
+
     public void collisionSerpent(){
+        System.out.println("Collision Serpent");
         gameOver();
-        }
+    }
 
     public void collisionSerpentMur(){
+        System.out.println("Collision Mur");
         gameOver();
     }
 
@@ -112,7 +122,7 @@ public class Gameplay {
         replacerPomme();
     }
 
-    public Objet createBlocSerpent(int x, int y) {
+    public Objet createBlocSerpent(double x, double y) {
         return new Objet(x, y, new Rectangle(tailleBloc, tailleBloc), "bloc.png", tailleBloc, tailleBloc); // Mettre chemin de l'image.
     }
 
@@ -145,6 +155,10 @@ public class Gameplay {
             }
         } while (!verifPosition);
         pomme.setPosition(newWidth, newHeight);
+    }
+
+    public void mangerPomme(){
+        collisionSerpentPomme();
     }
 
     public void gameOver() {

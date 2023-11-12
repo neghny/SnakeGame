@@ -36,9 +36,9 @@ public class Control {
                 || (o.getYposition() + o.getSizeImageY() > height)
                 || (o.getYposition() < 0);
     }
-    public void run() {
-        /*int width = 1000;
-        int height = 1000;*/
+    /*public void run() {
+        *//*int width = 1000;
+        int height = 1000;*//*
 
         long startTime;
         long expectedRestart;
@@ -48,7 +48,7 @@ public class Control {
             //expectedRestart = startTime + 33;
             expectedRestart = startTime + 100;
 
-            /*for (int i = 0; i < gp.objets.size(); i ++) {
+            *//*for (int i = 0; i < gp.objets.size(); i ++) {
                 Objet o1 = gp.objets.get(i);
                 if (o1.getXposition() + o1.getSizeImageX() > width) {
                     System.out.println("dépassement sur la droite de l'axe X");
@@ -74,8 +74,8 @@ public class Control {
                         o1.eventCollision(o2);
                     }
                 }
-            }*/
-            /*Objet teteSerpent = gp.serpent.get(0);
+            }*//*
+            *//*Objet teteSerpent = gp.serpent.get(0);
 
             if (teteSerpent.percute(gp.pomme)){
                 gp.collisionSerpentPomme();
@@ -90,7 +90,7 @@ public class Control {
                         gp.collisionSerpent();
                     }
                 }
-            }*/
+            }*//*
             List<Objet[]> collisions = new ArrayList<>();
             for (int i = 0; i < gp.objets.size(); i ++) {
                 Objet o1 = gp.objets.get(i);
@@ -112,7 +112,30 @@ public class Control {
             moteurGraphique.display(gp.objets);
         }
         System.exit(0);
+    }*/
+
+    public void run() {
+        long startTime;
+        long expectedRestart;
+
+        while (running) {
+            startTime = System.currentTimeMillis();
+            expectedRestart = startTime + 100;
+            gp.gestionCollisions();
+            System.out.println("--------------------------------");
+            for (Objet k:gp.serpent){
+                System.out.println(k.getXposition() + " " + k.getYposition() + "");
+            }
+            System.out.println("--------------------------------");
+            if (expectedRestart > System.currentTimeMillis()) {
+                try {
+                    Thread.sleep(expectedRestart - System.currentTimeMillis()); } catch (InterruptedException ignored) {}
+            }
+            moteurGraphique.display(gp.objets);
+        }
+        System.exit(0);
     }
+
     public void addObjet(Objet o) {
         gp.addObj(o);
     }
