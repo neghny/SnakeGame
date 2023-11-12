@@ -20,9 +20,83 @@ public class Gameplay {
 
 
     public Gameplay(int width, int height) {
-        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc - 2, tailleBloc - 2), "pomme.png", tailleBloc, tailleBloc);
         this.width = width;
         this.height = height;
+        // temporaire
+        demarrerPartie();
+    }
+
+    // MENU
+
+    /**
+     * cette méthode permet d’instancier les boutons au lancement du jeu.
+     * TODO : classe Bouton
+     */
+    public void instancierMenuPrincipal() {
+        // Créer bouton jouer.
+        // Créer bouton didacticiel.
+        // Créer bouton options.
+        // Créer bouton voir leaderboard.
+        // Créer bouton quitter.
+    }
+
+    /**
+     * cette méthode affiche le menu des options et attend les choix de l'utilisateur. Tant que l'utilisateur ne choisit
+     * pas de retourner au menu principal, la boucle continue à afficher le menu.
+     * L'utilisateur peut choisir différentes options telles que le niveau de difficulté, la couleur du serpent, ou
+     * retourner au menu principal.
+     */
+    public void afficherMenuOptions() {
+
+    }
+
+    /**
+     * est appelée lorsque l'utilisateur choisit l'option pour définir le niveau de difficulté. Cette méthode gère la
+     * logique associée à la configuration du niveau de difficulté.
+     */
+    public void choisirNiveauDifficulte() {
+
+    }
+
+    /**
+     * est appelée lorsque l'utilisateur choisit l'option pour définir la couleur du serpent. Cette méthode gère la
+     * logique associée à la configuration de la couleur du serpent.
+     */
+    public void choisirCouleurSerpent() {
+
+    }
+
+    /**
+     * cette méthode permet juste d’afficher les instructions/Règles du jeu.
+     */
+    public void afficherInstructions() {
+
+    }
+
+    /**
+     * affiche les meilleurs scores des joueurs, en triant la liste des joueurs en fonction de leurs scores et en
+     * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
+     * qu'aucun classement n'est disponible.
+     */
+    public void consulterClassements() {
+
+    }
+
+    /**
+     * affiche un message de remerciement.
+     */
+    public void quitterJeu() {
+        Control.setRunning(false);
+    }
+
+    /**
+     * permet de  recueillir des informations du joueur (nom, niveau de    difficulté, couleur du serpent) et les
+     * utiliser pour initialiser une nouvelle partie du jeu. Elle  est appelée lorsque l'utilisateur choisit de démarrer
+     * une nouvelle partie dans le menu principal
+     */
+    public void demarrerPartie() {
+        // TODO : Recueillir informations joueur.
+        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc - 2, tailleBloc - 2), "pomme.png", tailleBloc, tailleBloc);
 //        this.serpent = new LinkedList<>();
         resetLevel();
     }

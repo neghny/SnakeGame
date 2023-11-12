@@ -19,7 +19,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
         int keyReleased = e.getKeyCode();
 
         if (keyReleased == KeyEvent.VK_ESCAPE) {
-            Control.setRunning(false);
+            gp.quitterJeu();
         }
     }
 
