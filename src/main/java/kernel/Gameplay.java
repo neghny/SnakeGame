@@ -27,17 +27,42 @@ public class Gameplay {
     }
 
     // MENU
+    /*
+    public class Boutton extends Objet {
+
+        public Boutton(int initialX, int initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
+            super(initialX, initialY, forme, pathImage, sizeImageX, sizeImageY);
+        }
+    }
+     */
 
     /**
      * cette méthode permet d’instancier les boutons au lancement du jeu.
-     * TODO : classe Bouton
      */
+    int btnW = 200;
+    int btnH = 100;
+    Objet btnJouer;
+    Objet btnDid;
+    Objet btnOpt;
+    Objet btnLead;
+    Objet btnQuit;
+    Objet[] menuPrinc;
+    Objet btnDif;
+    Objet btnCoul;
+    Objet[] menuOpt;
     public void instancierMenuPrincipal() {
         // Créer bouton jouer.
+        btnJouer = new Objet(400, 100, new Rectangle(btnW, btnH), "btnJouer.png", btnW, btnH);
         // Créer bouton didacticiel.
+        btnDid = new Objet(400, 250, new Rectangle(btnW, btnH), "btnDid.png", btnW, btnH);
         // Créer bouton options.
+        btnOpt = new Objet(400, 400, new Rectangle(btnW, btnH), "btnOpt.png", btnW, btnH);
         // Créer bouton voir leaderboard.
+        btnLead = new Objet(400, 550, new Rectangle(btnW, btnH), "btnLead.png", btnW, btnH);
         // Créer bouton quitter.
+        btnQuit = new Objet(400, 700, new Rectangle(btnW, btnH), "btnQuit.png", btnW, btnH);
+
+        menuPrinc = new Objet[]{btnJouer, btnDid, btnOpt, btnLead, btnQuit};
     }
 
     /**
@@ -47,7 +72,12 @@ public class Gameplay {
      * retourner au menu principal.
      */
     public void afficherMenuOptions() {
+        // Créer spinner difficulté
+        btnDif = new Objet(400, 350, new Rectangle(btnW, btnH), "btnDif.png", btnW, btnH);
+        // Créer spinner couleur
+        btnCoul = new Objet(400, 550, new Rectangle(btnW, btnH), "btnCoul.png", btnW, btnH);
 
+        menuOpt = new Objet[]{btnDif, btnCoul};
     }
 
     /**
