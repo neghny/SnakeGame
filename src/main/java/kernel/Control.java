@@ -2,7 +2,9 @@ package kernel;
 
 import graphique.MoteurGraphique;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /* Control est le contrôle-commande du jeu-vidéo.
  * Il permet de mettre ensemble les différentes parties du jeu (physique, graphique).
@@ -87,18 +89,7 @@ public class Control {
                     }
                 }
             }*//*
-            List<Objet[]> collisions = new ArrayList<>();
-            for (int i = 0; i < gp.objets.size(); i ++) {
-                Objet o1 = gp.objets.get(i);
-                for (int j = i + 1; j < gp.objets.size(); j++) {
-                    Objet o2 = gp.objets.get(j);
-                    if (o1 != o2 && o1.percute(o2)) {
-                        // o1.eventCollision(o2);
-                        collisions.add(new Objet[]{o1, o2});
-                    }
-                }
-            }
-            gp.gestionCollisions(collisions);
+
 
             if (expectedRestart > System.currentTimeMillis()) {
                 try {
@@ -117,6 +108,18 @@ public class Control {
         while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
+            List<Objet[]> collisions = new ArrayList<>();
+            for (int i = 0; i < gp.objets.size(); i ++) {
+                Objet o1 = gp.objets.get(i);
+                for (int j = i + 1; j < gp.objets.size(); j++) {
+                    Objet o2 = gp.objets.get(j);
+                    if (o1 != o2 && o1.percute(o2)) {
+                        // o1.eventCollision(o2);
+                        collisions.add(new Objet[]{o1, o2});
+                    }
+                }
+            }
+            gp.gestionCollisions(collisions);
             //gp.gestionCollisions();
             System.out.println("--------------------------------");
             for (Objet k:gp.serpent){
