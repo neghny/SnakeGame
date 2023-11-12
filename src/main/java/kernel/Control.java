@@ -120,6 +120,7 @@ public class Control {
                 }
             }
             gp.gestionCollisions(collisions);
+            gp.mvtSnake();
             //gp.gestionCollisions();
             System.out.println("--------------------------------");
             for (Objet k:gp.serpent){
