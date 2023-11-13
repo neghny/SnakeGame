@@ -172,6 +172,7 @@ public class Gameplay {
     public void mvtSnake() {
         Objet teteSerpent = getTeteSerpent();
         if (teteSerpent.getSpeed() > 0) {
+            int taille = serpent.size();
             if (growSnake) {
                 for (Objet o : objets)
                     System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
@@ -179,7 +180,7 @@ public class Gameplay {
                 addObjSerpent(createBlocSerpent(dernier.getXposition(), dernier.getYposition()));
                 growSnake = false;
             }
-            for (int i = serpent.size() - 1; i > 0; i--) {
+            for (int i = taille - 1; i > 0; i--) {
                 Objet suivant = serpent.get(i - 1);
                 serpent.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
             }
