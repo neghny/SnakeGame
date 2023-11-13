@@ -150,10 +150,6 @@ public class Gameplay {
             collisionSerpentMur();
         }
     }
-/*
-
-*/
-
         /*if (teteSerpent.percute(pomme)){
             collisionSerpentPomme();
         }
@@ -219,20 +215,9 @@ public class Gameplay {
 
     public void collisionSerpentPomme(){
         score += 1;
-        //Objet dernierSerpent = serpent.get(serpent.size()-1);
-        //Objet nouveauBloc = createBlocSerpent(dernierSerpent.getXposition()+50, dernierSerpent.getYposition()+50);
-        //addObjSerpent(nouveauBloc);
         growSnake = true;
         replacerPomme();
     }
-
-    /*public void collisionSerpentPomme(){
-        score += 1;
-        growSnake = true;
-        //Objet teteSerpent = getTeteSerpent();
-        //addObjSerpent(createBlocSerpent(pomme.getX() + teteSerpent.hspeed, pomme.getY() + teteSerpent.vspeed));
-        replacerPomme();
-    }*/
 
     public void collisionSerpent(){
         System.out.println("Collision Serpent");
@@ -265,7 +250,6 @@ public class Gameplay {
     }
 
     public void addObjSerpent(Objet o) {
-        //serpent.add(0, o);  // le nouvel élément ajouté à la place de la pomme est la nouvelle tête du serpent je pense
         serpent.add(o); // le nouvel élément est ajouté à la queue du serpent.
         addObj(o);
     }
