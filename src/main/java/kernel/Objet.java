@@ -38,24 +38,20 @@ public class Objet extends JPanel {
 
         Logger logger = LogManager.getLogger(this.getClass());
         logger.debug("Construct a JPanel");
-        //String path = pathImage;
         if (logger.isDebugEnabled()) {
             String message = MessageFormat.format("Loading image at path {0}", pathImage);
             logger.debug(message);
         }
         try {
             bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getResource(pathImage)));
-            //image = ImageIO.read(new File(pathImage));
 
         } catch (Exception ex) {
             String message = MessageFormat.format("Error: Cannot load image at path: {0}", pathImage);
             logger.error(message, ex);
         }
-        //this.setSize(new Dimension(sizeImageX, sizeImageY));
         this.sizeImageX = sizeImageX;
         this.sizeImageY = sizeImageY;
         image = bufferedImage.getScaledInstance(sizeImageX, sizeImageY, Image.SCALE_DEFAULT);
-//        this.setPreferredSize(new Dimension(sizeImageX, sizeImageY));
     }
 
     // Constructeur pour tests collision.
@@ -86,7 +82,6 @@ public class Objet extends JPanel {
         transform.rotate(rotation);
         transform.translate((double) -sizeImageX /2, (double) -sizeImageY /2);
 
-        //g2d.drawImage(image, 0, 0, this.sizeImageX, this.sizeImageY, null);
         g2d.drawImage(image, transform, this);
     }
 
@@ -105,10 +100,6 @@ public class Objet extends JPanel {
     }
 
     public int getSpeed() { return abs(hspeed) + abs(vspeed); }
-
-    // public double getSpeed() { return sqrt(hspeed * hspeed + vspeed * vspeed); }
-
-    // public double getDirection : voir historique des commits
 
     public void setRotation(double radians){
         rotation = radians;
