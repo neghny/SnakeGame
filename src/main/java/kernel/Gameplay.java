@@ -320,4 +320,8 @@ public class Gameplay {
     public int getHeight() {
         return height;
     }
+
+    public boolean isGrowSnake() {
+        return growSnake;
+    }
 }
