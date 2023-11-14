@@ -1,26 +1,39 @@
 package graphique;
 
 import kernel.Objet;
-import physique.Cercle;
-import physique.IForme;
-import physique.Rectangle;
-
 import javax.swing.*;
 import java.util.LinkedList;
 
 public class MoteurGraphique {
-    JFrame mainFrame;
+    private static MoteurGraphique INSTANCE;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 1000;
 
-    public MoteurGraphique(int width, int height, String title) {
-        this.mainFrame = new JFrame(title);
+    private final JFrame mainFrame;
+
+    private MoteurGraphique() {
+        this.mainFrame = new JFrame("Frame");
         mainFrame.setLayout(null);
-        mainFrame.setSize(width, height);
+        mainFrame.setSize(WIDTH, HEIGHT);
         mainFrame.setResizable(true);
-        // Position de la fenêtre par défaut
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public static MoteurGraphique getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new MoteurGraphique();
+        }
+        return INSTANCE;
+    }
+
+    public static int getWidth() {
+        return WIDTH;
+    }
+
+    public static int getHeight() {
+        return HEIGHT;
+    }
 
     /**
      * Ajoute un objet à la fenêtre

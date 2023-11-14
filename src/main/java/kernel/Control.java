@@ -14,17 +14,13 @@ import java.util.List;
 public class Control {
     private static boolean running;
     private final MoteurGraphique mg;
-    private final int width;
-    private final int height;
     private final Gameplay gp;
 
 
-    public Control(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public Control() {
         running = true;
-        mg = new MoteurGraphique(width, height, "Frame");
-        gp = new Gameplay(width, height);
+        mg = MoteurGraphique.getInstance();
+        gp = new Gameplay();
         mg.getMainFrame().addKeyListener(new KeyListenerKernel(gp)); // est ce que ici c'est pas gp.sepent plutot ? la pomme s'en fout  du clavier ?
     }
 
@@ -52,7 +48,7 @@ public class Control {
             //Affichage contenant liste Serpent
             System.out.println("--------------------------------");
             for (Objet k:gp.serpent){
-                System.out.println(k.getXposition() + " " + k.getYposition() + "");
+                System.out.println(k.getXposition() + " " + k.getYposition());
             }
             System.out.println("--------------------------------");
 
@@ -82,7 +78,7 @@ public class Control {
     }
 
     public static void main(String[] args) {
-        var c = new Control(1000, 1000);
+        var c = new Control();
         c.getMoteurGraphique().init_display(c.gp.objets);
         c.run();
     }

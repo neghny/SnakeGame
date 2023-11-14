@@ -1,3 +1,4 @@
+import graphique.MoteurGraphique;
 import kernel.Gameplay;
 import kernel.Objet;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +17,7 @@ public class TestGameplay {
 
     @BeforeEach
     void setUp() {
-        testGameplay = new Gameplay(1000, 1000);
+        testGameplay = new Gameplay();
     }
 
     /**
@@ -37,10 +38,8 @@ public class TestGameplay {
         double pommeX = testGameplay.getPomme().getXposition();
         double pommeY = testGameplay.getPomme().getYposition();
         int tailleBloc = testGameplay.getTailleBloc();
-        int width = testGameplay.getWidth();
-        int height = testGameplay.getHeight();
-        Assertions.assertTrue(pommeX >= 0 && pommeX + tailleBloc <= width);
-        Assertions.assertTrue(pommeY >= 0 && pommeY + tailleBloc <= height);
+        Assertions.assertTrue(pommeX >= 0 && pommeX + tailleBloc <= MoteurGraphique.getWidth());
+        Assertions.assertTrue(pommeY >= 0 && pommeY + tailleBloc <= MoteurGraphique.getHeight());
     }
 
 

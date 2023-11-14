@@ -1,5 +1,6 @@
 package kernel;
 
+import graphique.MoteurGraphique;
 import physique.Rectangle;
 
 import java.awt.event.KeyEvent;
@@ -14,14 +15,10 @@ public class Gameplay {
     Objet pomme;
     int score = 0;
     final int tailleBloc = 50;
-    private final int width;
-    private final int height;
     private boolean growSnake = false;
 
 
-    public Gameplay(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public Gameplay() {
         // temporaire
         demarrerPartie();
     }
@@ -208,9 +205,9 @@ public class Gameplay {
     }
 
     public boolean depassementBords(Objet o){
-        return (o.getXposition() + o.getSizeImageX() > width)
+        return (o.getXposition() + o.getSizeImageX() > MoteurGraphique.getWidth())
                 || (o.getXposition() < 0)
-                || (o.getYposition() + o.getSizeImageY() > height)
+                || (o.getYposition() + o.getSizeImageY() > MoteurGraphique.getHeight())
                 || (o.getYposition() < 0);
     }
 
@@ -268,21 +265,18 @@ public class Gameplay {
         boolean verifPosition;
         do {
             Random random = new Random();
-            newWidth = random.nextInt(width / tailleBloc) * tailleBloc;
-            newHeight = random.nextInt(height / tailleBloc) * tailleBloc;
+            newWidth = random.nextInt(MoteurGraphique.getWidth() / tailleBloc) * tailleBloc;
+            newHeight = random.nextInt(MoteurGraphique.getHeight() / tailleBloc) * tailleBloc;
             verifPosition = true;
 
             for (Objet element : serpent) {
                 if (element.getXposition() == newWidth && element.getYposition() == newHeight) {
                     verifPosition = false;
+                    break;
                 }
             }
         } while (!verifPosition);
         pomme.setPosition(newWidth, newHeight);
-    }
-
-    public void mangerPomme(){
-        collisionSerpentPomme();
     }
 
     public void gameOver() {
@@ -311,14 +305,6 @@ public class Gameplay {
 
     public int getTailleBloc() {
         return tailleBloc;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public boolean isGrowSnake() {
