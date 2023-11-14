@@ -28,6 +28,7 @@ public class Control {
         long startTime;
         long expectedRestart;
 
+        Gameplay.getInstance().demarrerPartie();
         MoteurGraphique.getInstance().init_display(Gameplay.getInstance().getObjets());
 
         while (running) {

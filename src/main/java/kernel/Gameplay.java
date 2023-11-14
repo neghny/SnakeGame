@@ -119,20 +119,6 @@ public class Gameplay {
             collisionSerpentMur();
         }
     }
-        /*if (teteSerpent.percute(pomme)){
-            collisionSerpentPomme();
-        }
-        else if (depassementBords(teteSerpent)) { // la tête du serpent dépasse les bords
-            collisionSerpentMur();
-        }
-        else {
-            for (int i = 1; i < serpent.size(); i++) {
-                //if (teteSerpent.percute(gp.serpent.get(i))){
-                if (teteSerpent.getXposition() == serpent.get(i).getXposition() && teteSerpent.getYposition() == serpent.get(i).getYposition()) {
-                    collisionSerpent();
-                }
-            }
-        }*/
 
     public Objet getTeteSerpent() {
         return serpent.get(0);
@@ -141,20 +127,18 @@ public class Gameplay {
     public void mvtSnake() {
         Objet teteSerpent = getTeteSerpent();
         if (teteSerpent.getSpeed() > 0) {
-            int taille = serpent.size();
             if (growSnake) {
                 for (Objet o : objets)
                     System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
-                Objet dernier = serpent.getLast();
-                addObjSerpent(createBlocSerpent(dernier.getXposition(), dernier.getYposition()));
+                Objet last = serpent.getLast();
+                addObjSerpent(createBlocSerpent(last.getXposition(), last.getYposition()));
                 growSnake = false;
             }
-            for (int i = taille - 1; i > 0; i--) {
+            for (int i = serpent.size() - 1; i > 0; i--) {
                 Objet suivant = serpent.get(i - 1);
                 serpent.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
             }
         }
-        // Bouger la tête du serpent avec hspeed et vspeed.
         teteSerpent.updatePosition();
     }
 
