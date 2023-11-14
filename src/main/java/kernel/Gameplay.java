@@ -18,7 +18,8 @@ public class Gameplay {
     private final int BLOCKSIZE = 50;
     private boolean growSnake = false;
 
-    private Gameplay() {}
+    private Gameplay() {
+    }
 
     public static Gameplay getInstance() {
         if (INSTANCE == null) {
@@ -91,13 +92,6 @@ public class Gameplay {
     }
 
     /**
-     * affiche un message de remerciement.
-     */
-    public void quitterJeu() {
-        Control.setRunning(false);
-    }
-
-    /**
      * permet de  recueillir des informations du joueur (nom, niveau de    difficulté, couleur du serpent) et les
      * utiliser pour initialiser une nouvelle partie du jeu. Elle  est appelée lorsque l'utilisateur choisit de démarrer
      * une nouvelle partie dans le menu principal
@@ -109,22 +103,19 @@ public class Gameplay {
         resetLevel();
     }
 
-    public void gestionCollisions(List<Objet[]> collisions){
+    public void gestionCollisions(List<Objet[]> collisions) {
         Objet teteSerpent = getTeteSerpent();
 
-        for (Objet[] collision : collisions){
-            if (collision[0] == teteSerpent || collision[1] == teteSerpent){
-                if (collision[0] == apple || collision[1] == apple){
+        for (Objet[] collision : collisions) {
+            if (collision[0] == teteSerpent || collision[1] == teteSerpent) {
+                if (collision[0] == apple || collision[1] == apple) {
                     collisionSerpentPomme();
-                } else if (
-                        collision[0] == teteSerpent && serpent.contains(collision[1])
-                                || collision[1] == teteSerpent && serpent.contains(collision[0])
-                ) {
+                } else if (collision[0] == teteSerpent && serpent.contains(collision[1]) || collision[1] == teteSerpent && serpent.contains(collision[0])) {
                     collisionSerpent();
                 }
             }
         }
-        if (depassementBords(teteSerpent)){
+        if (depassementBords(teteSerpent)) {
             collisionSerpentMur();
         }
     }
@@ -185,25 +176,22 @@ public class Gameplay {
         }
     }
 
-    public boolean depassementBords(Objet o){
-        return (o.getXposition() + o.getSizeImageX() > MoteurGraphique.getWidth())
-                || (o.getXposition() < 0)
-                || (o.getYposition() + o.getSizeImageY() > MoteurGraphique.getHeight())
-                || (o.getYposition() < 0);
+    public boolean depassementBords(Objet o) {
+        return (o.getXposition() + o.getSizeImageX() > MoteurGraphique.getInstance().getWidth()) || (o.getXposition() < 0) || (o.getYposition() + o.getSizeImageY() > MoteurGraphique.getInstance().getHeight()) || (o.getYposition() < 0);
     }
 
-    public void collisionSerpentPomme(){
+    public void collisionSerpentPomme() {
         score += 1;
         growSnake = true;
         replacerPomme();
     }
 
-    public void collisionSerpent(){
+    public void collisionSerpent() {
         System.out.println("Collision Serpent");
         gameOver();
     }
 
-    public void collisionSerpentMur(){
+    public void collisionSerpentMur() {
         System.out.println("Collision Mur");
         gameOver();
     }
@@ -211,9 +199,9 @@ public class Gameplay {
     public void resetLevel() { // si on a en parallele une liste objets, est ce qu'il faut pas supprimer les anciens membres du serpent de cette liste ?
         score = 0;
         // On réinitialise le serpent.
-        Objet bloc1 = createBlocSerpent(5* BLOCKSIZE, 5* BLOCKSIZE);
-        Objet bloc2 = createBlocSerpent(4* BLOCKSIZE, 5* BLOCKSIZE);
-        Objet bloc3 = createBlocSerpent(3* BLOCKSIZE, 5* BLOCKSIZE);
+        Objet bloc1 = createBlocSerpent(5 * BLOCKSIZE, 5 * BLOCKSIZE);
+        Objet bloc2 = createBlocSerpent(4 * BLOCKSIZE, 5 * BLOCKSIZE);
+        Objet bloc3 = createBlocSerpent(3 * BLOCKSIZE, 5 * BLOCKSIZE);
         objets = new LinkedList<>();
         addObj(apple);
         serpent = new LinkedList<>();
@@ -246,8 +234,8 @@ public class Gameplay {
         boolean verifPosition;
         do {
             Random random = new Random();
-            newWidth = random.nextInt(MoteurGraphique.getWidth() / BLOCKSIZE) * BLOCKSIZE;
-            newHeight = random.nextInt(MoteurGraphique.getHeight() / BLOCKSIZE) * BLOCKSIZE;
+            newWidth = random.nextInt(MoteurGraphique.getInstance().getWidth() / BLOCKSIZE) * BLOCKSIZE;
+            newHeight = random.nextInt(MoteurGraphique.getInstance().getHeight() / BLOCKSIZE) * BLOCKSIZE;
             verifPosition = true;
 
             for (Objet element : serpent) {

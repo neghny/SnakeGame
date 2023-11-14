@@ -1,9 +1,7 @@
 package kernel;
 
 import graphique.MoteurGraphique;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,57 +10,69 @@ import java.util.List;
  * Il est responsable de faire tourner le jeu.
  */
 public class Control {
-    private static boolean running;
+    private static Control INSTANCE;
+    private boolean running;
 
-    public Control() {
+    private Control() {
         running = true;
+    }
+
+    public static Control getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Control();
+        }
+        return INSTANCE;
     }
 
     public void run() {
         long startTime;
         long expectedRestart;
 
+        MoteurGraphique.getInstance().init_display(Gameplay.getInstance().getObjets());
+
         while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
+
             Gameplay.getInstance().mvtSnake();
+
             List<Objet[]> collisions = new ArrayList<>();
-            for (int i = 0; i < Gameplay.getInstance().getObjets().size(); i ++) {
-                Objet o1 = Gameplay.getInstance().getObjets().get(i);
+            for (int i = 0; i < Gameplay.getInstance().getObjets().size(); i++) {
+                Objet objet1 = Gameplay.getInstance().getObjets().get(i);
+
                 for (int j = i + 1; j < Gameplay.getInstance().getObjets().size(); j++) {
-                    Objet o2 = Gameplay.getInstance().getObjets().get(j);
-                    if (o1 != o2 && o1.percute(o2)) {
-                        // o1.eventCollision(o2);
-                        collisions.add(new Objet[]{o1, o2});
+                    Objet objet2 = Gameplay.getInstance().getObjets().get(j);
+
+                    if (objet1 != objet2 && objet1.percute(objet2)) {
+                        collisions.add(new Objet[]{objet1, objet2});
                     }
                 }
             }
             Gameplay.getInstance().gestionCollisions(collisions);
 
-            //Affichage contenant liste Serpent
             System.out.println("--------------------------------");
-            for (Objet k: Gameplay.getInstance().getSerpent()){
-                System.out.println(k.getXposition() + " " + k.getYposition());
+            for (Objet objet : Gameplay.getInstance().getSerpent()) {
+                System.out.println(objet.getXposition() + " " + objet.getYposition());
             }
             System.out.println("--------------------------------");
 
             if (expectedRestart > System.currentTimeMillis()) {
                 try {
-                    Thread.sleep(expectedRestart - System.currentTimeMillis()); } catch (InterruptedException ignored) {}
+                    Thread.sleep(expectedRestart - System.currentTimeMillis());
+                } catch (InterruptedException ignored) {
+                }
             }
             MoteurGraphique.getInstance().display(Gameplay.getInstance().getObjets());
         }
         System.exit(0);
     }
 
-    public static void setRunning(boolean running) {
-        Control.running = running;
+    public void exitGame() {
+        this.running = false;
     }
 
     public static void main(String[] args) {
-        var c = new Control();
-        MoteurGraphique.getInstance().init_display(Gameplay.getInstance().getObjets());
-        c.run();
+        Control.getInstance().run();
     }
 }
 

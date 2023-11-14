@@ -38,8 +38,8 @@ public class TestGameplay {
         double pommeX = testGameplay.getApple().getXposition();
         double pommeY = testGameplay.getApple().getYposition();
         int tailleBloc = testGameplay.getBLOCKSIZE();
-        Assertions.assertTrue(pommeX >= 0 && pommeX + tailleBloc <= MoteurGraphique.getWidth());
-        Assertions.assertTrue(pommeY >= 0 && pommeY + tailleBloc <= MoteurGraphique.getHeight());
+        Assertions.assertTrue(pommeX >= 0 && pommeX + tailleBloc <= MoteurGraphique.getInstance().getWidth());
+        Assertions.assertTrue(pommeY >= 0 && pommeY + tailleBloc <= MoteurGraphique.getInstance().getHeight());
     }
 
 
@@ -47,13 +47,12 @@ public class TestGameplay {
      * Permet de vérifier que lorsqu'il y a collision entre le serpent et une pomme :
      * - Le serpent doit grandir
      * - Le score augmente
-     *
      */
     @Test
     void testCollisionSerpentPomme() {
         int lastScore = testGameplay.getScore();
         testGameplay.collisionSerpentPomme();
-        assertEquals(lastScore + 1 , testGameplay.getScore());
+        assertEquals(lastScore + 1, testGameplay.getScore());
         Assertions.assertTrue(testGameplay.isGrowSnake());
     }
 
@@ -65,11 +64,11 @@ public class TestGameplay {
      */
     @Test
     void testAddObjetSerpent() {
-        Objet bloc = new Objet(2*testGameplay.getBLOCKSIZE(), 2*testGameplay.getBLOCKSIZE(), new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
+        Objet bloc = new Objet(2 * testGameplay.getBLOCKSIZE(), 2 * testGameplay.getBLOCKSIZE(), new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
         int serpentSizeBefore = testGameplay.getSerpent().size();
         testGameplay.addObjSerpent(bloc);
         assertEquals(serpentSizeBefore + 1, testGameplay.getSerpent().size());
-        Objet finQueue = testGameplay.getSerpent().get(testGameplay.getSerpent().size()-1);
+        Objet finQueue = testGameplay.getSerpent().get(testGameplay.getSerpent().size() - 1);
         assertEquals(bloc, finQueue);
         Assertions.assertTrue(testGameplay.getObjets().contains(bloc));
     }
@@ -79,10 +78,9 @@ public class TestGameplay {
      * Test de la fonction depassementBords()
      * On doit vérifier qu'on a bien une détection lorsque le serpent dépasse la fenêtre de jeu.
      * Pour cela, on crée un objet hors des limites de la fenêtre de jeu et on vérifie que la méthode depassementBords() renvoie true pour cet objet.
-     *
      */
     @Test
-    void testDepassementBord(){
+    void testDepassementBord() {
         Objet objetHorsLimites = new Objet(1010, 1010, new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
         Assertions.assertTrue(testGameplay.depassementBords(objetHorsLimites));
     }
@@ -124,7 +122,7 @@ public class TestGameplay {
      * Vérifier que les positions ont bien été mise à jour (chaque bloc prend la position du bloc qu'il suit) : têtes, dernier elements, chaque morceau de corps ?
      */
     @Test
-    void testMouvementSerpent(){
+    void testMouvementSerpent() {
         // TODO: Implémentation test mvtSerpent()
     }
 }

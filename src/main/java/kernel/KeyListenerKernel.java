@@ -3,15 +3,21 @@ package kernel;
 import java.awt.event.KeyEvent;
 
 public class KeyListenerKernel implements java.awt.event.KeyListener {
-    Gameplay gp;
+    private static KeyListenerKernel INSTANCE;
 
-    public KeyListenerKernel(Gameplay gameplay) {
-        gp = gameplay;
+    public static KeyListenerKernel getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new KeyListenerKernel();
+        }
+        return INSTANCE;
+    }
+
+    private KeyListenerKernel() {
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        gp.changerDirection(e);
+        Gameplay.getInstance().changerDirection(e);
     }
 
     @Override
@@ -19,7 +25,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
         int keyReleased = e.getKeyCode();
 
         if (keyReleased == KeyEvent.VK_ESCAPE) {
-            gp.quitterJeu();
+            Control.getInstance().exitGame();
         }
     }
 
