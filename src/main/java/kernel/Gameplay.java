@@ -9,57 +9,35 @@ import java.util.List;
 import java.util.Random;
 
 public class Gameplay {
+    private static Gameplay INSTANCE;
 
-    LinkedList<Objet> serpent;
-    LinkedList<Objet> objets;
-    Objet pomme;
-    int score = 0;
-    final int tailleBloc = 50;
+    private LinkedList<Objet> serpent;
+    private LinkedList<Objet> objets;
+    private Objet apple;
+    private int score = 0;
+    private final int BLOCKSIZE = 50;
     private boolean growSnake = false;
 
+    private Gameplay() {}
 
-    public Gameplay() {
-        // temporaire
-        demarrerPartie();
-    }
-
-    // MENU
-    /*
-    public class Boutton extends Objet {
-
-        public Boutton(int initialX, int initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
-            super(initialX, initialY, forme, pathImage, sizeImageX, sizeImageY);
+    public static Gameplay getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Gameplay();
         }
+        return INSTANCE;
     }
-     */
 
-    /**
-     * cette méthode permet d’instancier les boutons au lancement du jeu.
-     */
-    int btnW = 200;
-    int btnH = 100;
-    Objet btnJouer;
-    Objet btnDid;
-    Objet btnOpt;
-    Objet btnLead;
-    Objet btnQuit;
-    Objet[] menuPrinc;
-    Objet btnDif;
-    Objet btnCoul;
-    Objet[] menuOpt;
     public void instancierMenuPrincipal() {
-        // Créer bouton jouer.
-        btnJouer = new Objet(400, 100, new Rectangle(btnW, btnH), "btnJouer.png", btnW, btnH);
-        // Créer bouton didacticiel.
-        btnDid = new Objet(400, 250, new Rectangle(btnW, btnH), "btnDid.png", btnW, btnH);
-        // Créer bouton options.
-        btnOpt = new Objet(400, 400, new Rectangle(btnW, btnH), "btnOpt.png", btnW, btnH);
-        // Créer bouton voir leaderboard.
-        btnLead = new Objet(400, 550, new Rectangle(btnW, btnH), "btnLead.png", btnW, btnH);
-        // Créer bouton quitter.
-        btnQuit = new Objet(400, 700, new Rectangle(btnW, btnH), "btnQuit.png", btnW, btnH);
+        int buttonWidth = 200;
+        int buttonHeight = 100;
 
-        menuPrinc = new Objet[]{btnJouer, btnDid, btnOpt, btnLead, btnQuit};
+        Objet playButton = new Objet(400, 100, new Rectangle(buttonWidth, buttonHeight), "btnJouer.png", buttonWidth, buttonHeight);
+        Objet tutorialButton = new Objet(400, 250, new Rectangle(buttonWidth, buttonHeight), "btnDid.png", buttonWidth, buttonHeight);
+        Objet optionButton = new Objet(400, 400, new Rectangle(buttonWidth, buttonHeight), "btnOpt.png", buttonWidth, buttonHeight);
+        Objet leaderboardButton = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnLead.png", buttonWidth, buttonHeight);
+        Objet exitButton = new Objet(400, 700, new Rectangle(buttonWidth, buttonHeight), "btnQuit.png", buttonWidth, buttonHeight);
+
+        Objet[] mainMenu = new Objet[]{playButton, tutorialButton, optionButton, leaderboardButton, exitButton};
     }
 
     /**
@@ -69,12 +47,15 @@ public class Gameplay {
      * retourner au menu principal.
      */
     public void afficherMenuOptions() {
-        // Créer spinner difficulté
-        btnDif = new Objet(400, 350, new Rectangle(btnW, btnH), "btnDif.png", btnW, btnH);
-        // Créer spinner couleur
-        btnCoul = new Objet(400, 550, new Rectangle(btnW, btnH), "btnCoul.png", btnW, btnH);
+        int buttonWidth = 200;
+        int buttonHeight = 100;
 
-        menuOpt = new Objet[]{btnDif, btnCoul};
+        // Créer spinner difficulté
+        Objet difficultySpinner = new Objet(400, 350, new Rectangle(buttonWidth, buttonHeight), "btnDif.png", buttonWidth, buttonHeight);
+        // Créer spinner couleur
+        Objet colorSpinner = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnCoul.png", buttonWidth, buttonHeight);
+
+        Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner};
     }
 
     /**
@@ -123,7 +104,7 @@ public class Gameplay {
      */
     public void demarrerPartie() {
         // TODO : Recueillir informations joueur.
-        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc - 2, tailleBloc - 2), "pomme.png", tailleBloc, tailleBloc);
+        this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "pomme.png", BLOCKSIZE, BLOCKSIZE);
 //        this.serpent = new LinkedList<>();
         resetLevel();
     }
@@ -133,7 +114,7 @@ public class Gameplay {
 
         for (Objet[] collision : collisions){
             if (collision[0] == teteSerpent || collision[1] == teteSerpent){
-                if (collision[0] == pomme || collision[1] == pomme){
+                if (collision[0] == apple || collision[1] == apple){
                     collisionSerpentPomme();
                 } else if (
                         collision[0] == teteSerpent && serpent.contains(collision[1])
@@ -190,16 +171,16 @@ public class Gameplay {
         int keyPressed = e.getKeyCode();
         Objet teteSerpent = getTeteSerpent();
         if (keyPressed == KeyEvent.VK_RIGHT) {
-            teteSerpent.hspeed = tailleBloc;
+            teteSerpent.hspeed = BLOCKSIZE;
             teteSerpent.vspeed = 0;
         } else if (keyPressed == KeyEvent.VK_LEFT) {
-            teteSerpent.hspeed = -tailleBloc;
+            teteSerpent.hspeed = -BLOCKSIZE;
             teteSerpent.vspeed = 0;
         } else if (keyPressed == KeyEvent.VK_UP) {
-            teteSerpent.vspeed = -tailleBloc;
+            teteSerpent.vspeed = -BLOCKSIZE;
             teteSerpent.hspeed = 0;
         } else if (keyPressed == KeyEvent.VK_DOWN) {
-            teteSerpent.vspeed = tailleBloc;
+            teteSerpent.vspeed = BLOCKSIZE;
             teteSerpent.hspeed = 0;
         }
     }
@@ -230,11 +211,11 @@ public class Gameplay {
     public void resetLevel() { // si on a en parallele une liste objets, est ce qu'il faut pas supprimer les anciens membres du serpent de cette liste ?
         score = 0;
         // On réinitialise le serpent.
-        Objet bloc1 = createBlocSerpent(5*tailleBloc, 5*tailleBloc);
-        Objet bloc2 = createBlocSerpent(4*tailleBloc, 5*tailleBloc);
-        Objet bloc3 = createBlocSerpent(3*tailleBloc, 5*tailleBloc);
+        Objet bloc1 = createBlocSerpent(5* BLOCKSIZE, 5* BLOCKSIZE);
+        Objet bloc2 = createBlocSerpent(4* BLOCKSIZE, 5* BLOCKSIZE);
+        Objet bloc3 = createBlocSerpent(3* BLOCKSIZE, 5* BLOCKSIZE);
         objets = new LinkedList<>();
-        addObj(pomme);
+        addObj(apple);
         serpent = new LinkedList<>();
         addObjSerpent(bloc1);
         addObjSerpent(bloc2);
@@ -244,7 +225,7 @@ public class Gameplay {
     }
 
     public Objet createBlocSerpent(int x, int y) {
-        return new Objet(x, y, new Rectangle(tailleBloc - 2, tailleBloc - 2), "bloc.png", tailleBloc, tailleBloc);
+        return new Objet(x, y, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "bloc.png", BLOCKSIZE, BLOCKSIZE);
     }
 
     public void addObjSerpent(Objet o) {
@@ -265,8 +246,8 @@ public class Gameplay {
         boolean verifPosition;
         do {
             Random random = new Random();
-            newWidth = random.nextInt(MoteurGraphique.getWidth() / tailleBloc) * tailleBloc;
-            newHeight = random.nextInt(MoteurGraphique.getHeight() / tailleBloc) * tailleBloc;
+            newWidth = random.nextInt(MoteurGraphique.getWidth() / BLOCKSIZE) * BLOCKSIZE;
+            newHeight = random.nextInt(MoteurGraphique.getHeight() / BLOCKSIZE) * BLOCKSIZE;
             verifPosition = true;
 
             for (Objet element : serpent) {
@@ -276,7 +257,7 @@ public class Gameplay {
                 }
             }
         } while (!verifPosition);
-        pomme.setPosition(newWidth, newHeight);
+        apple.setPosition(newWidth, newHeight);
     }
 
     public void gameOver() {
@@ -295,16 +276,16 @@ public class Gameplay {
         return objets;
     }
 
-    public Objet getPomme() {
-        return pomme;
+    public Objet getApple() {
+        return apple;
     }
 
     public int getScore() {
         return score;
     }
 
-    public int getTailleBloc() {
-        return tailleBloc;
+    public int getBLOCKSIZE() {
+        return BLOCKSIZE;
     }
 
     public boolean isGrowSnake() {

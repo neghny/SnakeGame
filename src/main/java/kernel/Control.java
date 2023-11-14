@@ -13,15 +13,9 @@ import java.util.List;
  */
 public class Control {
     private static boolean running;
-    private final MoteurGraphique mg;
-    private final Gameplay gp;
-
 
     public Control() {
         running = true;
-        mg = MoteurGraphique.getInstance();
-        gp = new Gameplay();
-        mg.getMainFrame().addKeyListener(new KeyListenerKernel(gp)); // est ce que ici c'est pas gp.sepent plutot ? la pomme s'en fout  du clavier ?
     }
 
     public void run() {
@@ -31,23 +25,23 @@ public class Control {
         while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
-            gp.mvtSnake();
+            Gameplay.getInstance().mvtSnake();
             List<Objet[]> collisions = new ArrayList<>();
-            for (int i = 0; i < gp.objets.size(); i ++) {
-                Objet o1 = gp.objets.get(i);
-                for (int j = i + 1; j < gp.objets.size(); j++) {
-                    Objet o2 = gp.objets.get(j);
+            for (int i = 0; i < Gameplay.getInstance().getObjets().size(); i ++) {
+                Objet o1 = Gameplay.getInstance().getObjets().get(i);
+                for (int j = i + 1; j < Gameplay.getInstance().getObjets().size(); j++) {
+                    Objet o2 = Gameplay.getInstance().getObjets().get(j);
                     if (o1 != o2 && o1.percute(o2)) {
                         // o1.eventCollision(o2);
                         collisions.add(new Objet[]{o1, o2});
                     }
                 }
             }
-            gp.gestionCollisions(collisions);
+            Gameplay.getInstance().gestionCollisions(collisions);
 
             //Affichage contenant liste Serpent
             System.out.println("--------------------------------");
-            for (Objet k:gp.serpent){
+            for (Objet k: Gameplay.getInstance().getSerpent()){
                 System.out.println(k.getXposition() + " " + k.getYposition());
             }
             System.out.println("--------------------------------");
@@ -56,21 +50,9 @@ public class Control {
                 try {
                     Thread.sleep(expectedRestart - System.currentTimeMillis()); } catch (InterruptedException ignored) {}
             }
-            mg.display(gp.objets);
+            MoteurGraphique.getInstance().display(Gameplay.getInstance().getObjets());
         }
         System.exit(0);
-    }
-
-    public void addObjet(Objet o) {
-        gp.addObj(o);
-    }
-
-    public LinkedList<Objet> getObjets() {
-        return gp.objets;
-    }
-
-    public MoteurGraphique getMoteurGraphique() {
-        return mg;
     }
 
     public static void setRunning(boolean running) {
@@ -79,7 +61,7 @@ public class Control {
 
     public static void main(String[] args) {
         var c = new Control();
-        c.getMoteurGraphique().init_display(c.gp.objets);
+        MoteurGraphique.getInstance().init_display(Gameplay.getInstance().getObjets());
         c.run();
     }
 }

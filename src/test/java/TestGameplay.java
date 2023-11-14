@@ -17,7 +17,7 @@ public class TestGameplay {
 
     @BeforeEach
     void setUp() {
-        testGameplay = new Gameplay();
+        testGameplay = Gameplay.getInstance();
     }
 
     /**
@@ -28,16 +28,16 @@ public class TestGameplay {
      */
     @Test
     void testReplacerPomme() {
-        double lastXposition = testGameplay.getPomme().getXposition();
-        double lastYposition = testGameplay.getPomme().getYposition();
+        double lastXposition = testGameplay.getApple().getXposition();
+        double lastYposition = testGameplay.getApple().getYposition();
         testGameplay.replacerPomme();
-        Assertions.assertTrue((lastXposition != testGameplay.getPomme().getXposition()) || (lastYposition != testGameplay.getPomme().getYposition()));
+        Assertions.assertTrue((lastXposition != testGameplay.getApple().getXposition()) || (lastYposition != testGameplay.getApple().getYposition()));
         for (Objet element : testGameplay.getSerpent()) {
-            Assertions.assertTrue((element.getXposition() != testGameplay.getPomme().getXposition()) || (element.getYposition() != testGameplay.getPomme().getYposition()));
+            Assertions.assertTrue((element.getXposition() != testGameplay.getApple().getXposition()) || (element.getYposition() != testGameplay.getApple().getYposition()));
         }
-        double pommeX = testGameplay.getPomme().getXposition();
-        double pommeY = testGameplay.getPomme().getYposition();
-        int tailleBloc = testGameplay.getTailleBloc();
+        double pommeX = testGameplay.getApple().getXposition();
+        double pommeY = testGameplay.getApple().getYposition();
+        int tailleBloc = testGameplay.getBLOCKSIZE();
         Assertions.assertTrue(pommeX >= 0 && pommeX + tailleBloc <= MoteurGraphique.getWidth());
         Assertions.assertTrue(pommeY >= 0 && pommeY + tailleBloc <= MoteurGraphique.getHeight());
     }
@@ -65,7 +65,7 @@ public class TestGameplay {
      */
     @Test
     void testAddObjetSerpent() {
-        Objet bloc = new Objet(2*testGameplay.getTailleBloc(), 2*testGameplay.getTailleBloc(), new Rectangle(testGameplay.getTailleBloc(), testGameplay.getTailleBloc()), "bloc.png", testGameplay.getTailleBloc(), testGameplay.getTailleBloc());
+        Objet bloc = new Objet(2*testGameplay.getBLOCKSIZE(), 2*testGameplay.getBLOCKSIZE(), new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
         int serpentSizeBefore = testGameplay.getSerpent().size();
         testGameplay.addObjSerpent(bloc);
         assertEquals(serpentSizeBefore + 1, testGameplay.getSerpent().size());
@@ -83,7 +83,7 @@ public class TestGameplay {
      */
     @Test
     void testDepassementBord(){
-        Objet objetHorsLimites = new Objet(1010, 1010, new Rectangle(testGameplay.getTailleBloc(), testGameplay.getTailleBloc()), "bloc.png", testGameplay.getTailleBloc(), testGameplay.getTailleBloc());
+        Objet objetHorsLimites = new Objet(1010, 1010, new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
         Assertions.assertTrue(testGameplay.depassementBords(objetHorsLimites));
     }
 
@@ -110,14 +110,14 @@ public class TestGameplay {
     @Test
     void testResetLevel() {
         Random random = new Random();
-        testGameplay.getPomme().setPosition(random.nextInt(1000 / testGameplay.getTailleBloc()) * testGameplay.getTailleBloc(), random.nextInt(1000 / testGameplay.getTailleBloc()) * testGameplay.getTailleBloc());
-        double lastXposition = testGameplay.getPomme().getXposition();
-        double lastYposition = testGameplay.getPomme().getYposition();
+        testGameplay.getApple().setPosition(random.nextInt(1000 / testGameplay.getBLOCKSIZE()) * testGameplay.getBLOCKSIZE(), random.nextInt(1000 / testGameplay.getBLOCKSIZE()) * testGameplay.getBLOCKSIZE());
+        double lastXposition = testGameplay.getApple().getXposition();
+        double lastYposition = testGameplay.getApple().getYposition();
         testGameplay.resetLevel();
         assertEquals(0, testGameplay.getScore());
         assertEquals(3, testGameplay.getSerpent().size());
-        assertNotEquals(lastXposition, testGameplay.getPomme().getXposition());
-        assertNotEquals(lastYposition, testGameplay.getPomme().getYposition());
+        assertNotEquals(lastXposition, testGameplay.getApple().getXposition());
+        assertNotEquals(lastYposition, testGameplay.getApple().getYposition());
     }
 
     /**

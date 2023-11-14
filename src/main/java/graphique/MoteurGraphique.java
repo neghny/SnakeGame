@@ -1,5 +1,7 @@
 package graphique;
 
+import kernel.Gameplay;
+import kernel.KeyListenerKernel;
 import kernel.Objet;
 import javax.swing.*;
 import java.util.LinkedList;
@@ -18,6 +20,7 @@ public class MoteurGraphique {
         mainFrame.setResizable(true);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.addKeyListener(new KeyListenerKernel(Gameplay.getInstance()));
     }
 
     public static MoteurGraphique getInstance() {
