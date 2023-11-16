@@ -39,12 +39,7 @@ public class Control {
 
             gameplay.growSnake();
             gameplay.handleCollision();
-
-            System.out.println("--------------------------------");
-            for (Objet objet : gameplay.getSnake()) {
-                System.out.println(objet.getXposition() + " " + objet.getYposition());
-            }
-            System.out.println("--------------------------------");
+            gameplay.printSnakePosition();
 
             if (expectedRestart > System.currentTimeMillis()) {
                 try {

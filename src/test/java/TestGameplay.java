@@ -53,7 +53,7 @@ public class TestGameplay {
         int lastScore = testGameplay.getScore();
         testGameplay.collisionSerpentPomme();
         assertEquals(lastScore + 1, testGameplay.getScore());
-        Assertions.assertTrue(testGameplay.isGrowSnake());
+        Assertions.assertTrue(testGameplay.snakeGrowing());
     }
 
     /**
@@ -66,7 +66,7 @@ public class TestGameplay {
     void testAddObjetSerpent() {
         Objet bloc = new Objet(2 * testGameplay.getBLOCKSIZE(), 2 * testGameplay.getBLOCKSIZE(), new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
         int serpentSizeBefore = testGameplay.getSnake().size();
-        testGameplay.addObjSerpent(bloc);
+        testGameplay.addSnakeBlock(bloc);
         assertEquals(serpentSizeBefore + 1, testGameplay.getSnake().size());
         Objet finQueue = testGameplay.getSnake().get(testGameplay.getSnake().size() - 1);
         assertEquals(bloc, finQueue);

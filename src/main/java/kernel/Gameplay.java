@@ -12,18 +12,20 @@ import java.util.Random;
 public class Gameplay {
     private static Gameplay INSTANCE;
     private final MoteurGraphique moteurGraphique;
-    private final Gameplay gameplay;
 
-    private LinkedList<Objet> snake;
-    private LinkedList<Objet> objets;
+    private final LinkedList<Objet> snake;
+    private final LinkedList<Objet> objets;
     private Objet apple;
-    private int score = 0;
+    private int score;
     private final int BLOCKSIZE = 50;
-    private boolean growSnake = false;
+    private boolean growSnake;
 
     private Gameplay() {
         moteurGraphique = MoteurGraphique.getInstance();
-        gameplay = Gameplay.getInstance();
+        growSnake = false;
+        score = 0;
+        snake = new LinkedList<>();
+        objets = new LinkedList<>();
     }
 
     public static Gameplay getInstance() {
@@ -117,23 +119,29 @@ public class Gameplay {
         resetLevel();
     }
 
-    public void handleCollision() {
+    private List<Objet[]> getCollisions() {
         List<Objet[]> collisions = new ArrayList<>();
 
-        for (int i = 0; i < gameplay.getObjets().size(); i++) {
-            Objet objet1 = gameplay.getObjets().get(i);
+        for (int i = 0; i < objets.size(); i++) {
+            Objet objet1 = objets.get(i);
 
-            for (int j = i + 1; j < gameplay.getObjets().size(); j++) {
-                Objet objet2 = gameplay.getObjets().get(j);
+            for (int j = i + 1; j < objets.size(); j++) {
+                Objet objet2 = objets.get(j);
 
                 if (objet1 != objet2 && objet1.percute(objet2)) {
                     collisions.add(new Objet[]{objet1, objet2});
                 }
             }
         }
+        return collisions;
+    }
+    public void handleCollision() {
         Objet teteSerpent = getSnakeHead();
 
-        for (Objet[] collision : collisions) {
+        if (depassementBords(teteSerpent)) {
+            collisionSerpentMur();
+        }
+        for (Objet[] collision : getCollisions()) {
             if (collision[0] == teteSerpent || collision[1] == teteSerpent) {
                 if (collision[0] == apple || collision[1] == apple) {
                     collisionSerpentPomme();
@@ -142,13 +150,34 @@ public class Gameplay {
                 }
             }
         }
-        if (depassementBords(teteSerpent)) {
-            collisionSerpentMur();
-        }
     }
 
-    public Objet getSnakeHead() {
-        return snake.get(0);
+    public boolean depassementBords(Objet o) {
+        return (o.getXposition() + o.getSizeImageX() > moteurGraphique.getWidth()) || (o.getXposition() < 0) || (o.getYposition() + o.getSizeImageY() > moteurGraphique.getHeight()) || (o.getYposition() < 0);
+    }
+
+    public void collisionSerpentPomme() {
+        score += 1;
+        growSnake = true;
+        replacerPomme();
+    }
+
+    public void collisionSerpent() {
+        System.out.println("Collision Serpent");
+        gameOver();
+    }
+
+    public void collisionSerpentMur() {
+        System.out.println("Collision Mur");
+        gameOver();
+    }
+
+    public void printSnakePosition() {
+        System.out.println("--------------------------------");
+        for (Objet objet : snake) {
+            System.out.println(objet.getXposition() + " " + objet.getYposition());
+        }
+        System.out.println("--------------------------------");
     }
 
     public void growSnake() {
@@ -158,7 +187,7 @@ public class Gameplay {
                 for (Objet o : objets)
                     System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
                 Objet last = snake.getLast();
-                addObjSerpent(createBlocSerpent(last.getXposition(), last.getYposition()));
+                addSnakeBlock(createBlocSerpent(last.getXposition(), last.getYposition()));
                 growSnake = false;
             }
             for (int i = snake.size() - 1; i > 0; i--) {
@@ -187,39 +216,19 @@ public class Gameplay {
         }
     }
 
-    public boolean depassementBords(Objet o) {
-        return (o.getXposition() + o.getSizeImageX() > moteurGraphique.getWidth()) || (o.getXposition() < 0) || (o.getYposition() + o.getSizeImageY() > moteurGraphique.getHeight()) || (o.getYposition() < 0);
-    }
-
-    public void collisionSerpentPomme() {
-        score += 1;
-        growSnake = true;
-        replacerPomme();
-    }
-
-    public void collisionSerpent() {
-        System.out.println("Collision Serpent");
-        gameOver();
-    }
-
-    public void collisionSerpentMur() {
-        System.out.println("Collision Mur");
-        gameOver();
-    }
-
     public void resetLevel() { // si on a en parallele une liste objets, est ce qu'il faut pas supprimer les anciens membres du serpent de cette liste ?
         score = 0;
-        // On réinitialise le serpent.
+        objets.clear();
+        snake.clear();
+
         Objet bloc1 = createBlocSerpent(5 * BLOCKSIZE, 5 * BLOCKSIZE);
         Objet bloc2 = createBlocSerpent(4 * BLOCKSIZE, 5 * BLOCKSIZE);
         Objet bloc3 = createBlocSerpent(3 * BLOCKSIZE, 5 * BLOCKSIZE);
-        objets = new LinkedList<>();
-        addObj(apple);
-        snake = new LinkedList<>();
-        addObjSerpent(bloc1);
-        addObjSerpent(bloc2);
-        addObjSerpent(bloc3);
-        // On réinitialise la pomme.
+        addSnakeBlock(bloc1);
+        addSnakeBlock(bloc2);
+        addSnakeBlock(bloc3);
+
+        addObjet(apple);
         replacerPomme();
     }
 
@@ -227,12 +236,12 @@ public class Gameplay {
         return new Objet(x, y, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "bloc.png", BLOCKSIZE, BLOCKSIZE);
     }
 
-    public void addObjSerpent(Objet o) {
-        snake.add(o); // le nouvel élément est ajouté à la queue du serpent.
-        addObj(o);
+    public void addSnakeBlock(Objet o) {
+        snake.add(o);
+        addObjet(o);
     }
 
-    public void addObj(Objet o) {
+    public void addObjet(Objet o) {
         objets.add(o);
     }
 
@@ -262,7 +271,7 @@ public class Gameplay {
     public void gameOver() {
         System.out.println("Game Over!");
         System.out.println("Score final : " + score);
-        //on réinitialise le jeu
+
         resetLevel();
     }
 
@@ -287,7 +296,11 @@ public class Gameplay {
         return BLOCKSIZE;
     }
 
-    public boolean isGrowSnake() {
+    public boolean snakeGrowing() {
         return growSnake;
+    }
+
+    public Objet getSnakeHead() {
+        return snake.get(0);
     }
 }
