@@ -30,7 +30,7 @@ public class TestGameplay {
     void testReplacerPomme() {
         double lastXposition = testGameplay.getApple().getXposition();
         double lastYposition = testGameplay.getApple().getYposition();
-        testGameplay.replacerPomme();
+        testGameplay.replaceApple();
         Assertions.assertTrue((lastXposition != testGameplay.getApple().getXposition()) || (lastYposition != testGameplay.getApple().getYposition()));
         for (Objet element : testGameplay.getSnake()) {
             Assertions.assertTrue((element.getXposition() != testGameplay.getApple().getXposition()) || (element.getYposition() != testGameplay.getApple().getYposition()));
@@ -53,7 +53,7 @@ public class TestGameplay {
         int lastScore = testGameplay.getScore();
         testGameplay.collisionSerpentPomme();
         assertEquals(lastScore + 1, testGameplay.getScore());
-        Assertions.assertTrue(testGameplay.snakeGrowing());
+        Assertions.assertTrue(testGameplay.snakeIsGrowing());
     }
 
     /**
@@ -82,7 +82,7 @@ public class TestGameplay {
     @Test
     void testDepassementBord() {
         Objet objetHorsLimites = new Objet(1010, 1010, new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
-        Assertions.assertTrue(testGameplay.depassementBords(objetHorsLimites));
+        Assertions.assertTrue(testGameplay.isOutOfScreen(objetHorsLimites));
     }
 
     /**

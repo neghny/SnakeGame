@@ -17,8 +17,8 @@ import static java.lang.Math.abs;
 public class Objet extends JPanel {
     private int x;
     private int y;
-    public int hspeed = 0;
-    public int vspeed = 0;
+    private int horizontalSpeed;
+    private int verticalSpeed;
 
     private final IForme forme;
 
@@ -29,12 +29,13 @@ public class Objet extends JPanel {
     private int sizeImageY;
     private double rotation;
 
-    // Constructeur général.
     public Objet(int initialX, int initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
         this.pathImage = pathImage;
+        this.horizontalSpeed = 0;
+        this.verticalSpeed = 0;
 
         Logger logger = LogManager.getLogger(this.getClass());
         logger.debug("Construct a JPanel");
@@ -54,16 +55,18 @@ public class Objet extends JPanel {
         image = bufferedImage.getScaledInstance(sizeImageX, sizeImageY, Image.SCALE_DEFAULT);
     }
 
-    // Constructeur pour tests collision.
+    // for testCollision
     public Objet(int initialX, int initialY, IForme forme) {
         this.x = initialX;
         this.y = initialY;
         this.forme = forme;
+        this.horizontalSpeed = 0;
+        this.verticalSpeed = 0;
     }
 
     public void updatePosition() {
-        x += hspeed;
-        y += vspeed;
+        x += horizontalSpeed;
+        y += verticalSpeed;
     }
 
     public void setPosition(int x, int y){
@@ -99,7 +102,7 @@ public class Objet extends JPanel {
         return y;
     }
 
-    public int getSpeed() { return abs(hspeed) + abs(vspeed); }
+    public int getSpeed() { return abs(horizontalSpeed) + abs(verticalSpeed); }
 
     public void setRotation(double radians){
         rotation = radians;
@@ -115,6 +118,15 @@ public class Objet extends JPanel {
 
     public IForme getForme() {
         return forme;
+    }
+
+
+    public void setHorizontalSpeed(int horizontalSpeed) {
+        this.horizontalSpeed = horizontalSpeed;
+    }
+
+    public void setVerticalSpeed(int verticalSpeed) {
+        this.verticalSpeed = verticalSpeed;
     }
 }
 

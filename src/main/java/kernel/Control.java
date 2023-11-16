@@ -39,7 +39,7 @@ public class Control {
 
             gameplay.growSnake();
             gameplay.handleCollision();
-            gameplay.printSnakePosition();
+            //gameplay.printSnakePosition();
 
             if (expectedRestart > System.currentTimeMillis()) {
                 try {

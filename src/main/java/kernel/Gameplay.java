@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import static java.awt.event.KeyEvent.*;
+
 public class Gameplay {
     private static Gameplay INSTANCE;
     private final MoteurGraphique moteurGraphique;
@@ -138,28 +140,29 @@ public class Gameplay {
     public void handleCollision() {
         Objet teteSerpent = getSnakeHead();
 
-        if (depassementBords(teteSerpent)) {
+        if (isOutOfScreen(teteSerpent)) {
             collisionSerpentMur();
-        }
-        for (Objet[] collision : getCollisions()) {
-            if (collision[0] == teteSerpent || collision[1] == teteSerpent) {
-                if (collision[0] == apple || collision[1] == apple) {
-                    collisionSerpentPomme();
-                } else if (collision[0] == teteSerpent && snake.contains(collision[1]) || collision[1] == teteSerpent && snake.contains(collision[0])) {
-                    collisionSerpent();
+        } else {
+            for (Objet[] collision : getCollisions()) {
+                if (collision[0] == teteSerpent || collision[1] == teteSerpent) {
+                    if (collision[0] == apple || collision[1] == apple) {
+                        collisionSerpentPomme();
+                    } else if (collision[0] == teteSerpent && snake.contains(collision[1]) || collision[1] == teteSerpent && snake.contains(collision[0])) {
+                        collisionSerpent();
+                    }
                 }
             }
         }
     }
 
-    public boolean depassementBords(Objet o) {
+    public boolean isOutOfScreen(Objet o) {
         return (o.getXposition() + o.getSizeImageX() > moteurGraphique.getWidth()) || (o.getXposition() < 0) || (o.getYposition() + o.getSizeImageY() > moteurGraphique.getHeight()) || (o.getYposition() < 0);
     }
 
     public void collisionSerpentPomme() {
         score += 1;
         growSnake = true;
-        replacerPomme();
+        replaceApple();
     }
 
     public void collisionSerpent() {
@@ -199,24 +202,33 @@ public class Gameplay {
     }
 
     public void changeDirection(KeyEvent e) {
-        int keyPressed = e.getKeyCode();
         Objet teteSerpent = getSnakeHead();
-        if (keyPressed == KeyEvent.VK_RIGHT) {
-            teteSerpent.hspeed = BLOCKSIZE;
-            teteSerpent.vspeed = 0;
-        } else if (keyPressed == KeyEvent.VK_LEFT) {
-            teteSerpent.hspeed = -BLOCKSIZE;
-            teteSerpent.vspeed = 0;
-        } else if (keyPressed == KeyEvent.VK_UP) {
-            teteSerpent.vspeed = -BLOCKSIZE;
-            teteSerpent.hspeed = 0;
-        } else if (keyPressed == KeyEvent.VK_DOWN) {
-            teteSerpent.vspeed = BLOCKSIZE;
-            teteSerpent.hspeed = 0;
+
+        switch(e.getKeyCode()) {
+            case VK_RIGHT: {
+                teteSerpent.setHorizontalSpeed(BLOCKSIZE);
+                teteSerpent.setVerticalSpeed(0);
+                break;
+            }
+            case VK_LEFT: {
+                teteSerpent.setHorizontalSpeed(-BLOCKSIZE);
+                teteSerpent.setVerticalSpeed(0);
+                break;
+            }
+            case VK_UP: {
+                teteSerpent.setHorizontalSpeed(0);
+                teteSerpent.setVerticalSpeed(-BLOCKSIZE);
+                break;
+            }
+            case VK_DOWN: {
+                teteSerpent.setHorizontalSpeed(0);
+                teteSerpent.setVerticalSpeed(BLOCKSIZE);
+                break;
+            }
         }
     }
 
-    public void resetLevel() { // si on a en parallele une liste objets, est ce qu'il faut pas supprimer les anciens membres du serpent de cette liste ?
+    public void resetLevel() {
         score = 0;
         objets.clear();
         snake.clear();
@@ -229,7 +241,7 @@ public class Gameplay {
         addSnakeBlock(bloc3);
 
         addObjet(apple);
-        replacerPomme();
+        replaceApple();
     }
 
     public Objet createBlocSerpent(int x, int y) {
@@ -248,23 +260,24 @@ public class Gameplay {
     /**
      * Replace la pomme à une position aléatoire, en prenant en compte la position du serpent, la taille de la fenêtre
      */
-    public void replacerPomme() {
+    public void replaceApple() {
         int newWidth;
         int newHeight;
-        boolean verifPosition;
+        boolean checkPosition;
+
         do {
             Random random = new Random();
             newWidth = random.nextInt(moteurGraphique.getWidth() / BLOCKSIZE) * BLOCKSIZE;
             newHeight = random.nextInt(moteurGraphique.getHeight() / BLOCKSIZE) * BLOCKSIZE;
-            verifPosition = true;
+            checkPosition = true;
 
             for (Objet element : snake) {
                 if (element.getXposition() == newWidth && element.getYposition() == newHeight) {
-                    verifPosition = false;
+                    checkPosition = false;
                     break;
                 }
             }
-        } while (!verifPosition);
+        } while (!checkPosition);
         apple.setPosition(newWidth, newHeight);
     }
 
@@ -296,7 +309,7 @@ public class Gameplay {
         return BLOCKSIZE;
     }
 
-    public boolean snakeGrowing() {
+    public boolean snakeIsGrowing() {
         return growSnake;
     }
 
