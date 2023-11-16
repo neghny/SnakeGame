@@ -17,7 +17,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Gameplay.getInstance().changerDirection(e);
+        Gameplay.getInstance().changeDirection(e);
     }
 
     @Override

@@ -4,14 +4,17 @@ import graphique.MoteurGraphique;
 import physique.Rectangle;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class Gameplay {
     private static Gameplay INSTANCE;
+    private final MoteurGraphique moteurGraphique;
+    private final Gameplay gameplay;
 
-    private LinkedList<Objet> serpent;
+    private LinkedList<Objet> snake;
     private LinkedList<Objet> objets;
     private Objet apple;
     private int score = 0;
@@ -19,6 +22,8 @@ public class Gameplay {
     private boolean growSnake = false;
 
     private Gameplay() {
+        moteurGraphique = MoteurGraphique.getInstance();
+        gameplay = Gameplay.getInstance();
     }
 
     public static Gameplay getInstance() {
@@ -28,7 +33,8 @@ public class Gameplay {
         return INSTANCE;
     }
 
-    public void instancierMenuPrincipal() {
+    @SuppressWarnings("unused")
+    public void instantiateMainMenu() {
         int buttonWidth = 200;
         int buttonHeight = 100;
 
@@ -39,6 +45,8 @@ public class Gameplay {
         Objet exitButton = new Objet(400, 700, new Rectangle(buttonWidth, buttonHeight), "btnQuit.png", buttonWidth, buttonHeight);
 
         Objet[] mainMenu = new Objet[]{playButton, tutorialButton, optionButton, leaderboardButton, exitButton};
+
+        // TODO
     }
 
     /**
@@ -47,7 +55,8 @@ public class Gameplay {
      * L'utilisateur peut choisir différentes options telles que le niveau de difficulté, la couleur du serpent, ou
      * retourner au menu principal.
      */
-    public void afficherMenuOptions() {
+    @SuppressWarnings("unused")
+    public void showOptionMenu() {
         int buttonWidth = 200;
         int buttonHeight = 100;
 
@@ -57,29 +66,34 @@ public class Gameplay {
         Objet colorSpinner = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnCoul.png", buttonWidth, buttonHeight);
 
         Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner};
+
+        // TODO
     }
 
     /**
      * est appelée lorsque l'utilisateur choisit l'option pour définir le niveau de difficulté. Cette méthode gère la
      * logique associée à la configuration du niveau de difficulté.
      */
-    public void choisirNiveauDifficulte() {
-
+    @SuppressWarnings("unused")
+    public void chooseDifficultyLevel() {
+        // TODO
     }
 
     /**
      * est appelée lorsque l'utilisateur choisit l'option pour définir la couleur du serpent. Cette méthode gère la
      * logique associée à la configuration de la couleur du serpent.
      */
-    public void choisirCouleurSerpent() {
-
+    @SuppressWarnings("unused")
+    public void chooseSnakeColor() {
+        // TODO
     }
 
     /**
      * cette méthode permet juste d’afficher les instructions/Règles du jeu.
      */
-    public void afficherInstructions() {
-
+    @SuppressWarnings("unused")
+    public void showInstruction() {
+        // TODO
     }
 
     /**
@@ -87,8 +101,9 @@ public class Gameplay {
      * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
      * qu'aucun classement n'est disponible.
      */
-    public void consulterClassements() {
-
+    @SuppressWarnings("unused")
+    public void showLeaderboard() {
+        // TODO
     }
 
     /**
@@ -96,21 +111,33 @@ public class Gameplay {
      * utiliser pour initialiser une nouvelle partie du jeu. Elle  est appelée lorsque l'utilisateur choisit de démarrer
      * une nouvelle partie dans le menu principal
      */
-    public void demarrerPartie() {
+    public void startGame() {
         // TODO : Recueillir informations joueur.
         this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "pomme.png", BLOCKSIZE, BLOCKSIZE);
-//        this.serpent = new LinkedList<>();
         resetLevel();
     }
 
-    public void gestionCollisions(List<Objet[]> collisions) {
-        Objet teteSerpent = getTeteSerpent();
+    public void handleCollision() {
+        List<Objet[]> collisions = new ArrayList<>();
+
+        for (int i = 0; i < gameplay.getObjets().size(); i++) {
+            Objet objet1 = gameplay.getObjets().get(i);
+
+            for (int j = i + 1; j < gameplay.getObjets().size(); j++) {
+                Objet objet2 = gameplay.getObjets().get(j);
+
+                if (objet1 != objet2 && objet1.percute(objet2)) {
+                    collisions.add(new Objet[]{objet1, objet2});
+                }
+            }
+        }
+        Objet teteSerpent = getSnakeHead();
 
         for (Objet[] collision : collisions) {
             if (collision[0] == teteSerpent || collision[1] == teteSerpent) {
                 if (collision[0] == apple || collision[1] == apple) {
                     collisionSerpentPomme();
-                } else if (collision[0] == teteSerpent && serpent.contains(collision[1]) || collision[1] == teteSerpent && serpent.contains(collision[0])) {
+                } else if (collision[0] == teteSerpent && snake.contains(collision[1]) || collision[1] == teteSerpent && snake.contains(collision[0])) {
                     collisionSerpent();
                 }
             }
@@ -120,31 +147,31 @@ public class Gameplay {
         }
     }
 
-    public Objet getTeteSerpent() {
-        return serpent.get(0);
+    public Objet getSnakeHead() {
+        return snake.get(0);
     }
 
-    public void mvtSnake() {
-        Objet teteSerpent = getTeteSerpent();
+    public void growSnake() {
+        Objet teteSerpent = getSnakeHead();
         if (teteSerpent.getSpeed() > 0) {
             if (growSnake) {
                 for (Objet o : objets)
                     System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
-                Objet last = serpent.getLast();
+                Objet last = snake.getLast();
                 addObjSerpent(createBlocSerpent(last.getXposition(), last.getYposition()));
                 growSnake = false;
             }
-            for (int i = serpent.size() - 1; i > 0; i--) {
-                Objet suivant = serpent.get(i - 1);
-                serpent.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
+            for (int i = snake.size() - 1; i > 0; i--) {
+                Objet suivant = snake.get(i - 1);
+                snake.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
             }
         }
         teteSerpent.updatePosition();
     }
 
-    public void changerDirection(KeyEvent e) {
+    public void changeDirection(KeyEvent e) {
         int keyPressed = e.getKeyCode();
-        Objet teteSerpent = getTeteSerpent();
+        Objet teteSerpent = getSnakeHead();
         if (keyPressed == KeyEvent.VK_RIGHT) {
             teteSerpent.hspeed = BLOCKSIZE;
             teteSerpent.vspeed = 0;
@@ -161,7 +188,7 @@ public class Gameplay {
     }
 
     public boolean depassementBords(Objet o) {
-        return (o.getXposition() + o.getSizeImageX() > MoteurGraphique.getInstance().getWidth()) || (o.getXposition() < 0) || (o.getYposition() + o.getSizeImageY() > MoteurGraphique.getInstance().getHeight()) || (o.getYposition() < 0);
+        return (o.getXposition() + o.getSizeImageX() > moteurGraphique.getWidth()) || (o.getXposition() < 0) || (o.getYposition() + o.getSizeImageY() > moteurGraphique.getHeight()) || (o.getYposition() < 0);
     }
 
     public void collisionSerpentPomme() {
@@ -188,7 +215,7 @@ public class Gameplay {
         Objet bloc3 = createBlocSerpent(3 * BLOCKSIZE, 5 * BLOCKSIZE);
         objets = new LinkedList<>();
         addObj(apple);
-        serpent = new LinkedList<>();
+        snake = new LinkedList<>();
         addObjSerpent(bloc1);
         addObjSerpent(bloc2);
         addObjSerpent(bloc3);
@@ -201,7 +228,7 @@ public class Gameplay {
     }
 
     public void addObjSerpent(Objet o) {
-        serpent.add(o); // le nouvel élément est ajouté à la queue du serpent.
+        snake.add(o); // le nouvel élément est ajouté à la queue du serpent.
         addObj(o);
     }
 
@@ -218,11 +245,11 @@ public class Gameplay {
         boolean verifPosition;
         do {
             Random random = new Random();
-            newWidth = random.nextInt(MoteurGraphique.getInstance().getWidth() / BLOCKSIZE) * BLOCKSIZE;
-            newHeight = random.nextInt(MoteurGraphique.getInstance().getHeight() / BLOCKSIZE) * BLOCKSIZE;
+            newWidth = random.nextInt(moteurGraphique.getWidth() / BLOCKSIZE) * BLOCKSIZE;
+            newHeight = random.nextInt(moteurGraphique.getHeight() / BLOCKSIZE) * BLOCKSIZE;
             verifPosition = true;
 
-            for (Objet element : serpent) {
+            for (Objet element : snake) {
                 if (element.getXposition() == newWidth && element.getYposition() == newHeight) {
                     verifPosition = false;
                     break;
@@ -240,8 +267,8 @@ public class Gameplay {
     }
 
 
-    public LinkedList<Objet> getSerpent() {
-        return serpent;
+    public LinkedList<Objet> getSnake() {
+        return snake;
     }
 
     public LinkedList<Objet> getObjets() {

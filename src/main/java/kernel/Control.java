@@ -1,8 +1,6 @@
 package kernel;
 
 import graphique.MoteurGraphique;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Control est le contrôle-commande du jeu-vidéo.
@@ -11,10 +9,14 @@ import java.util.List;
  */
 public class Control {
     private static Control INSTANCE;
+    private final MoteurGraphique moteurGraphique;
+    private final Gameplay gameplay;
     private boolean running;
 
     private Control() {
         running = true;
+        moteurGraphique = MoteurGraphique.getInstance();
+        gameplay = Gameplay.getInstance();
     }
 
     public static Control getInstance() {
@@ -28,31 +30,18 @@ public class Control {
         long startTime;
         long expectedRestart;
 
-        Gameplay.getInstance().demarrerPartie();
-        MoteurGraphique.getInstance().init_display(Gameplay.getInstance().getObjets());
+        gameplay.startGame();
+        moteurGraphique.init_display(gameplay.getObjets());
 
         while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
 
-            Gameplay.getInstance().mvtSnake();
-
-            List<Objet[]> collisions = new ArrayList<>();
-            for (int i = 0; i < Gameplay.getInstance().getObjets().size(); i++) {
-                Objet objet1 = Gameplay.getInstance().getObjets().get(i);
-
-                for (int j = i + 1; j < Gameplay.getInstance().getObjets().size(); j++) {
-                    Objet objet2 = Gameplay.getInstance().getObjets().get(j);
-
-                    if (objet1 != objet2 && objet1.percute(objet2)) {
-                        collisions.add(new Objet[]{objet1, objet2});
-                    }
-                }
-            }
-            Gameplay.getInstance().gestionCollisions(collisions);
+            gameplay.growSnake();
+            gameplay.handleCollision();
 
             System.out.println("--------------------------------");
-            for (Objet objet : Gameplay.getInstance().getSerpent()) {
+            for (Objet objet : gameplay.getSnake()) {
                 System.out.println(objet.getXposition() + " " + objet.getYposition());
             }
             System.out.println("--------------------------------");
@@ -63,7 +52,7 @@ public class Control {
                 } catch (InterruptedException ignored) {
                 }
             }
-            MoteurGraphique.getInstance().display(Gameplay.getInstance().getObjets());
+            moteurGraphique.display(gameplay.getObjets());
         }
         System.exit(0);
     }

@@ -32,7 +32,7 @@ public class TestGameplay {
         double lastYposition = testGameplay.getApple().getYposition();
         testGameplay.replacerPomme();
         Assertions.assertTrue((lastXposition != testGameplay.getApple().getXposition()) || (lastYposition != testGameplay.getApple().getYposition()));
-        for (Objet element : testGameplay.getSerpent()) {
+        for (Objet element : testGameplay.getSnake()) {
             Assertions.assertTrue((element.getXposition() != testGameplay.getApple().getXposition()) || (element.getYposition() != testGameplay.getApple().getYposition()));
         }
         double pommeX = testGameplay.getApple().getXposition();
@@ -65,10 +65,10 @@ public class TestGameplay {
     @Test
     void testAddObjetSerpent() {
         Objet bloc = new Objet(2 * testGameplay.getBLOCKSIZE(), 2 * testGameplay.getBLOCKSIZE(), new Rectangle(testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE()), "bloc.png", testGameplay.getBLOCKSIZE(), testGameplay.getBLOCKSIZE());
-        int serpentSizeBefore = testGameplay.getSerpent().size();
+        int serpentSizeBefore = testGameplay.getSnake().size();
         testGameplay.addObjSerpent(bloc);
-        assertEquals(serpentSizeBefore + 1, testGameplay.getSerpent().size());
-        Objet finQueue = testGameplay.getSerpent().get(testGameplay.getSerpent().size() - 1);
+        assertEquals(serpentSizeBefore + 1, testGameplay.getSnake().size());
+        Objet finQueue = testGameplay.getSnake().get(testGameplay.getSnake().size() - 1);
         assertEquals(bloc, finQueue);
         Assertions.assertTrue(testGameplay.getObjets().contains(bloc));
     }
@@ -113,7 +113,7 @@ public class TestGameplay {
         double lastYposition = testGameplay.getApple().getYposition();
         testGameplay.resetLevel();
         assertEquals(0, testGameplay.getScore());
-        assertEquals(3, testGameplay.getSerpent().size());
+        assertEquals(3, testGameplay.getSnake().size());
         assertNotEquals(lastXposition, testGameplay.getApple().getXposition());
         assertNotEquals(lastYposition, testGameplay.getApple().getYposition());
     }
