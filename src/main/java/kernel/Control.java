@@ -48,6 +48,7 @@ public class Control {
 
             if (expectedRestart > System.currentTimeMillis()) {
                 try {
+                    //noinspection BusyWait
                     Thread.sleep(expectedRestart - System.currentTimeMillis());
                 } catch (InterruptedException ignored) {
                 }
