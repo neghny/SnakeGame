@@ -27,7 +27,6 @@ public class Objet extends JPanel {
     private Image image;
     private int sizeImageX;
     private int sizeImageY;
-    private double rotation;
 
     public Objet(int initialX, int initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
         this.x = initialX;
@@ -82,7 +81,6 @@ public class Objet extends JPanel {
         AffineTransform transform = new AffineTransform();
 
         transform.translate((double) sizeImageX /2, (double) sizeImageY /2);
-        transform.rotate(rotation);
         transform.translate((double) -sizeImageX /2, (double) -sizeImageY /2);
 
         g2d.drawImage(image, transform, this);
@@ -92,10 +90,6 @@ public class Objet extends JPanel {
         return forme.percute(this, other);
     }
 
-    public void eventCollision(Objet other) {
-        System.out.println(other.pathImage + " (" + other.getXposition() + "," + other.getYposition() + ")");
-    }
-
     public int getXposition() { return x; }
 
     public int getYposition() {
@@ -103,10 +97,6 @@ public class Objet extends JPanel {
     }
 
     public int getSpeed() { return abs(horizontalSpeed) + abs(verticalSpeed); }
-
-    public void setRotation(double radians){
-        rotation = radians;
-    }
 
     public int getSizeImageX() {
         return sizeImageX;
