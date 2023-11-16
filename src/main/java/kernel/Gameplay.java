@@ -175,6 +175,7 @@ public class Gameplay {
         gameOver();
     }
 
+    @SuppressWarnings("unused")
     public void printSnakePosition() {
         System.out.println("--------------------------------");
         for (Objet objet : snake) {
