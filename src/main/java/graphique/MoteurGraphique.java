@@ -44,6 +44,11 @@ public class MoteurGraphique {
         }
         mainFrame.setVisible(true);
     }
+
+    /**
+     * Met à jour les objets (position, taille, etc) sur l'écran
+     * @param objects objets à mettre à jour
+     */
     public void display(LinkedList<Objet> objects){
         for (Objet o : objects){
             o.setBounds(o.getXposition(), o.getYposition(), o.getSizeImageX(), o.getSizeImageY());
