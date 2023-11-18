@@ -133,7 +133,7 @@ public class Gameplay {
      */
     public void demarrerPartie() {
         // TODO : Recueillir informations joueur.
-        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc - 2, tailleBloc - 2), "pomme.png", tailleBloc, tailleBloc);
+        this.pomme = new Objet(0, 0, new Rectangle(tailleBloc - 2, tailleBloc - 2), "red_apple.png", tailleBloc, tailleBloc);
 //        this.serpent = new LinkedList<>();
         resetLevel();
     }
