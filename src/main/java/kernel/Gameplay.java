@@ -136,6 +136,11 @@ public class Gameplay {
         resetLevel();
     }
 
+    /**
+     * Gère les collisions communiquées par le moteur control. Selon le type de collision (serpent-serpent,
+     * serpent-pomme, serpent-mur) une méthode adéquate est appelée.
+     * @param collisions liste des collisions fournie par le moteur Control
+     */
     public void gestionCollisions(List<Objet[]> collisions){
         Objet teteSerpent = getTeteSerpent();
 
@@ -211,6 +216,11 @@ public class Gameplay {
         }
     }
 
+    /**
+     * Détecte le dépassement des bords de la fenêtre par un objet
+     * @param o objet à tester
+     * @return true si l'objet dépasse des bords, false sinon
+     */
     public boolean depassementBords(Objet o){
         return (o.getXposition() + o.getSizeImageX() > width)
                 || (o.getXposition() < 0)
@@ -326,17 +336,33 @@ public class Gameplay {
         return height;
     }
 
+    /**
+     * Demande le nom du/de la joueur-euse et l'inscrit dans le fichier de scores avant d'afficher les 10 meilleurs scores
+     */
     public void gestionScores(){
         String nom = demanderNom();
         ecrireScore(nom, score, fichierScores);
-        recupererMeilleurs(fichierScores);
+        List<Score> meilleursScores = recupererMeilleurs(fichierScores);
+        for (Score s : meilleursScores){ // affichage dans le terminal pour l'instant TODO à changer
+            System.out.println(s);
+        }
     }
 
+    /**
+     * Demande et récupère le nom de la personne qui vient de finir sa partie
+     * @return le nom récupéré
+     */
     private String demanderNom() {
         // TODO : récupérer le pseudo entré dans le menu quand ce sera implémenté
         return "pseudo";
     }
 
+    /**
+     * Inscrit un nouveau score dans le fichier de scores
+     * @param nom pseudo de la personne qui joue
+     * @param score score de la partie achevée
+     * @param cheminAcces chemin d'accès vers le fichier de scores
+     */
     private void ecrireScore(String nom, int score, String cheminAcces){
         try {
             BufferedWriter ecrireScores = new BufferedWriter(new FileWriter(cheminAcces, true));
@@ -349,8 +375,14 @@ public class Gameplay {
         }
     }
 
+    /**
+     * Lit le fichier de scores pour récupérer les 10 meilleurs
+     * @param cheminAcces chemin d'accès vers le fichier de scores
+     * @return la liste des 10 meilleurs scores
+     */
     private List<Score> recupererMeilleurs(String cheminAcces){
         List<Score> scores = new ArrayList<>();
+        List<Score> meilleursScores = new ArrayList<>();
         try {
             BufferedReader lireScores = new BufferedReader(new FileReader(cheminAcces));
             String ligne = lireScores.readLine();
@@ -359,12 +391,16 @@ public class Gameplay {
                 String nom = contenu[0];
                 int score = Integer.parseInt(contenu[1]);
                 scores.add(new Score(nom, score));
+                ligne = lireScores.readLine();
             }
             lireScores.close();
             scores.sort(null);
+            for (int i = 0; i < 10; i++){
+                meilleursScores.add(scores.get(i));
+            }
         } catch (IOException e){
             throw new RuntimeException(e);
         }
-        return scores;
+        return meilleursScores;
     }
 }

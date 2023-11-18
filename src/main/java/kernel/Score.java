@@ -17,6 +17,10 @@ public class Score implements Comparable<Score>{
         return score;
     }
 
+    @Override
+    public String toString(){
+        return name + " " + score + "pts";
+    }
 
     @Override
     public int compareTo(Score o) {
