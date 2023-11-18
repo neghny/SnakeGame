@@ -123,6 +123,7 @@ public class TestGameplay {
 
     /**
      * Vérifier que les positions ont bien été mise à jour (chaque bloc prend la position du bloc qu'il suit) : têtes, dernier elements, chaque morceau de corps et que le serpent à bien grandit
+     * Vérifier qu'un nouvel objet est ajouté au serpent et à la liste d'objets.
      */
     @Test
     void testMouvementSerpent(){
@@ -133,6 +134,7 @@ public class TestGameplay {
             YlastPositions[i] = testGameplay.getSerpent().get(i).getYposition();
         }
         int lastSizeSerpent = testGameplay.getSerpent().size();
+        int lastNumberObjets = testGameplay.getObjets().size();
 
         testGameplay.getTeteSerpent().hspeed = testGameplay.getTailleBloc();
         testGameplay.setGrowSnake(true);
@@ -150,9 +152,16 @@ public class TestGameplay {
         assertEquals(boutCorps.getXposition(), XlastPositions[XlastPositions.length - 1]);
         assertEquals(boutCorps.getYposition(), YlastPositions[YlastPositions.length - 1]);
 
+        assertEquals(lastNumberObjets + 1, testGameplay.getObjets().size());
         assertEquals(lastSizeSerpent + 1, testGameplay.getSerpent().size());
     }
 
+    @Test
+    void testGameOver (){
+        Objet expectedGameOver = new Objet(testGameplay.getWidth() / 2, testGameplay.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
+        testGameplay.gameOver();
+        assertEquals(expectedGameOver, expectedGameOver = new Objet(testGameplay.getWidth() / 2, testGameplay.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100));
+    }
 
 
 }
