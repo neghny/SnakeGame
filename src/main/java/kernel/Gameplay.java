@@ -381,4 +381,8 @@ public class Gameplay {
     public boolean isGrowSnake() {
         return growSnake;
     }
+
+    public void setGrowSnake(boolean growSnake) {
+        this.growSnake = growSnake;
+    }
 }
