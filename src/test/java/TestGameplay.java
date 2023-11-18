@@ -158,10 +158,11 @@ public class TestGameplay {
 
     @Test
     void testGameOver (){
+        int lastSize = testGameplay.getObjets().size();
         Objet expectedGameOver = new Objet(testGameplay.getWidth() / 2, testGameplay.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
         testGameplay.gameOver();
-        assertEquals(expectedGameOver, expectedGameOver = new Objet(testGameplay.getWidth() / 2, testGameplay.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100));
+        //assertEquals(expectedGameOver, testGameplay.getObjets().getLast());
+        assertEquals(lastSize + 1, testGameplay.getObjets().size());
     }
-
 
 }

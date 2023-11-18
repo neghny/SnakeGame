@@ -146,5 +146,17 @@ public class Objet extends JPanel {
     public IForme getForme() {
         return forme;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Objet objet)) return false;
+        return getX() == objet.getX() && getY() == objet.getY() && hspeed == objet.hspeed && vspeed == objet.vspeed && getSizeImageX() == objet.getSizeImageX() && getSizeImageY() == objet.getSizeImageY() && Double.compare(objet.rotation, rotation) == 0 && bufferedImage.equals(objet.bufferedImage) && pathImage.equals(objet.pathImage) && image.equals(objet.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY(), hspeed, vspeed, getForme(), bufferedImage, pathImage, image, getSizeImageX(), getSizeImageY(), rotation);
+    }
 }
 
