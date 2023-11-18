@@ -134,6 +134,7 @@ public class TestGameplay {
         }
         int lastSizeSerpent = testGameplay.getSerpent().size();
 
+        testGameplay.getTeteSerpent().hspeed = testGameplay.getTailleBloc();
         testGameplay.setGrowSnake(true);
         testGameplay.mvtSnake();
 
@@ -149,7 +150,7 @@ public class TestGameplay {
         assertEquals(boutCorps.getXposition(), XlastPositions[XlastPositions.length - 1]);
         assertEquals(boutCorps.getYposition(), YlastPositions[YlastPositions.length - 1]);
 
-        assertEquals(lastSizeSerpent, testGameplay.getSerpent().size());
+        assertEquals(lastSizeSerpent + 1, testGameplay.getSerpent().size());
     }
 
 
