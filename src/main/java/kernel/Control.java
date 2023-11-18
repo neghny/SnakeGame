@@ -28,6 +28,11 @@ public class Control {
         mg.getMainFrame().addKeyListener(new KeyListenerKernel(gp)); // est ce que ici c'est pas gp.sepent plutot ? la pomme s'en fout  du clavier ?
     }
 
+    /**
+     * Fonction principale du jeu. Elle gère le passage d'une frame à la suivante, en effectuant les opérations
+     * nécessaires au bon fonctionnement du jeu : demander la mise à jour de l'emplacement du serpent, détecter les
+     * collisions et les envoyer au moteur gameplay, mettre à jour l'affichage
+     */
     public void run() {
         long startTime;
         long expectedRestart;
@@ -35,7 +40,7 @@ public class Control {
         while (running) {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
-            gp.mvtSnake();
+            gp.mvtSnake(); // je pense qu'on va avoir la remarque que c'est propre au snake et donc que ça devrait pas être dans Control
             List<Objet[]> collisions = new ArrayList<>();
             for (int i = 0; i < gp.objets.size(); i ++) {
                 Objet o1 = gp.objets.get(i);
