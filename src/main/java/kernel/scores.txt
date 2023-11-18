@@ -1,0 +1,10 @@
+pseudo 0
+pseudo 0
+pseudo 1
+pseudo 0
+pseudo 0
+pseudo 0
+pseudo 1
+pseudo 5
+pseudo 0
+pseudo 0

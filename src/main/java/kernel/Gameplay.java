@@ -2,7 +2,10 @@ package kernel;
 
 import physique.Rectangle;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -17,6 +20,8 @@ public class Gameplay {
     private final int width;
     private final int height;
     private boolean growSnake = false;
+
+    private String fichierScores = "src/main/java/kernel/scores.txt";
 
 
     public Gameplay(int width, int height) {
@@ -287,6 +292,7 @@ public class Gameplay {
     public void gameOver() {
         System.out.println("Game Over!");
         System.out.println("Score final : " + score);
+        gestionScores();
         //on réinitialise le jeu
         resetLevel();
     }
@@ -318,5 +324,47 @@ public class Gameplay {
 
     public int getHeight() {
         return height;
+    }
+
+    public void gestionScores(){
+        String nom = demanderNom();
+        ecrireScore(nom, score, fichierScores);
+        recupererMeilleurs(fichierScores);
+    }
+
+    private String demanderNom() {
+        // TODO : récupérer le pseudo entré dans le menu quand ce sera implémenté
+        return "pseudo";
+    }
+
+    private void ecrireScore(String nom, int score, String cheminAcces){
+        try {
+            BufferedWriter ecrireScores = new BufferedWriter(new FileWriter(cheminAcces, true));
+            ecrireScores.write(nom + " " + score);
+            ecrireScores.newLine();
+            ecrireScores.flush();
+            ecrireScores.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private List<Score> recupererMeilleurs(String cheminAcces){
+        List<Score> scores = new ArrayList<>();
+        try {
+            BufferedReader lireScores = new BufferedReader(new FileReader(cheminAcces));
+            String ligne = lireScores.readLine();
+            while (ligne != null){
+                String[] contenu = ligne.split(" ");
+                String nom = contenu[0];
+                int score = Integer.parseInt(contenu[1]);
+                scores.add(new Score(nom, score));
+            }
+            lireScores.close();
+            scores.sort(null);
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+        return scores;
     }
 }
