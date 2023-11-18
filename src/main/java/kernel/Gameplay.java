@@ -16,9 +16,16 @@ public class Gameplay {
     final int tailleBloc = 50;
     private final int width;
     private final int height;
+    /**
+     * Décide si le serpent doit grandir au prochain appel de mvtSnake.
+     * Voir Javadoc de isGrowSnake.
+     */
     private boolean growSnake = false;
 
-
+    /**
+     * @param width taille horizontale de l'écran
+     * @param height taille verticale de l'écran
+     */
     public Gameplay(int width, int height) {
         this.width = width;
         this.height = height;
@@ -36,9 +43,6 @@ public class Gameplay {
     }
      */
 
-    /**
-     * cette méthode permet d’instancier les boutons au lancement du jeu.
-     */
     int btnW = 200;
     int btnH = 100;
     Objet btnJouer;
@@ -50,6 +54,9 @@ public class Gameplay {
     Objet btnDif;
     Objet btnCoul;
     Objet[] menuOpt;
+    /**
+     * cette méthode permet d’instancier les boutons au lancement du jeu.
+     */
     public void instancierMenuPrincipal() {
         // Créer bouton jouer.
         btnJouer = new Objet(400, 100, new Rectangle(btnW, btnH), "btnJouer.png", btnW, btnH);
@@ -131,6 +138,10 @@ public class Gameplay {
         resetLevel();
     }
 
+    /**
+     * TODO : Javadoc
+     * @param collisions
+     */
     public void gestionCollisions(List<Objet[]> collisions){
         Objet teteSerpent = getTeteSerpent();
 
@@ -169,6 +180,10 @@ public class Gameplay {
         return serpent.get(0);
     }
 
+    /**
+     * Déplacer le serpent le temps d'un pas.
+     * Faire grandir le serpent s'il a mangé une pomme (voir Javadoc pour isGrowSnake).
+     */
     public void mvtSnake() {
         Objet teteSerpent = getTeteSerpent();
         if (teteSerpent.getSpeed() > 0) {
@@ -189,6 +204,11 @@ public class Gameplay {
         teteSerpent.updatePosition();
     }
 
+    /**
+     * Selon la touche appuyée, le serpent change de direction.
+     * Si le serpent ne bouge pas, il commence à bouger.
+     * @param e
+     */
     public void changerDirection(KeyEvent e) {
         int keyPressed = e.getKeyCode();
         Objet teteSerpent = getTeteSerpent();
@@ -214,22 +234,35 @@ public class Gameplay {
                 || (o.getYposition() < 0);
     }
 
+    /**
+     * Que faire dans l'événement de collision entre le serpent et la pomme.
+     */
     public void collisionSerpentPomme(){
         score += 1;
         growSnake = true;
         replacerPomme();
     }
 
+    /**
+     * Que faire dans l'événement de collision entre le serpent et lui-même.
+     */
     public void collisionSerpent(){
         System.out.println("Collision Serpent");
         gameOver();
     }
 
+    /**
+     * Que faire dans l'événement de collision entre le serpent et le bord de l'écran.
+     */
     public void collisionSerpentMur(){
         System.out.println("Collision Mur");
         gameOver();
     }
 
+    /**
+     * Réinitialiser le niveau.
+     * Est aussi utilisé pour initialiser le niveau au début du jeu.
+     */
     public void resetLevel() { // si on a en parallele une liste objets, est ce qu'il faut pas supprimer les anciens membres du serpent de cette liste ?
         score = 0;
         // On réinitialise le serpent.
@@ -246,15 +279,30 @@ public class Gameplay {
         replacerPomme();
     }
 
+    /**
+     * Créer un bloc de serpent ; il faut ensuite appeler addObjSerpent pour rajouter ce bloc à la liste d'objets et à
+     * la liste de blocs du serpent.
+     * @param x
+     * @param y
+     * @return un bloc sous forme d'un Objet
+     */
     public Objet createBlocSerpent(int x, int y) {
         return new Objet(x, y, new Rectangle(tailleBloc - 2, tailleBloc - 2), "bloc.png", tailleBloc, tailleBloc);
     }
 
+    /**
+     * A appeler après createBlocSerpent pour mettre à jour la liste d'objets et la liste de blocs du serpent.
+     * @param o le bloc de serpent
+     */
     public void addObjSerpent(Objet o) {
         serpent.add(o); // le nouvel élément est ajouté à la queue du serpent.
         addObj(o);
     }
 
+    /**
+     * À appeler après new Objet(...) pour mettre à jour la liste d'objets.
+     * @param o
+     */
     public void addObj(Objet o) {
         objets.add(o);
     }
@@ -285,6 +333,9 @@ public class Gameplay {
         collisionSerpentPomme();
     }
 
+    /**
+     * Que faire si le joueur perd.
+     */
     public void gameOver() {
         System.out.println("Game Over!");
         System.out.println("Score final : " + score);
@@ -321,6 +372,12 @@ public class Gameplay {
         return height;
     }
 
+    /**
+     * Cette méthode est la conséquence d'un problème de conception. En effet, il est impossible de savoir où placer
+     * un nouveau bloc du serpent quand le serpent mange une pomme, mais on sait que la prochaine fois que le serpent
+     * bouge, le nouveau bloc sera à la position du dernier bloc.
+     * @return Est-ce que le serpent doit grandir d'un bloc lors de l'appel de la méthode mvtSnake.
+     */
     public boolean isGrowSnake() {
         return growSnake;
     }

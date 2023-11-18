@@ -18,7 +18,10 @@ public class Control {
     private final int height;
     private final Gameplay gp;
 
-
+    /**
+     * @param width taille horizontale de l'écran
+     * @param height taille verticale de l'écran
+     */
     public Control(int width, int height) {
         this.width = width;
         this.height = height;
@@ -28,6 +31,11 @@ public class Control {
         mg.getMainFrame().addKeyListener(new KeyListenerKernel(gp)); // est ce que ici c'est pas gp.sepent plutot ? la pomme s'en fout  du clavier ?
     }
 
+    /**
+     * Boucle du jeu.
+     * Chaque pas a une durée déterminée : il commence au temps startTime et se termine au temps expectedRestart.
+     * Dans chaque pas, le mouvement du Snake, les collisions, l'affichage des objets.
+     */
     public void run() {
         long startTime;
         long expectedRestart;
@@ -77,10 +85,18 @@ public class Control {
         return mg;
     }
 
+    /**
+     * décrit le fait que la boucle de jeu tourne.
+     * Au démarrage, running = true;
+     */
     public static void setRunning(boolean running) {
         Control.running = running;
     }
 
+    /**
+     * C'est l'entrée principale du jeu.
+     * @param args
+     */
     public static void main(String[] args) {
         var c = new Control(1000, 1000);
         c.getMoteurGraphique().init_display(c.gp.objets);
