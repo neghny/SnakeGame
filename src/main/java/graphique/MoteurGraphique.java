@@ -29,6 +29,7 @@ public class MoteurGraphique {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.addKeyListener(KeyListenerKernel.getInstance());
+        mainFrame.setVisible(true);
     }
 
     public static MoteurGraphique getInstance() {
@@ -55,7 +56,9 @@ public class MoteurGraphique {
         mainFrame.add(objet);
     }
 
-    public void empty_mainFrame() {}
+    public void empty_mainFrame() {
+        mainFrame.getContentPane().removeAll();
+    }
 
     /**
      * Affiche tous les objets de la liste dans l'ordre inverse d'ajout à la liste, prenant en compte leurs tailles et positions

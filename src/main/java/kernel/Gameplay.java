@@ -32,8 +32,6 @@ public class Gameplay {
         score = 0;
         snake = new LinkedList<>();
         objets = new LinkedList<>();
-        // temporaire
-        startGame();
     }
 
     public static Gameplay getInstance() {
@@ -226,28 +224,30 @@ public class Gameplay {
      * Si le serpent ne bouge pas, il commence à bouger.
      */
     public void changeDirection(KeyEvent e) {
-        Objet teteSerpent = getSnakeHead();
+        if (!snake.isEmpty()) {
+            Objet teteSerpent = getSnakeHead();
 
-        switch(e.getKeyCode()) {
-            case VK_RIGHT: {
-                teteSerpent.setHorizontalSpeed(BLOCKSIZE);
-                teteSerpent.setVerticalSpeed(0);
-                break;
-            }
-            case VK_LEFT: {
-                teteSerpent.setHorizontalSpeed(-BLOCKSIZE);
-                teteSerpent.setVerticalSpeed(0);
-                break;
-            }
-            case VK_UP: {
-                teteSerpent.setHorizontalSpeed(0);
-                teteSerpent.setVerticalSpeed(-BLOCKSIZE);
-                break;
-            }
-            case VK_DOWN: {
-                teteSerpent.setHorizontalSpeed(0);
-                teteSerpent.setVerticalSpeed(BLOCKSIZE);
-                break;
+            switch (e.getKeyCode()) {
+                case VK_RIGHT: {
+                    teteSerpent.setHorizontalSpeed(BLOCKSIZE);
+                    teteSerpent.setVerticalSpeed(0);
+                    break;
+                }
+                case VK_LEFT: {
+                    teteSerpent.setHorizontalSpeed(-BLOCKSIZE);
+                    teteSerpent.setVerticalSpeed(0);
+                    break;
+                }
+                case VK_UP: {
+                    teteSerpent.setHorizontalSpeed(0);
+                    teteSerpent.setVerticalSpeed(-BLOCKSIZE);
+                    break;
+                }
+                case VK_DOWN: {
+                    teteSerpent.setHorizontalSpeed(0);
+                    teteSerpent.setVerticalSpeed(BLOCKSIZE);
+                    break;
+                }
             }
         }
     }
@@ -258,6 +258,7 @@ public class Gameplay {
      */
     public void resetLevel() {
         score = 0;
+        MoteurGraphique.getInstance().empty_mainFrame();
         objets.clear();
         snake.clear();
 

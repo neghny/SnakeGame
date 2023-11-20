@@ -36,7 +36,6 @@ public class Control {
         long expectedRestart;
 
         gameplay.startGame();
-        moteurGraphique.init_display(gameplay.getObjets());
 
         while (running) {
             startTime = System.currentTimeMillis();
