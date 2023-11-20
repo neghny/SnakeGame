@@ -20,6 +20,9 @@ public class Gameplay {
     private Objet apple;
     private int score;
     private final int BLOCKSIZE = 50;
+    /**
+     * Décide si le serpent doit grandir au prochain appel de mvtSnake.
+     */
     private boolean growSnake;
 
     private Gameplay() {
@@ -117,7 +120,7 @@ public class Gameplay {
      */
     public void startGame() {
         // TODO : Recueillir informations joueur.
-        this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "pomme.png", BLOCKSIZE, BLOCKSIZE);
+        this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "red_apple.png", BLOCKSIZE, BLOCKSIZE);
         resetLevel();
     }
 
@@ -137,6 +140,7 @@ public class Gameplay {
         }
         return collisions;
     }
+
     public void handleCollision() {
         Objet teteSerpent = getSnakeHead();
 
@@ -156,10 +160,13 @@ public class Gameplay {
     }
 
     public boolean isOutOfScreen(Objet o) {
-        return (o.getXposition() + o.getSizeImageX() > moteurGraphique.getWidth()) || (o.getXposition() < 0) || (o.getYposition() + o.getSizeImageY() > moteurGraphique.getHeight()) || (o.getYposition() < 0);
+        return (o.getXposition() + o.getSizeImageX() > moteurGraphique.getWidth())
+                || (o.getXposition() < 0)
+                || (o.getYposition() + o.getSizeImageY() > moteurGraphique.getHeight())
+                || (o.getYposition() < 0);
     }
 
-    public void collisionSerpentPomme() {
+    public void collisionSerpentPomme(){
         score += 1;
         growSnake = true;
         replaceApple();
@@ -202,6 +209,11 @@ public class Gameplay {
         teteSerpent.updatePosition();
     }
 
+    /**
+     * Selon la touche appuyée, le serpent change de direction.
+     * Si le serpent ne bouge pas, il commence à bouger.
+     * @param e
+     */
     public void changeDirection(KeyEvent e) {
         Objet teteSerpent = getSnakeHead();
 
@@ -229,6 +241,9 @@ public class Gameplay {
         }
     }
 
+    /**
+     * Réinitialise le niveau.
+     */
     public void resetLevel() {
         score = 0;
         objets.clear();
@@ -282,8 +297,15 @@ public class Gameplay {
         apple.setPosition(newWidth, newHeight);
     }
 
+    /**
+     * Que faire si le joueur perd.
+     */
     public void gameOver() {
+        // TODO: Afficher le Panel game_over.png
+        Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
+        addObjet(gameOver);
         System.out.println("Game Over!");
+        // TODO: Afficher le leaderboard
         System.out.println("Score final : " + score);
 
         resetLevel();
@@ -316,5 +338,9 @@ public class Gameplay {
 
     public Objet getSnakeHead() {
         return snake.get(0);
+    }
+
+    public void setGrowSnake(boolean growSnake) {
+        this.growSnake = growSnake;
     }
 }

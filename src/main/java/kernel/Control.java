@@ -26,6 +26,11 @@ public class Control {
         return INSTANCE;
     }
 
+    /**
+     * Boucle du jeu.
+     * Chaque pas a une durée déterminée : il commence au temps startTime et se termine au temps expectedRestart.
+     * Dans chaque pas, le mouvement du Snake, les collisions, l'affichage des objets.
+     */
     public void run() {
         long startTime;
         long expectedRestart;
@@ -57,6 +62,10 @@ public class Control {
         this.running = false;
     }
 
+    /**
+     * C'est l'entrée principale du jeu.
+     * @param args
+     */
     public static void main(String[] args) {
         Control.getInstance().run();
     }

@@ -2,12 +2,39 @@ package physique;
 
 import kernel.Objet;
 
+/**
+ * Chaque objet en a une, cela correspond à la région dans le plan où l'objet est considéré comme étant en collision
+ * avec d'autres objets.
+ */
 public interface IForme {
+    /**
+     * Décide si les deux objets en argument sont en collision.
+     * @param self
+     * @param other
+     * @return
+     */
     boolean percute(Objet self, Objet other);
+
+    /**
+     * Longueur i.e taille horizontale i.e sur l'axe x, de la forme.
+     * @return la longueur sous la forme d'un double.
+     */
     double avoirLong();
+    /**
+     * Hauteur i.e taille verticale i.e sur l'axe y, de la forme.
+     * @return la hauteur sous la forme d'un double.
+     */
     double avoirHaut();
 
-    // https://stackoverflow.com/questions/401847/circle-rectangle-collision-detection-intersection
+    /**
+     * Source : https://stackoverflow.com/questions/401847/circle-rectangle-collision-detection-intersection
+     * Retourne val sauf si val dépasse les bornes [min, max], auquel cas on retourne la borne correspondante.
+     * En d'autres termes, c'est un min-max.
+     * @param val
+     * @param min
+     * @param max
+     * @return
+     */
     static double clamp(double val, double min, double max) {
         if (val <= min)
             return min;
@@ -53,10 +80,11 @@ public interface IForme {
     }
 
     /**
-            * This will check if two lines collide. It will return the collision point
+     * Source : http://www.java2s.com/example/java/java.lang/this-will-check-if-two-lines-collide.html
+     * This will check if two lines collide. It will return the collision point
      * which is null if their is no collision.
-            *
-            * @param x1
+     *
+     * @param x1
      *            the x position of the first line firsts point.
      * @param y1
      *            the y position of the first line firsts point.
@@ -72,10 +100,9 @@ public interface IForme {
      *            the x position of the second line second point.
      * @param y4
      *            the y position of the second line second point.
-     * @return the collision point which can be null.
-            */
+     * @return
+     */
     static boolean percuteLigneLigne(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
-        // http://www.java2s.com/example/java/java.lang/this-will-check-if-two-lines-collide.html
         double denom = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
 
         if (denom == 0.0)
@@ -86,8 +113,18 @@ public interface IForme {
         return ua >= 0.0f && ua <= 1.0f && ub >= 0.0f && ub <= 1.0f;
     }
 
-    // http://www.java2s.com/example/java/java.lang/intersection-between-line-determined-for-two-points-and-a-circle-wit.html
-    // https://www.geeksforgeeks.org/check-line-touches-intersects-circle/
+    /**
+     * Sources :    http://www.java2s.com/example/java/java.lang/intersection-between-line-determined-for-two-points-and-a-circle-wit.html
+     *              https://www.geeksforgeeks.org/check-line-touches-intersects-circle/
+     * @param x
+     * @param y
+     * @param radius
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return
+     */
     static boolean doesCircleIntersectLine(double x, double y, double radius, double x1, double y1, double x2, double y2) {
         // Calculate the squared distance between the circle center and the line segment
         double distance = squaredDistanceToLineSegment(x, y, x1, y1, x2, y2);

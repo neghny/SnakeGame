@@ -63,6 +63,9 @@ public class Objet extends JPanel {
         this.verticalSpeed = 0;
     }
 
+    /**
+     * Avancer l'objet le temps d'un pas.
+     */
     public void updatePosition() {
         x += horizontalSpeed;
         y += verticalSpeed;
@@ -86,6 +89,11 @@ public class Objet extends JPanel {
         g2d.drawImage(image, transform, this);
     }
 
+    /**
+     * Décide si this est en collision avec l'objet other.
+     * @param other
+     * @return
+     */
     public boolean percute(Objet other) {
         return forme.percute(this, other);
     }
@@ -117,6 +125,18 @@ public class Objet extends JPanel {
 
     public void setVerticalSpeed(int verticalSpeed) {
         this.verticalSpeed = verticalSpeed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Objet objet)) return false;
+        return getX() == objet.getX() && getY() == objet.getY() && horizontalSpeed == objet.hspeed && vspeed == objet.vspeed && getSizeImageX() == objet.getSizeImageX() && getSizeImageY() == objet.getSizeImageY() && Double.compare(objet.rotation, rotation) == 0 && bufferedImage.equals(objet.bufferedImage) && pathImage.equals(objet.pathImage) && image.equals(objet.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY(), horizontalSpeed, verticalSpeed, getForme(), bufferedImage, pathImage, image, getSizeImageX(), getSizeImageY(), rotation);
     }
 }
 

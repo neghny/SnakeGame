@@ -47,6 +47,7 @@ public class TestGameplay {
      * Permet de vérifier que lorsqu'il y a collision entre le serpent et une pomme :
      * - Le serpent doit grandir
      * - Le score augmente
+     *
      */
     @Test
     void testCollisionSerpentPomme() {
@@ -118,11 +119,44 @@ public class TestGameplay {
         assertNotEquals(lastYposition, testGameplay.getApple().getYposition());
     }
 
-    /**
-     * Vérifier que les positions ont bien été mise à jour (chaque bloc prend la position du bloc qu'il suit) : têtes, dernier elements, chaque morceau de corps ?
-     */
     @Test
-    void testMouvementSerpent() {
-        // TODO: Implémentation test mvtSerpent()
+    void testMouvementSerpent(){
+        int[] XlastPositions = new int[testGameplay.getSerpent().size() ];
+        int[] YlastPositions = new int[testGameplay.getSerpent().size() ];
+        for (int i = 0; i < testGameplay.getSerpent().size(); i++){
+            XlastPositions[i] = testGameplay.getSerpent().get(i).getXposition();
+            YlastPositions[i] = testGameplay.getSerpent().get(i).getYposition();
+        }
+        int lastSizeSerpent = testGameplay.getSerpent().size();
+        int lastNumberObjets = testGameplay.getObjets().size();
+
+        testGameplay.getTeteSerpent().hspeed = testGameplay.getTailleBloc();
+        testGameplay.setGrowSnake(true);
+        testGameplay.mvtSnake();
+
+        for (int i = 1; i < testGameplay.getSerpent().size(); i++) {
+            assertEquals(XlastPositions[i - 1], testGameplay.getSerpent().get(i).getXposition());
+            assertEquals(YlastPositions[i - 1], testGameplay.getSerpent().get(i).getYposition());
+        }
+        Objet teteSerpent = testGameplay.getSerpent().get(0);
+        assertEquals(teteSerpent.getXposition(), XlastPositions[0] + testGameplay.getTailleBloc());
+        assertEquals(teteSerpent.getYposition(), YlastPositions[0]);
+
+        Objet boutCorps = testGameplay.getSerpent().get(testGameplay.getSerpent().size() - 1);
+        assertEquals(boutCorps.getXposition(), XlastPositions[XlastPositions.length - 1]);
+        assertEquals(boutCorps.getYposition(), YlastPositions[YlastPositions.length - 1]);
+
+        assertEquals(lastNumberObjets + 1, testGameplay.getObjets().size());
+        assertEquals(lastSizeSerpent + 1, testGameplay.getSerpent().size());
     }
+
+    @Test
+    void testGameOver (){
+        int lastSize = testGameplay.getObjets().size();
+        Objet expectedGameOver = new Objet(testGameplay.getWidth() / 2, testGameplay.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
+        testGameplay.gameOver();
+        //assertEquals(expectedGameOver, testGameplay.getObjets().getLast());
+        assertEquals(lastSize + 1, testGameplay.getObjets().size());
+    }
+
 }
