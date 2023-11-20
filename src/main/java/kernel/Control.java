@@ -42,7 +42,7 @@ public class Control {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + 100;
 
-            gameplay.growSnake();
+            gameplay.moveSnake();
             gameplay.handleCollision();
             //gameplay.printSnakePosition();
 

@@ -133,28 +133,28 @@ public class TestGameplay {
 
         testGameplay.getSnakeHead().setHorizontalSpeed(testGameplay.getBLOCKSIZE());
         testGameplay.setGrowSnake(true);
-        testGameplay.mvtSnake();
+        testGameplay.moveSnake();
 
-        for (int i = 1; i < testGameplay.getSerpent().size(); i++) {
-            assertEquals(XlastPositions[i - 1], testGameplay.getSerpent().get(i).getXposition());
-            assertEquals(YlastPositions[i - 1], testGameplay.getSerpent().get(i).getYposition());
+        for (int i = 1; i < testGameplay.getSnake().size(); i++) {
+            assertEquals(XlastPositions[i - 1], testGameplay.getSnake().get(i).getXposition());
+            assertEquals(YlastPositions[i - 1], testGameplay.getSnake().get(i).getYposition());
         }
-        Objet teteSerpent = testGameplay.getSerpent().get(0);
-        assertEquals(teteSerpent.getXposition(), XlastPositions[0] + testGameplay.getTailleBloc());
+        Objet teteSerpent = testGameplay.getSnake().get(0);
+        assertEquals(teteSerpent.getXposition(), XlastPositions[0] + testGameplay.getBLOCKSIZE());
         assertEquals(teteSerpent.getYposition(), YlastPositions[0]);
 
-        Objet boutCorps = testGameplay.getSerpent().get(testGameplay.getSerpent().size() - 1);
+        Objet boutCorps = testGameplay.getSnake().get(testGameplay.getSnake().size() - 1);
         assertEquals(boutCorps.getXposition(), XlastPositions[XlastPositions.length - 1]);
         assertEquals(boutCorps.getYposition(), YlastPositions[YlastPositions.length - 1]);
 
         assertEquals(lastNumberObjets + 1, testGameplay.getObjets().size());
-        assertEquals(lastSizeSerpent + 1, testGameplay.getSerpent().size());
+        assertEquals(lastSizeSerpent + 1, testGameplay.getSnake().size());
     }
 
     @Test
     void testGameOver (){
         int lastSize = testGameplay.getObjets().size();
-        Objet expectedGameOver = new Objet(testGameplay.getWidth() / 2, testGameplay.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
+        Objet expectedGameOver = new Objet(MoteurGraphique.getInstance().getWidth()/ 2, MoteurGraphique.getInstance().getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
         testGameplay.gameOver();
         //assertEquals(expectedGameOver, testGameplay.getObjets().getLast());
         assertEquals(lastSize + 1, testGameplay.getObjets().size());

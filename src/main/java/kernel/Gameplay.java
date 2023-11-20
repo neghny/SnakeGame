@@ -191,9 +191,8 @@ public class Gameplay {
         System.out.println("--------------------------------");
     }
 
-    public void growSnake() {
-        Objet teteSerpent = getSnakeHead();
-        if (teteSerpent.getSpeed() > 0) {
+    public void moveSnake() {
+        if (getSnakeHead().getSpeed() > 0) {
             if (growSnake) {
                 for (Objet o : objets)
                     System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
@@ -206,7 +205,7 @@ public class Gameplay {
                 snake.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
             }
         }
-        teteSerpent.updatePosition();
+        getSnakeHead().updatePosition();
     }
 
     /**
