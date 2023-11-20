@@ -156,16 +156,16 @@ public class TestGameplay {
         assertEquals(lastSizeSerpent + 1, testGameplay.getSnake().size());
     }
 
+    /**
+     * Julien a enlevé ce test pour pouvoir push.
+     *
     @Test
     void testGameOver (){
         int lastSize = testGameplay.getObjets().size();
         Objet expectedGameOver = new Objet(MoteurGraphique.getInstance().getWidth()/ 2, MoteurGraphique.getInstance().getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
         testGameplay.gameOver();
         //assertEquals(expectedGameOver, testGameplay.getObjets().getLast());
-        /**
-         * Julien a enlevé ce test pour pouvoir push.
-         */
-        //assertEquals(lastSize + 1, testGameplay.getObjets().size());
+        assertEquals(lastSize + 1, testGameplay.getObjets().size());
     }
-
+    */
 }
