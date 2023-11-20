@@ -15,6 +15,14 @@ public class MoteurGraphique {
 
     private MoteurGraphique() {
         mainFrame = new JFrame("Frame");
+        init_mainFrame();
+    }
+
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
+
+    public void init_mainFrame() {
         mainFrame.setLayout(null);
         mainFrame.setSize(WIDTH, HEIGHT);
         mainFrame.setResizable(true);
@@ -47,12 +55,15 @@ public class MoteurGraphique {
         mainFrame.add(objet);
     }
 
+    public void empty_mainFrame() {}
+
     /**
      * Affiche tous les objets de la liste dans l'ordre inverse d'ajout à la liste, prenant en compte leurs tailles et positions
      *
      * @param objets liste d'objets à afficher
      */
     public void init_display(LinkedList<Objet> objets) {
+        empty_mainFrame();
         for (Objet o : objets) {
             addObjet(o);
         }

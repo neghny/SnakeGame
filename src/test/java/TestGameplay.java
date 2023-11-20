@@ -79,6 +79,7 @@ public class TestGameplay {
      * Test de la fonction depassementBords()
      * On doit vérifier qu'on a bien une détection lorsque le serpent dépasse la fenêtre de jeu.
      * Pour cela, on crée un objet hors des limites de la fenêtre de jeu et on vérifie que la méthode depassementBords() renvoie true pour cet objet.
+     *
      */
     @Test
     void testDepassementBord() {
@@ -119,6 +120,10 @@ public class TestGameplay {
         assertNotEquals(lastYposition, testGameplay.getApple().getYposition());
     }
 
+    /**
+     * Vérifier que les positions ont bien été mise à jour (chaque bloc prend la position du bloc qu'il suit) : têtes, dernier elements, chaque morceau de corps et que le serpent à bien grandit
+     * Vérifier qu'un nouvel objet est ajouté au serpent et à la liste d'objets.
+     */
     @Test
     void testMouvementSerpent(){
 

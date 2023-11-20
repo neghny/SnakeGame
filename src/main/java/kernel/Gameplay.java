@@ -22,6 +22,7 @@ public class Gameplay {
     private final int BLOCKSIZE = 50;
     /**
      * Décide si le serpent doit grandir au prochain appel de mvtSnake.
+     * Voir Javadoc de isGrowSnake.
      */
     private boolean growSnake;
 
@@ -31,6 +32,8 @@ public class Gameplay {
         score = 0;
         snake = new LinkedList<>();
         objets = new LinkedList<>();
+        // temporaire
+        startGame();
     }
 
     public static Gameplay getInstance() {
@@ -166,18 +169,27 @@ public class Gameplay {
                 || (o.getYposition() < 0);
     }
 
+    /**
+     * Que faire dans l'événement de collision entre le serpent et la pomme.
+     */
     public void collisionSerpentPomme(){
         score += 1;
         growSnake = true;
         replaceApple();
     }
 
-    public void collisionSerpent() {
+    /**
+     * Que faire dans l'événement de collision entre le serpent et lui-même.
+     */
+    public void collisionSerpent(){
         System.out.println("Collision Serpent");
         gameOver();
     }
 
-    public void collisionSerpentMur() {
+    /**
+     * Que faire dans l'événement de collision entre le serpent et le bord de l'écran.
+     */
+    public void collisionSerpentMur(){
         System.out.println("Collision Mur");
         gameOver();
     }
@@ -193,6 +205,7 @@ public class Gameplay {
 
     public void moveSnake() {
         if (getSnakeHead().getSpeed() > 0) {
+            int taille = snake.size();
             if (growSnake) {
                 for (Objet o : objets)
                     System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
@@ -200,7 +213,7 @@ public class Gameplay {
                 addSnakeBlock(createBlocSerpent(last.getXposition(), last.getYposition()));
                 growSnake = false;
             }
-            for (int i = snake.size() - 1; i > 0; i--) {
+            for (int i = taille - 1; i > 0; i--) {
                 Objet suivant = snake.get(i - 1);
                 snake.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
             }
@@ -240,7 +253,8 @@ public class Gameplay {
     }
 
     /**
-     * Réinitialise le niveau.
+     * Réinitialiser le niveau.
+     * Est aussi utilisé pour initialiser le niveau au début du jeu.
      */
     public void resetLevel() {
         score = 0;
@@ -258,17 +272,33 @@ public class Gameplay {
         replaceApple();
     }
 
+    /**
+     * Créer un bloc de serpent ; il faut ensuite appeler addObjSerpent pour rajouter ce bloc à la liste d'objets et à
+     * la liste de blocs du serpent.
+     * @param x
+     * @param y
+     * @return un bloc sous forme d'un Objet
+     */
     public Objet createBlocSerpent(int x, int y) {
         return new Objet(x, y, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "bloc.png", BLOCKSIZE, BLOCKSIZE);
     }
 
+    /**
+     * A appeler après createBlocSerpent pour mettre à jour la liste d'objets et la liste de blocs du serpent.
+     * @param o le bloc de serpent
+     */
     public void addSnakeBlock(Objet o) {
         snake.add(o);
         addObjet(o);
     }
 
+    /**
+     * À appeler après new Objet(...) pour mettre à jour la liste d'objets.
+     * @param o
+     */
     public void addObjet(Objet o) {
         objets.add(o);
+        moteurGraphique.addObjet(o);
     }
 
     /**
@@ -305,7 +335,6 @@ public class Gameplay {
         System.out.println("Game Over!");
         // TODO: Afficher le leaderboard
         System.out.println("Score final : " + score);
-
         resetLevel();
     }
 
@@ -330,6 +359,12 @@ public class Gameplay {
         return BLOCKSIZE;
     }
 
+    /**
+     * Cette méthode est la conséquence d'un problème de conception. En effet, il est impossible de savoir où placer
+     * un nouveau bloc du serpent quand le serpent mange une pomme, mais on sait que la prochaine fois que le serpent
+     * bouge, le nouveau bloc sera à la position du dernier bloc.
+     * @return Est-ce que le serpent doit grandir d'un bloc lors de l'appel de la méthode mvtSnake.
+     */
     public boolean snakeIsGrowing() {
         return growSnake;
     }

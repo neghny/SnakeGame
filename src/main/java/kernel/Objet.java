@@ -15,11 +15,13 @@ import java.util.Objects;
 import static java.lang.Math.abs;
 
 public class Objet extends JPanel {
+    // Partie physique
     private int x;
     private int y;
     private int horizontalSpeed;
     private int verticalSpeed;
 
+    // Partie graphique
     private final IForme forme;
 
     private BufferedImage bufferedImage;
@@ -102,6 +104,12 @@ public class Objet extends JPanel {
         return y;
     }
 
+    /**
+     * Calcule la vitesse de l'objet d'une façon peu coûteuse en processeur O(1).
+     * L'alternative plus exacte pour un jeu quelconque serait return hspeed * hspeed + vspeed * vspeed i.e la norme
+     * euclidienne.
+     * @return vitesse par la distance de Manhattan.
+     */
     public int getSpeed() { return abs(horizontalSpeed) + abs(verticalSpeed); }
 
     public int getSizeImageX() {
