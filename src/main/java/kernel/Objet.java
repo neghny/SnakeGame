@@ -118,7 +118,6 @@ public class Objet extends JPanel {
         return forme;
     }
 
-
     public void setHorizontalSpeed(int horizontalSpeed) {
         this.horizontalSpeed = horizontalSpeed;
     }
@@ -127,16 +126,24 @@ public class Objet extends JPanel {
         this.verticalSpeed = verticalSpeed;
     }
 
+    public int getHorizontalSpeed() {
+        return horizontalSpeed;
+    }
+
+    public int getVerticalSpeed() {
+        return verticalSpeed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Objet objet)) return false;
-        return getX() == objet.getX() && getY() == objet.getY() && horizontalSpeed == objet.hspeed && vspeed == objet.vspeed && getSizeImageX() == objet.getSizeImageX() && getSizeImageY() == objet.getSizeImageY() && Double.compare(objet.rotation, rotation) == 0 && bufferedImage.equals(objet.bufferedImage) && pathImage.equals(objet.pathImage) && image.equals(objet.image);
+        return getX() == objet.getX() && getY() == objet.getY() && this.horizontalSpeed == objet.getHorizontalSpeed() && this.verticalSpeed == objet.getVerticalSpeed() && getSizeImageX() == objet.getSizeImageX() && getSizeImageY() == objet.getSizeImageY()  && bufferedImage.equals(objet.bufferedImage) && pathImage.equals(objet.pathImage) && image.equals(objet.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getX(), getY(), horizontalSpeed, verticalSpeed, getForme(), bufferedImage, pathImage, image, getSizeImageX(), getSizeImageY(), rotation);
+        return Objects.hash(getX(), getY(), horizontalSpeed, verticalSpeed, getForme(), bufferedImage, pathImage, image, getSizeImageX(), getSizeImageY());
     }
 }
 

@@ -121,16 +121,17 @@ public class TestGameplay {
 
     @Test
     void testMouvementSerpent(){
-        int[] XlastPositions = new int[testGameplay.getSerpent().size() ];
-        int[] YlastPositions = new int[testGameplay.getSerpent().size() ];
-        for (int i = 0; i < testGameplay.getSerpent().size(); i++){
-            XlastPositions[i] = testGameplay.getSerpent().get(i).getXposition();
-            YlastPositions[i] = testGameplay.getSerpent().get(i).getYposition();
+
+        int[] XlastPositions = new int[testGameplay.getSnake().size() ];
+        int[] YlastPositions = new int[testGameplay.getSnake().size() ];
+        for (int i = 0; i < testGameplay.getSnake().size(); i++){
+            XlastPositions[i] = testGameplay.getSnake().get(i).getXposition();
+            YlastPositions[i] = testGameplay.getSnake().get(i).getYposition();
         }
-        int lastSizeSerpent = testGameplay.getSerpent().size();
+        int lastSizeSerpent = testGameplay.getSnake().size();
         int lastNumberObjets = testGameplay.getObjets().size();
 
-        testGameplay.getTeteSerpent().hspeed = testGameplay.getTailleBloc();
+        testGameplay.getSnakeHead().setHorizontalSpeed(testGameplay.getBLOCKSIZE());
         testGameplay.setGrowSnake(true);
         testGameplay.mvtSnake();
 
