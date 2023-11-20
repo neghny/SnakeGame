@@ -64,7 +64,6 @@ public class Control {
 
     /**
      * C'est l'entrée principale du jeu.
-     * @param args
      */
     public static void main(String[] args) {
         Control.getInstance().run();

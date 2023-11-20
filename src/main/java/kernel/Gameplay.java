@@ -211,7 +211,6 @@ public class Gameplay {
     /**
      * Selon la touche appuyée, le serpent change de direction.
      * Si le serpent ne bouge pas, il commence à bouger.
-     * @param e
      */
     public void changeDirection(KeyEvent e) {
         Objet teteSerpent = getSnakeHead();

@@ -91,8 +91,6 @@ public class Objet extends JPanel {
 
     /**
      * Décide si this est en collision avec l'objet other.
-     * @param other
-     * @return
      */
     public boolean percute(Objet other) {
         return forme.percute(this, other);
