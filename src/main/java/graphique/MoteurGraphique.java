@@ -4,6 +4,8 @@ import kernel.KeyListenerKernel;
 import kernel.Objet;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class MoteurGraphique {
@@ -54,10 +56,28 @@ public class MoteurGraphique {
      */
     public void addObjet(Objet objet) { // affiche un objet
         mainFrame.add(objet);
+        objet.setVisible(true);
+    }
+
+    /**
+     * source : http://www.java2s.com/Code/Java/Swing-JFC/GetAllComponentsinacontainer.htm
+     */
+    public static ArrayList<Component> getAllComponents(final Container c) {
+        Component[] comps = c.getComponents();
+        ArrayList<Component> compList = new ArrayList<>();
+        for (Component comp : comps) {
+            compList.add(comp);
+            if (comp instanceof Container)
+                compList.addAll(getAllComponents((Container) comp));
+        }
+        return compList;
     }
 
     public void empty_mainFrame() {
-        mainFrame.getContentPane().removeAll();
+        // mainFrame.getContentPane().removeAll();
+        for (Component comp : getAllComponents(mainFrame))
+            if (comp instanceof Objet)
+                comp.setVisible(false);
     }
 
     /**
