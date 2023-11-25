@@ -330,13 +330,13 @@ public class Gameplay {
      * Que faire si le joueur perd.
      */
     public void gameOver() {
-        // TODO: Afficher le Panel game_over.png
-        Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
+        // TODO: Réctifier Affichage du Panel game_over.png
+        Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
         addObjet(gameOver);
         System.out.println("Game Over!");
         // TODO: Afficher le leaderboard
         System.out.println("Score final : " + score);
-        resetLevel();
+        //resetLevel();
     }
 
 

@@ -15,8 +15,8 @@ public class MoteurGraphique {
 
     private final JFrame mainFrame;
 
-    private MoteurGraphique() {
-        mainFrame = new JFrame("Frame");
+    public MoteurGraphique() {
+        mainFrame = new JFrame("Jeu");
         init_mainFrame();
     }
 
