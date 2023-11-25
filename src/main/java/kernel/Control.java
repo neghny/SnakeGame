@@ -35,7 +35,7 @@ public class Control {
         long startTime;
         long expectedRestart;
 
-        gameplay.startGame();
+        gameplay.showMainMenu();
 
         while (running) {
             startTime = System.currentTimeMillis();

@@ -1,8 +1,11 @@
 package kernel;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class KeyListenerKernel implements java.awt.event.KeyListener {
+public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListener {
     private static KeyListenerKernel INSTANCE;
 
     public static KeyListenerKernel getInstance() {
@@ -31,5 +34,33 @@ public class KeyListenerKernel implements java.awt.event.KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        Objet objet = (Objet) mouseEvent.getComponent();
+        System.out.println(objet.pathImage);
+        Gameplay gp = Gameplay.getInstance();
+        if (objet.equals(gp.playButton)) gp.startGame();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
     }
 }

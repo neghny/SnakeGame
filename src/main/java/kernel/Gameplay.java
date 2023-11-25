@@ -4,6 +4,7 @@ import graphique.MoteurGraphique;
 import physique.Rectangle;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,23 @@ import static java.awt.event.KeyEvent.*;
 public class Gameplay {
     private static Gameplay INSTANCE;
     private final MoteurGraphique moteurGraphique;
+    int buttonWidth = 200;
+    int buttonHeight = 100;
+
+    Objet playButton = new Objet(400, 100, new Rectangle(buttonWidth, buttonHeight), "btnJouer.png", buttonWidth, buttonHeight);
+    Objet tutorialButton = new Objet(400, 250, new Rectangle(buttonWidth, buttonHeight), "btnDidacticiel.png", buttonWidth, buttonHeight);
+    Objet optionButton = new Objet(400, 400, new Rectangle(buttonWidth, buttonHeight), "btnOptions.png", buttonWidth, buttonHeight);
+    Objet leaderboardButton = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnLeaderboard.png", buttonWidth, buttonHeight);
+    Objet exitButton = new Objet(400, 700, new Rectangle(buttonWidth, buttonHeight), "btnQuitter.png", buttonWidth, buttonHeight);
+
+    Objet[] mainMenu = new Objet[]{playButton, tutorialButton, optionButton, leaderboardButton, exitButton};
+
+    // Créer spinner difficulté
+    Objet difficultySpinner = new Objet(400, 350, new Rectangle(buttonWidth, buttonHeight), "btnDifficulte.png", buttonWidth, buttonHeight);
+    // Créer spinner couleur
+    Objet colorSpinner = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnCouleur.png", buttonWidth, buttonHeight);
+
+    Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner};
 
     private final LinkedList<Objet> snake;
     private final LinkedList<Objet> objets;
@@ -32,6 +50,10 @@ public class Gameplay {
         score = 0;
         snake = new LinkedList<>();
         objets = new LinkedList<>();
+        for (Objet b : mainMenu)
+            addObjet(b);
+        for (Objet b : optionMenu)
+            addObjet(b);
     }
 
     public static Gameplay getInstance() {
@@ -41,41 +63,38 @@ public class Gameplay {
         return INSTANCE;
     }
 
-    @SuppressWarnings("unused")
-    public void instantiateMainMenu() {
-        int buttonWidth = 200;
-        int buttonHeight = 100;
-
-        Objet playButton = new Objet(400, 100, new Rectangle(buttonWidth, buttonHeight), "btnJouer.png", buttonWidth, buttonHeight);
-        Objet tutorialButton = new Objet(400, 250, new Rectangle(buttonWidth, buttonHeight), "btnDid.png", buttonWidth, buttonHeight);
-        Objet optionButton = new Objet(400, 400, new Rectangle(buttonWidth, buttonHeight), "btnOpt.png", buttonWidth, buttonHeight);
-        Objet leaderboardButton = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnLead.png", buttonWidth, buttonHeight);
-        Objet exitButton = new Objet(400, 700, new Rectangle(buttonWidth, buttonHeight), "btnQuit.png", buttonWidth, buttonHeight);
-
-        Objet[] mainMenu = new Objet[]{playButton, tutorialButton, optionButton, leaderboardButton, exitButton};
-
-        // TODO
+    public void showMainMenu() {
+        for (Objet b : mainMenu) {
+            b.setVisible(true);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+            b.addMouseListener(KeyListenerKernel.getInstance());
+        }
+        for (Objet b : optionMenu) {
+            b.setVisible(false);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+        }
     }
 
     /**
-     * cette méthode affiche le menu des options et attend les choix de l'utilisateur. Tant que l'utilisateur ne choisit
-     * pas de retourner au menu principal, la boucle continue à afficher le menu.
+     * cette méthode affiche le menu des options et attend les choix de l'utilisateur.
      * L'utilisateur peut choisir différentes options telles que le niveau de difficulté, la couleur du serpent, ou
      * retourner au menu principal.
      */
     @SuppressWarnings("unused")
     public void showOptionMenu() {
-        int buttonWidth = 200;
-        int buttonHeight = 100;
-
-        // Créer spinner difficulté
-        Objet difficultySpinner = new Objet(400, 350, new Rectangle(buttonWidth, buttonHeight), "btnDif.png", buttonWidth, buttonHeight);
-        // Créer spinner couleur
-        Objet colorSpinner = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnCoul.png", buttonWidth, buttonHeight);
-
-        Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner};
-
-        // TODO
+        for (Objet b : mainMenu) {
+            b.setVisible(false);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+        }
+        for (Objet b : optionMenu) {
+            b.setVisible(true);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+            b.addMouseListener(KeyListenerKernel.getInstance());
+        }
     }
 
     /**
@@ -143,17 +162,19 @@ public class Gameplay {
     }
 
     public void handleCollision() {
-        Objet teteSerpent = getSnakeHead();
+        if (snakeExists()) {
+            Objet teteSerpent = getSnakeHead();
 
-        if (isOutOfScreen(teteSerpent)) {
-            collisionSerpentMur();
-        } else {
-            for (Objet[] collision : getCollisions()) {
-                if (collision[0] == teteSerpent || collision[1] == teteSerpent) {
-                    if (collision[0] == apple || collision[1] == apple) {
-                        collisionSerpentPomme();
-                    } else if (collision[0] == teteSerpent && snake.contains(collision[1]) || collision[1] == teteSerpent && snake.contains(collision[0])) {
-                        collisionSerpent();
+            if (isOutOfScreen(teteSerpent)) {
+                collisionSerpentMur();
+            } else {
+                for (Objet[] collision : getCollisions()) {
+                    if (collision[0] == teteSerpent || collision[1] == teteSerpent) {
+                        if (collision[0] == apple || collision[1] == apple) {
+                            collisionSerpentPomme();
+                        } else if (collision[0] == teteSerpent && snake.contains(collision[1]) || collision[1] == teteSerpent && snake.contains(collision[0])) {
+                            collisionSerpent();
+                        }
                     }
                 }
             }
@@ -202,21 +223,23 @@ public class Gameplay {
     }
 
     public void moveSnake() {
-        if (getSnakeHead().getSpeed() > 0) {
-            int taille = snake.size();
-            if (growSnake) {
-                for (Objet o : objets)
-                    System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
-                Objet last = snake.getLast();
-                addSnakeBlock(createBlocSerpent(last.getXposition(), last.getYposition()));
-                growSnake = false;
+        if (snakeExists()) {
+            if (getSnakeHead().getSpeed() > 0) {
+                int taille = snake.size();
+                if (growSnake) {
+                    for (Objet o : objets)
+                        System.out.println("Sprite :" + o.pathImage + "; X Obj : " + o.getXposition() + "; X affich :" + o.getX() + "; Y Obj : " + o.getYposition() + "; Y affich :" + o.getY());
+                    Objet last = snake.getLast();
+                    addSnakeBlock(createBlocSerpent(last.getXposition(), last.getYposition()));
+                    growSnake = false;
+                }
+                for (int i = taille - 1; i > 0; i--) {
+                    Objet suivant = snake.get(i - 1);
+                    snake.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
+                }
             }
-            for (int i = taille - 1; i > 0; i--) {
-                Objet suivant = snake.get(i - 1);
-                snake.get(i).setPosition(suivant.getXposition(), suivant.getYposition());
-            }
+            getSnakeHead().updatePosition();
         }
-        getSnakeHead().updatePosition();
     }
 
     /**
@@ -224,7 +247,7 @@ public class Gameplay {
      * Si le serpent ne bouge pas, il commence à bouger.
      */
     public void changeDirection(KeyEvent e) {
-        if (!snake.isEmpty()) {
+        if (snakeExists()) {
             Objet teteSerpent = getSnakeHead();
 
             switch (e.getKeyCode()) {
@@ -368,6 +391,10 @@ public class Gameplay {
      */
     public boolean snakeIsGrowing() {
         return growSnake;
+    }
+
+    public boolean snakeExists() {
+        return !snake.isEmpty();
     }
 
     public Objet getSnakeHead() {
