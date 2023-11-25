@@ -90,6 +90,7 @@ public class MoteurGraphique {
         for (Objet o : objets) {
             addObjet(o);
         }
+        display(objets);
         mainFrame.setVisible(true);
     }
 

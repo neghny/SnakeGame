@@ -12,7 +12,7 @@ public class TestVisuelMoteurDeJeu {
 
     public static void main(String[] args){
         LinkedList<Objet> objs = new LinkedList<>();
-        var mg = new MoteurGraphique();
+        var mg = MoteurGraphique.getInstance();
         Objet pacman = new Objet(25, 25, new Cercle(60), "pacman.png", 120, 120);
         objs.add(pacman);
         Objet monstre = new Objet(250, 0, new physique.Rectangle(120, 120), "pink_ghost.png", 120, 120);
