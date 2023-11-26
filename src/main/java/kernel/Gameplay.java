@@ -5,6 +5,7 @@ import physique.Rectangle;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -133,10 +134,7 @@ public class Gameplay {
      * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
      * qu'aucun classement n'est disponible.
      */
-    @SuppressWarnings("unused")
-    public void showLeaderboard() {
-        // TODO
-    }
+
 
     /**
      * permet de  recueillir des informations du joueur (nom, niveau de    difficulté, couleur du serpent) et les
@@ -376,6 +374,84 @@ public class Gameplay {
     }
 
     /**
+     * Demande et récupère le nom de la personne qui vient de finir sa partie
+     * @return le nom récupéré
+     */
+    private String getPseudo() {
+        // TODO : récupérer le pseudo entré dans le menu quand ce sera implémenté
+        return "pseudo";
+    }
+
+    /**
+     * Enregister un nouveau score dans le leaderboard
+     * @param fichierScores chemin d'accès vers le fichier de scores
+     */
+    private void registerScore(String fichierScores){
+        String nom = getPseudo();
+        writeScore(nom, score, fichierScores);
+    }
+
+    /**
+     * Inscrit un nouveau score dans le fichier de scores
+     * @param nom pseudo de la personne qui joue
+     * @param score score de la partie achevée
+     * @param cheminAcces chemin d'accès vers le fichier de scores
+     */
+    private void writeScore(String nom, int score, String cheminAcces){
+        try {
+            BufferedWriter ecrireScores = new BufferedWriter(new FileWriter(cheminAcces, true));
+            ecrireScores.write(nom + " " + score);
+            ecrireScores.newLine();
+            ecrireScores.flush();
+            ecrireScores.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Lit le fichier de scores pour récupérer les 10 meilleurs
+     * @param cheminAcces chemin d'accès vers le fichier de scores
+     * @return la liste des 10 meilleurs scores
+     */
+    private List<Score> getBestScores(String cheminAcces){
+        List<Score> scores = new ArrayList<>();
+        List<Score> meilleursScores = new ArrayList<>();
+        try {
+            BufferedReader lireScores = new BufferedReader(new FileReader(cheminAcces));
+            String ligne = lireScores.readLine();
+            while (ligne != null){
+                String[] contenu = ligne.split(" ");
+                String nom = contenu[0];
+                int score = Integer.parseInt(contenu[1]);
+                scores.add(new Score(nom, score));
+                ligne = lireScores.readLine();
+            }
+            lireScores.close();
+            scores.sort(null);
+            for (int i = 0; i < 5; i++){
+                meilleursScores.add(scores.get(i));
+            }
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+        return meilleursScores;
+    }
+
+    /**
+     * affiche les meilleurs scores des joueur-euses, en triant la liste des joueur-euses en fonction de leurs scores et en
+     * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
+     * qu'aucun classement n'est disponible.
+     */
+    public void showLeaderboard(){
+        List<Score> meilleursScores = getBestScores(fichierScores);
+        for (Score s : meilleursScores){ // affichage dans le terminal pour l'instant TODO à changer
+            System.out.println(s);
+        }
+    }
+
+
+    /**
      * Que faire si le joueur perd.
      */
     public void gameOver() {
@@ -391,6 +467,8 @@ public class Gameplay {
         // TODO: Réctifier Affichage du Panel game_over.png
         System.out.println("Game Over!");
         // TODO: Afficher le leaderboard
+        registerScore("scores.txt");
+        showLeaderboard();
         System.out.println("Score final : " + score);
     }
 
