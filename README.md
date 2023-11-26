@@ -135,6 +135,7 @@ Gameplay jeu = Gameplay.getInstance();
 jeu.showMainMenu();
 ````
 
+
 #### <span style="color: #85BDB5"> Control
 
 La classe `Control` est le composant central du contrôle-commande du jeu vidéo. Elle agit comme un orchestrateur entre les différentes parties du jeu, en particulier la logique de jeu (classe `Gameplay`) et le moteur graphique (classe `MoteurGraphique`). Sa responsabilité principale est de faire fonctionner le jeu en coordonnant les interactions entre ces composants.
