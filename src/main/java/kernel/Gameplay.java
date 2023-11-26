@@ -15,6 +15,9 @@ import static java.awt.event.KeyEvent.*;
 import static java.lang.Math.min;
 import static java.lang.Thread.sleep;
 
+/**
+ * Gère le gameplay du jeu Snake. Gère les collisions, l'instanciation, les menus, etc.
+ */
 public class Gameplay {
     private static Gameplay INSTANCE;
     private final MoteurGraphique moteurGraphique = MoteurGraphique.getInstance();
@@ -67,6 +70,7 @@ public class Gameplay {
     /**
      * Source : https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html section Getting the User's Input from a Dialog
      * @return le pseudo
+     * @author Julien
      */
     public String enterPseudo() {
         for (;;) {
@@ -88,6 +92,10 @@ public class Gameplay {
         }
     }
 
+    /**
+     * Constructeur de Gameplay. Initialise les objets du jeu.
+     * @author Julien, Kawthar, Pauline
+     */
     private Gameplay(){
         pseudo = enterPseudo();
         growSnake = false;
@@ -113,7 +121,6 @@ public class Gameplay {
         HUDLabel.setFont(font.deriveFont(Font.BOLD, 24));
         HUDLabel.setForeground(Color.WHITE);
         affichageScore.add(HUDLabel);
-        //leaderboard[1].add(new JLabel("Leaderboard"));
         for (int i = 0; i < 5; i++){
             leaderboard[i+2] = new Objet(100, (i+2)*100, new Rectangle(400, 100), "blank.png", 400, 100);
             JLabel label = new JLabel("");
@@ -126,6 +133,9 @@ public class Gameplay {
         }
     }
 
+    /**
+     * @author Matteo
+     */
     public static Gameplay getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Gameplay();
@@ -133,6 +143,9 @@ public class Gameplay {
         return INSTANCE;
     }
 
+    /**
+     * @author Julien, Sellou
+     */
     public void showMainMenu() {
         gameOver.setVisible(false);
         for (Objet i : leaderboard){
@@ -156,9 +169,10 @@ public class Gameplay {
     }
 
     /**
-     * cette méthode affiche le menu des options et attend les choix de l'utilisateur.
+     * Cette méthode affiche le menu des options et attend les choix de l'utilisateur.
      * L'utilisateur peut choisir différentes options telles que le niveau de difficulté, la couleur du serpent, ou
      * retourner au menu principal.
+     * @author Julien
      */
     public void showOptionMenu() {
         for (Objet i : leaderboard){
@@ -179,10 +193,11 @@ public class Gameplay {
         }
     }
 
-    // Source : https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html section showOptionDialog
     /**
-     * est appelée lorsque l'utilisateur choisit l'option pour définir le niveau de difficulté. Cette méthode gère la
-     * logique associée à la configuration du niveau de difficulté.
+     * Source : https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html section showOptionDialog
+     * Cette méthode est appelée lorsque l'utilisateur choisit l'option pour définir le niveau de difficulté. Cette
+     * méthode gère la logique associée à la configuration du niveau de difficulté.
+     * @author Julien
      */
     public void chooseDifficultyLevel() {
         Object[] difficultes = {"facile", "normal", "difficile"};
@@ -206,6 +221,7 @@ public class Gameplay {
     /**
      * est appelée lorsque l'utilisateur choisit l'option pour définir la couleur du serpent. Cette méthode gère la
      * logique associée à la configuration de la couleur du serpent.
+     * @author Julien
      */
     public void chooseSnakeColor() {
         int n = JOptionPane.showOptionDialog(moteurGraphique.getMainFrame(), "Choisissez votre couleur", "Dialogue utilisateur",
@@ -219,6 +235,7 @@ public class Gameplay {
 
     /**
      * cette méthode permet juste d’afficher les instructions/Règles du jeu.
+     * @author Sellou, Julien
      */
     public void showInstruction() {
         JOptionPane.showMessageDialog(moteurGraphique.getMainFrame(), "1. Contrôlez le serpent avec les touches directionnelles." + System.lineSeparator() +
@@ -232,6 +249,7 @@ public class Gameplay {
      * affiche les meilleurs scores des joueur-euses, en triant la liste des joueur-euses en fonction de leurs scores et en
      * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
      * qu'aucun classement n'est disponible.
+     * @author Pauline
      */
     public void showLeaderboard(String fichierScores){
         gameOver.setVisible(false);
@@ -251,7 +269,6 @@ public class Gameplay {
 
         List<Score> meilleursScores = getBestScores(fichierScores);
         for (int i = 0; i < meilleursScores.size(); i++){
-            //System.out.println(meilleursScores.get(i));
             ((JLabel) leaderboard[i+2].getComponent(0)).setText(meilleursScores.get(i).toString());
         }
         leaderboard[0].addMouseListener(KeyListenerKernel.getInstance());
@@ -266,6 +283,7 @@ public class Gameplay {
      * permet de  recueillir des informations du joueur (nom, niveau de    difficulté, couleur du serpent) et les
      * utiliser pour initialiser une nouvelle partie du jeu. Elle  est appelée lorsque l'utilisateur choisit de démarrer
      * une nouvelle partie dans le menu principal
+     * @author Julien
      */
     public void startGame() {
         for (Objet b : mainMenu) {
@@ -283,6 +301,10 @@ public class Gameplay {
         initializeLevel();
     }
 
+    /**
+     * @return Liste des collisions entre les différents objets du jeu
+     * @author Pauline
+     */
     private List<Objet[]> getCollisions() {
         List<Objet[]> collisions = new ArrayList<>();
 
@@ -300,6 +322,10 @@ public class Gameplay {
         return collisions;
     }
 
+    /**
+     * Gère les collisions entre les objets du jeu.
+     * @author Pauline
+     */
     public void handleCollision() {
         if (snakeExists()) {
             Objet teteSerpent = getSnakeHead();
@@ -320,6 +346,12 @@ public class Gameplay {
         }
     }
 
+    /**
+     * Vérifie si l'objet sort des limites de l'écran
+     * @param o Objet à tester
+     * @return Vrai si l'objet sort des limites de l'écran, faux sinon
+     * @author Pauline
+     */
     public boolean isOutOfScreen(Objet o) {
         return (o.getXposition() + o.getSizeImageX() > moteurGraphique.getWidth())
                 || (o.getXposition() < 0)
@@ -329,6 +361,7 @@ public class Gameplay {
 
     /**
      * Que faire dans l'événement de collision entre le serpent et la pomme.
+     * @author Kawthar
      */
     public void collisionSerpentPomme(){
         score += 1;
@@ -338,6 +371,7 @@ public class Gameplay {
 
     /**
      * Que faire dans l'événement de collision entre le serpent et lui-même.
+     * @author Julien, Sellou
      */
     public void collisionSerpent(){
         System.out.println("Collision Serpent");
@@ -346,6 +380,7 @@ public class Gameplay {
 
     /**
      * Que faire dans l'événement de collision entre le serpent et le bord de l'écran.
+     * @author Julien, Sellou
      */
     public void collisionSerpentMur(){
         System.out.println("Collision Mur");
@@ -361,6 +396,9 @@ public class Gameplay {
         System.out.println("--------------------------------");
     }
 
+    /**
+     * @author Julien
+     */
     public void moveSnake() {
         if (snakeExists()) {
             if (getSnakeHead().getSpeed() > 0) {
@@ -384,6 +422,7 @@ public class Gameplay {
     /**
      * Selon la touche appuyée, le serpent change de direction.
      * Si le serpent ne bouge pas, il commence à bouger.
+     * @author Matteo, Julien
      */
     public void changeDirection(KeyEvent e) {
         if (snakeExists()) {
@@ -425,6 +464,7 @@ public class Gameplay {
     /**
      * Réinitialiser le niveau.
      * Est aussi utilisé pour initialiser le niveau au début du jeu.
+     * @author Sellou, Julien
      */
     public void initializeLevel() {
         score = 0;
@@ -447,6 +487,7 @@ public class Gameplay {
      * @param x
      * @param y
      * @return un bloc sous forme d'un Objet
+     * @author Julien
      */
     public Objet createBlocSerpent(int x, int y) {
         return new Objet(x, y, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), fnameBloc, BLOCKSIZE, BLOCKSIZE);
@@ -455,6 +496,7 @@ public class Gameplay {
     /**
      * A appeler après createBlocSerpent pour mettre à jour la liste d'objets et la liste de blocs du serpent.
      * @param o le bloc de serpent
+     * @author Julien
      */
     public void addSnakeBlock(Objet o) {
         snake.add(o);
@@ -464,6 +506,7 @@ public class Gameplay {
     /**
      * À appeler après new Objet(...) pour mettre à jour la liste d'objets.
      * @param o
+     * @author Matteo, Julien
      */
     public void addObjet(Objet o) {
         o.setOpaque(false);
@@ -473,6 +516,7 @@ public class Gameplay {
 
     /**
      * Replace la pomme à une position aléatoire, en prenant en compte la position du serpent, la taille de la fenêtre
+     * @author Nesrine
      */
     public void replaceApple() {
         int newWidth;
@@ -497,6 +541,7 @@ public class Gameplay {
 
     /**
      * Référence : <a href="https://stackoverflow.com/questions/18852059/java-list-containsobject-with-field-value-equal-to-x">lien</a> premier code de première réponse
+     * @author Julien
      */
     public boolean doesNotContain(final List<Objet> l, final Objet ref) {
         return l.stream().noneMatch(o -> o.equals(ref));
@@ -505,6 +550,7 @@ public class Gameplay {
     /**
      * Demande et récupère le nom de la personne qui vient de finir sa partie
      * @return le nom récupéré
+     * @author Pauline
      */
     private String getPseudo() {
         return pseudo;
@@ -512,6 +558,7 @@ public class Gameplay {
 
     /**
      * Enregister un nouveau score dans le leaderboard
+     * @author Pauline
      */
     private void registerScore(String fichierScores){
         String nom = getPseudo();
@@ -523,6 +570,7 @@ public class Gameplay {
      * @param nom pseudo de la personne qui joue
      * @param score score de la partie achevée
      * @param fichierScores chemin d'accès vers le fichier de scores
+     * @author Pauline
      */
     private void writeScore(String nom, int score, String fichierScores){
         try {
@@ -539,6 +587,7 @@ public class Gameplay {
     /**
      * Lit le fichier de scores pour récupérer les 5 meilleurs
      * @return la liste des 5 meilleurs scores
+     * @author Pauline
      */
     private List<Score> getBestScores(String fichierScores){
         List<Score> scores = new ArrayList<>();
@@ -564,12 +613,17 @@ public class Gameplay {
         return meilleursScores;
     }
 
+    /**
+     * Met à jour l'affichage du score dans le coin de l'écran en jeu.
+     * @author Pauline, Julien
+     */
     public void updateScore() {
         HUDLabel.setText(new Score(pseudo, score).toString());
     }
 
     /**
      * Que faire si le joueur perd.
+     * @author Nesrine, Sellou, Julien
      */
     public void gameOver() {
         gameOver.setVisible(true);
@@ -618,6 +672,7 @@ public class Gameplay {
      * un nouveau bloc du serpent quand le serpent mange une pomme, mais on sait que la prochaine fois que le serpent
      * bouge, le nouveau bloc sera à la position du dernier bloc.
      * @return Est-ce que le serpent doit grandir d'un bloc lors de l'appel de la méthode mvtSnake.
+     * @author Julien
      */
     public boolean snakeIsGrowing() {
         return growSnake;
