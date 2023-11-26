@@ -1,13 +1,109 @@
-# Projet 
+# <span style="color: #086F61"> Projet Génie Logiciel : Game Engine
 
-### Membres du projet : 
-* GHANNAY Nesrine 
-* LEFEVRE Julien
-* GOUMAIDI Kawthar
-* DI SALVO-CILIA Pauline
-* Mamadou Sellou Diallo
-* COMTI Mattéo
+#### <span style="color: #086F61"> Membre de l'équipe 35 :
 
+* <span style="color: #85BDB5"> COMTI Mattéo
+* <span style="color: #85BDB5"> DIALLO Mamadou Sellou
+* <span style="color: #85BDB5"> DI SALVO-CILIA Pauline
+* <span style="color: #85BDB5"> GHANNAY Nesrine
+* <span style="color: #85BDB5"> LEFEVRE Julien
+* <span style="color: #85BDB5"> GOUMAIDI Kawthar
+
+## <span style="color: #086F61"> Objectifs
+
+Dans le domaine exigeant du développement de jeux vidéo, la création d'un logiciel de qualité représente un défi de taille,
+amplifié par les contraintes temporelles et les évolutions fréquentes des exigences. Ce projet s'inscrit dans cette réalité
+en visant la conception d'un prototype de jeu vidéo, offrant ainsi une simulation authentique des conditions industrielles.
+Dans ce contexte, l'application de méthodes et techniques avancées du génie logiciel devient impérative pour relever les
+nombreux défis inhérents à ce domaine dynamique.
+
+## <span style="color: #086F61"> Implémentation
+
+#### <span style="color: #086F61"> Moteur Physique
+
+Les méthodes du moteur physique reposent principalement sur des bibliothèques disponibles en ligne. Leur objectif 
+principal est de définir les formes qui, une fois établies, seront ensuite visuellement représentées dans le moteur graphique pour créer les différents objets du jeu.
+
+#### <span style="color: #086F61"> Moteur Graphique</span>
+
+Il est responsable de l'affichage, de l'animation, et de la gestion d'une scène de jeu vidéo qui est organisée dans une 
+structure spatiale.
+
+#### <span style="color: #086F61"> Core Kernel</span>
+ 
+Le Core Kernel assure la synchronisation des modules moteurs, qu'ils soient séquentiels ou parallèles, en fonction des événements 
+provenant de la couche gameplay et des sorties des moteurs.  \
+Les classes qui vont ici alimenter le core kernel sont :
+
+#### <span style="color: #85BDB5"> Objet : 
+La classe `Objet` est conçue pour gérer les aspects physiques et graphiques des objets du jeu. Elle encapsule les fonctionnalités suivantes :
+
+  * Propriétés Physiques :  \
+Coordonnées (x, y) de l'objet.  \
+Vitesses horizontale et verticale.  \
+Forme physique de l'objet (implémentée par l'interface IForme).
+    </span>
+
+* Propriétés Graphiques :  \
+Chargement d'une image à partir d'un chemin spécifié.  \
+Redimensionnement de l'image pour l'adapter à une taille définie.  \
+Affichage graphique de l'objet dans l'interface utilisateur. 
+</span>
+
+* Mouvement :  \
+  Mise à jour de la position de l'objet en fonction de sa vitesse.
+  </span>
+
+* Détection de Collision :  \
+Méthode "percute(Objet other)" pour déterminer si l'objet entre en collision avec un autre objet.
+  </span>
+
+* Fonctions Auxiliaires :  \
+  Méthodes pour obtenir les positions, tailles, et vitesses de l'objet.  \
+   Calcul de la vitesse basé sur la distance de Manhattan.
+  </span>
+
+* Affichage Graphique :  \
+  Surcharge de la méthode "paintComponent(Graphics g)" pour l'affichage graphique.
+  </span>
+
+
+ La classe "Objet" peut être instanciée en fournissant des paramètres tels que les coordonnées initiales, la forme 
+ physique, le chemin de l'image, et les dimensions souhaitées. Elle peut ensuite être intégrée dans l'interface utilisateur
+ graphique du jeu pour représenter divers éléments interactifs.
+  </span>
+ Remarques :
+
+    * La classe offre une méthode "updatePosition()" pour actualiser la position de l'objet en fonction de ses vitesses.
+    * Une méthode de collision "percute(Objet other)" permet de vérifier les collisions entre objets.
+
+#### <span style="color: #85BDB5"> KeyListenerKernel :
+
+La classe "KeyListenerKernel" gère les événements liés au clavier et à la souris dans le contexte du noyau du jeu. 
+Cette classe est conçue pour intercepter les actions liées aux touches du clavier et aux clics de souris, offrant une 
+gestion réactive des événements de l'utilisateur. Voici une vue d'ensemble des fonctionnalités et de l'utilisation de 
+cette classe :
+
+* Singleton Pattern :  \
+La classe `KeyListenerKernel` suit le modèle de conception Singleton, garantissant une seule instance de la classe dans 
+l'application. L'instance unique est accessible via la méthode statique getInstance().
+```
+KeyListenerKernel keyListener = KeyListenerKernel.getInstance();
+```
+
+* Gestion des Touches du Clavier :
+  + La méthode `keyPressed(KeyEvent e)` est appelée lorsqu'une touche du clavier est enfoncée. Elle délègue le changement de 
+  direction à la classe "Gameplay" en fonction de la touche pressée.
+  + La méthode `keyReleased(KeyEvent e)` est appelée lorsqu'une touche du clavier est relâchée. Si la touche relâchée est la 
+  touche "Escape" (VK_ESCAPE), la méthode exitGame() de la classe "Control" est appelée pour quitter le jeu.
+
+* Gestion des Clics de Souris :
+  + Les méthodes de l'interface `MouseListener` sont implémentées pour détecter les événements de la souris.
+  + La méthode `mouseClicked(MouseEvent mouseEvent)` est utilisée pour identifier l'objet graphique cliqué. 
+  En fonction de l'objet cliqué, différentes actions sont déclenchées, telles que le démarrage du jeu, l'affichage des
+  instructions, le retour au menu principal, etc.
+
+# <span style="color: #086F61"> Gradle
 
 Modèle basique de projet gradle pour interface graphique avec `swing`.
 

@@ -14,22 +14,33 @@ import java.util.Objects;
 
 import static java.lang.Math.abs;
 
+/**
+ * La classe "Objet" étend JPanel et représente un objet graphique dans un jeu.
+ * Elle gère les aspects physiques, affichage et de mouvement de l'objet.
+ */
 public class Objet extends JPanel {
     // Partie physique
     private int x;
     private int y;
     private int horizontalSpeed;
     private int verticalSpeed;
-
-    // Partie graphique
     private final IForme forme;
-
     private BufferedImage bufferedImage;
     public String pathImage;
     private Image image;
     private int sizeImageX;
     private int sizeImageY;
 
+    /**
+     * Constructeur de la classe "Objet" pour un objet graphique avec une image.
+     *
+     * @param initialX    Coordonnée X initiale de l'objet.
+     * @param initialY    Coordonnée Y initiale de l'objet.
+     * @param forme       Forme physique de l'objet (implémente IForme).
+     * @param pathImage   Chemin vers l'image de l'objet.
+     * @param sizeImageX  Largeur souhaitée de l'image.
+     * @param sizeImageY  Hauteur souhaitée de l'image.
+     */
     public Objet(int initialX, int initialY, IForme forme, String pathImage, int sizeImageX, int sizeImageY) {
         this.x = initialX;
         this.y = initialY;
@@ -56,7 +67,13 @@ public class Objet extends JPanel {
         image = bufferedImage.getScaledInstance(sizeImageX, sizeImageY, Image.SCALE_DEFAULT);
     }
 
-    // for testCollision
+    /**
+     * Constructeur alternatif pour les tests de collision.
+     *
+     * @param initialX Coordonnée X initiale de l'objet.
+     * @param initialY Coordonnée Y initiale de l'objet.
+     * @param forme    Forme physique de l'objet (implémente IForme).
+     */
     public Objet(int initialX, int initialY, IForme forme) {
         this.x = initialX;
         this.y = initialY;
@@ -73,11 +90,22 @@ public class Objet extends JPanel {
         y += verticalSpeed;
     }
 
+    /**
+     * Définit la position de l'objet.
+     *
+     * @param x Nouvelle coordonnée X.
+     * @param y Nouvelle coordonnée Y.
+     */
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Surcharge de la méthode paintComponent pour l'affichage graphique de l'objet.
+     *
+     * @param g Graphics utilisé pour le rendu.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -92,7 +120,10 @@ public class Objet extends JPanel {
     }
 
     /**
-     * Décide si this est en collision avec l'objet other.
+     * Vérifie si cet objet entre en collision avec un autre objet.
+     *
+     * @param other Objet avec lequel vérifier la collision.
+     * @return true si collision, sinon false.
      */
     public boolean percute(Objet other) {
         return forme.percute(this, other);
