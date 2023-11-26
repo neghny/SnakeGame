@@ -377,7 +377,7 @@ public class Gameplay {
 
     /**
      * Que faire dans l'événement de collision entre le serpent et lui-même.
-     * @author Julien, Sellou
+     * @author Kawthar
      */
     public void collisionSerpent(){
         System.out.println("Collision Serpent");
