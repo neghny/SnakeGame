@@ -36,9 +36,9 @@ public class Gameplay {
     Objet returnButton = new Objet(400, 750, new Rectangle(buttonWidth, buttonHeight), "btnRetour.png", buttonWidth, buttonHeight);
 
     Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
-    Objet gameOver = new Objet((MoteurGraphique.getInstance().getWidth()-300) / 2, (moteurGraphique.getHeight()-72) / 2, new Rectangle(300, 72), "game_over.png", 300, 72);
+    Objet gameOver = new Objet((MoteurGraphique.getInstance().getWidth()-600) / 2, (moteurGraphique.getHeight()-144) / 2, new Rectangle(600, 144), "game_over.png", 600, 144);
 
-    Objet leaderboardTitle = new Objet(100, 100, new Rectangle(200,100), "btnLeaderboard.png", 200, 100);
+    Objet leaderboardTitle = new Objet(100, 0, new Rectangle(600,200), "btnLeaderboard.png", 600, 300);
     Objet[] leaderboard = new Objet[7];
     String pseudo;
     String[] fnameBlocs = {"blocBleu.png",   "blocOrange.png",  "blocRose.png",
@@ -575,7 +575,7 @@ public class Gameplay {
         gameOver.setVisible(true);
         gameOver.addMouseListener(KeyListenerKernel.getInstance());
         try {
-            sleep(2000);
+            sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
