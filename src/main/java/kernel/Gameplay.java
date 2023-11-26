@@ -302,8 +302,7 @@ public class Gameplay {
             for (MouseListener l : b.getMouseListeners())
                 b.removeMouseListener(l);
         }
-        this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "red_apple.png", BLOCKSIZE, BLOCKSIZE);
-
+        this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "pomme.png", BLOCKSIZE, BLOCKSIZE);
         initializeLevel();
     }
 
