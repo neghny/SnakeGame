@@ -51,6 +51,7 @@ public class Gameplay {
 
     private final String fichierScores = "src/main/java/kernel/scores.txt";
     private final Objet affichageScore = new Objet(0,0, new Rectangle(200,50), "blank.png", 200,50);
+    private final JLabel HUDLabel = new JLabel();
 
     private final LinkedList<Objet> snake;
     private final LinkedList<Objet> objets;
@@ -103,18 +104,25 @@ public class Gameplay {
 
         leaderboard[0] = returnButton;
         leaderboard[1] = leaderboardTitle;
+        HUDLabel.setFont(font.deriveFont(Font.BOLD, 24));
+        HUDLabel.setForeground(Color.WHITE);
+        affichageScore.add(HUDLabel);
         //leaderboard[1].add(new JLabel("Leaderboard"));
-        for (int i = 0; i < 5; i++){
-            leaderboard[i+2] = new Objet(100, (i+2)*100, new Rectangle(400, 100), "blank.png", 400, 100);
-        }
-        for (int i = 1; i < 7; i++){
-            addObjet(leaderboard[i]);
-        }
 
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("Orbitron.ttf")));
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
+        }
+        for (int i = 0; i < 5; i++){
+            leaderboard[i+2] = new Objet(100, (i+2)*100, new Rectangle(400, 100), "blank.png", 400, 100);
+            JLabel label = new JLabel("");
+            label.setFont(font.deriveFont(Font.BOLD, 36));
+            label.setForeground(Color.WHITE);
+            leaderboard[i+2].add(label);
+        }
+        for (int i = 1; i < 7; i++){
+            addObjet(leaderboard[i]);
         }
     }
 
@@ -155,8 +163,8 @@ public class Gameplay {
     public void showOptionMenu() {
         for (Objet i : leaderboard){
             i.setVisible(false);
-            for (MouseListener l : leaderboard[0].getMouseListeners())
-                gameOver.removeMouseListener(l);
+            for (MouseListener l : i.getMouseListeners())
+                i.removeMouseListener(l);
         }
         for (Objet b : mainMenu) {
             b.setVisible(false);
@@ -244,12 +252,7 @@ public class Gameplay {
         List<Score> meilleursScores = getBestScores(fichierScores);
         for (int i = 0; i < meilleursScores.size(); i++){
             //System.out.println(meilleursScores.get(i));
-            leaderboard[i+2].removeAll();
-            JLabel label = new JLabel(meilleursScores.get(i).toString());
-            label.setForeground(Color.WHITE);
-            label.setFont(font.deriveFont(Font.BOLD, 36));
-            leaderboard[i+2].add(label);
-
+            ((JLabel) leaderboard[i+2].getComponent(0)).setText(meilleursScores.get(i).toString());
         }
         leaderboard[0].addMouseListener(KeyListenerKernel.getInstance());
         for (Objet i : leaderboard){
@@ -561,14 +564,8 @@ public class Gameplay {
         return meilleursScores;
     }
 
-    public void updateScore(){
-        affichageScore.removeAll();
-        JLabel label = new JLabel(new Score(pseudo, score).toString());
-        label.setForeground(Color.WHITE);
-        label.setFont(font.deriveFont(Font.BOLD, 24));
-        affichageScore.add(label);
-        affichageScore.setVisible(false);
-        affichageScore.setVisible(true);
+    public void updateScore() {
+        HUDLabel.setText(new Score(pseudo, score).toString());
     }
 
     /**
