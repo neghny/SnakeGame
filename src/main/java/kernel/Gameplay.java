@@ -39,6 +39,7 @@ public class Gameplay {
 
     Objet leaderboardTitle = new Objet(100, 100, new Rectangle(200,100), "btnLeaderboard.png", 200, 100);
     Objet[] leaderboard = new Objet[7];
+    String pseudo;
 
     Font font;
 
@@ -55,7 +56,28 @@ public class Gameplay {
      */
     private boolean growSnake;
 
+    public String enterPseudo() {
+        for (;;) {
+            String s = (String)JOptionPane.showInputDialog(
+                    moteurGraphique.getMainFrame(),
+                    "Entrez votre nom :",
+                    "Dialogue utilisateur",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "pseudo");
+
+            //If a string was returned, say so.
+            if ((s != null) && (s.length() > 0))
+                return s;
+
+            //If you're here, the return value was null/empty.
+            JOptionPane.showMessageDialog(moteurGraphique.getMainFrame(), "Entre un nom !");
+        }
+    }
+
     private Gameplay(){
+        pseudo = enterPseudo();
         growSnake = false;
         score = 0;
         snake = new LinkedList<>();
@@ -443,8 +465,7 @@ public class Gameplay {
      * @return le nom récupéré
      */
     private String getPseudo() {
-        // TODO : récupérer le pseudo entré dans le menu quand ce sera implémenté
-        return "pseudo";
+        return pseudo;
     }
 
     /**
