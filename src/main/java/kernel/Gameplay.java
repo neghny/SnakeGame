@@ -36,7 +36,7 @@ public class Gameplay {
     Objet returnButton = new Objet(400, 750, new Rectangle(buttonWidth, buttonHeight), "btnRetour.png", buttonWidth, buttonHeight);
 
     Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
-    Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
+    Objet gameOver = new Objet((MoteurGraphique.getInstance().getWidth()-300) / 2, (moteurGraphique.getHeight()-72) / 2, new Rectangle(300, 72), "game_over.png", 300, 72);
 
     Objet leaderboardTitle = new Objet(100, 100, new Rectangle(200,100), "btnLeaderboard.png", 200, 100);
     Objet[] leaderboard = new Objet[7];
@@ -93,10 +93,12 @@ public class Gameplay {
         score = 0;
         snake = new LinkedList<>();
         objets = new LinkedList<>();
-        for (Objet b : mainMenu)
+        for (Objet b : mainMenu) {
             addObjet(b);
-        for (Objet b : optionMenu)
+        }
+        for (Objet b : optionMenu) {
             addObjet(b);
+        }
         addObjet(gameOver);
 
         leaderboard[0] = returnButton;
@@ -244,6 +246,7 @@ public class Gameplay {
             //System.out.println(meilleursScores.get(i));
             leaderboard[i+2].removeAll();
             JLabel label = new JLabel(meilleursScores.get(i).toString());
+            label.setForeground(Color.WHITE);
             label.setFont(font.deriveFont(Font.BOLD, 36));
             leaderboard[i+2].add(label);
 
@@ -460,6 +463,7 @@ public class Gameplay {
      * @param o
      */
     public void addObjet(Objet o) {
+        o.setOpaque(false);
         objets.add(o);
         moteurGraphique.addObjet(o);
     }
@@ -560,6 +564,7 @@ public class Gameplay {
     public void updateScore(){
         affichageScore.removeAll();
         JLabel label = new JLabel(new Score(pseudo, score).toString());
+        label.setForeground(Color.WHITE);
         label.setFont(font.deriveFont(Font.BOLD, 24));
         affichageScore.add(label);
         affichageScore.setVisible(false);
