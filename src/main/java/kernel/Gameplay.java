@@ -143,7 +143,6 @@ public class Gameplay {
      * L'utilisateur peut choisir différentes options telles que le niveau de difficulté, la couleur du serpent, ou
      * retourner au menu principal.
      */
-    @SuppressWarnings("unused")
     public void showOptionMenu() {
         for (Objet i : leaderboard){
             i.setVisible(false);
@@ -163,20 +162,34 @@ public class Gameplay {
         }
     }
 
+    // Source : https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html section showOptionDialog
     /**
      * est appelée lorsque l'utilisateur choisit l'option pour définir le niveau de difficulté. Cette méthode gère la
      * logique associée à la configuration du niveau de difficulté.
      */
-    @SuppressWarnings("unused")
     public void chooseDifficultyLevel() {
-        // TODO
+        Object[] difficultes = {"facile", "normal", "difficile"};
+        int n = JOptionPane.showOptionDialog(moteurGraphique.getMainFrame(),
+                "Choisissez la difficulté :",
+                "Dialogue utilisateur",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,     //do not use a custom Icon
+                difficultes,  //the titles of buttons
+                difficultes[0]); //default button title
+
+        switch (n) {
+            case 0 -> Control.getInstance().frameLength = 300;
+            case 1 -> Control.getInstance().frameLength = 200;
+            case 2 -> Control.getInstance().frameLength = 100;
+            default -> JOptionPane.showMessageDialog(moteurGraphique.getMainFrame(), "Annulé.");
+        }
     }
 
     /**
      * est appelée lorsque l'utilisateur choisit l'option pour définir la couleur du serpent. Cette méthode gère la
      * logique associée à la configuration de la couleur du serpent.
      */
-    @SuppressWarnings("unused")
     public void chooseSnakeColor() {
         // TODO
     }

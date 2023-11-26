@@ -12,6 +12,7 @@ public class Control {
     private final MoteurGraphique moteurGraphique;
     private final Gameplay gameplay;
     private boolean running;
+    public int frameLength = 100;
 
     private Control() {
         running = true;
@@ -39,7 +40,7 @@ public class Control {
 
         while (running) {
             startTime = System.currentTimeMillis();
-            expectedRestart = startTime + 100;
+            expectedRestart = startTime + frameLength;
 
             gameplay.moveSnake();
             gameplay.handleCollision();
