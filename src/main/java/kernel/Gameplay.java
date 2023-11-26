@@ -93,10 +93,12 @@ public class Gameplay {
         score = 0;
         snake = new LinkedList<>();
         objets = new LinkedList<>();
-        for (Objet b : mainMenu)
+        for (Objet b : mainMenu) {
             addObjet(b);
-        for (Objet b : optionMenu)
+        }
+        for (Objet b : optionMenu) {
             addObjet(b);
+        }
         addObjet(gameOver);
 
         leaderboard[0] = returnButton;
@@ -244,6 +246,7 @@ public class Gameplay {
             //System.out.println(meilleursScores.get(i));
             leaderboard[i+2].removeAll();
             JLabel label = new JLabel(meilleursScores.get(i).toString());
+            label.setForeground(Color.WHITE);
             label.setFont(font.deriveFont(Font.BOLD, 36));
             leaderboard[i+2].add(label);
 
@@ -460,6 +463,7 @@ public class Gameplay {
      * @param o
      */
     public void addObjet(Objet o) {
+        o.setOpaque(false);
         objets.add(o);
         moteurGraphique.addObjet(o);
     }
@@ -560,6 +564,7 @@ public class Gameplay {
     public void updateScore(){
         affichageScore.removeAll();
         JLabel label = new JLabel(new Score(pseudo, score).toString());
+        label.setForeground(Color.WHITE);
         label.setFont(font.deriveFont(Font.BOLD, 24));
         affichageScore.add(label);
         affichageScore.setVisible(false);
