@@ -1,6 +1,6 @@
 # <span style="color: #086F61"> Projet Génie Logiciel : Game Engine
 
-#### <span style="color: #086F61"> Membre de l'équipe 35 :
+#### <span style="color: #086F61"> Membres de l'équipe 35 :
 
 * <span style="color: #85BDB5"> COMTI Mattéo
 * <span style="color: #85BDB5"> DIALLO Mamadou Sellou
@@ -102,6 +102,58 @@ KeyListenerKernel keyListener = KeyListenerKernel.getInstance();
   + La méthode `mouseClicked(MouseEvent mouseEvent)` est utilisée pour identifier l'objet graphique cliqué. 
   En fonction de l'objet cliqué, différentes actions sont déclenchées, telles que le démarrage du jeu, l'affichage des
   instructions, le retour au menu principal, etc.
+
+#### <span style="color: #85BDB5"> Score :
+
+La classe "Score" encapsule les informations associées à un score dans le jeu. Chaque objet "Score" est composé d'un 
+pseudo (nom du joueur) et d'un score entier.
+
+Remarques :
+
+    Les scores sont comparés pour déterminer leur position relative.
+    Cette classe sont utilisée dans des contextes tels que la gestion des meilleurs scores ou la création d'un tableau de classement.
+
+#### <span style="color: #85BDB5"> Classe Gameplay
+
+La classe `Gameplay` est un composant clé du moteur de jeu, gérant la logique du gameplay, les interactions utilisateur et le système de score.
+Elle orchestre les principales fonctionnalités du jeu, notamment le mouvement du serpent, la détection des collisions, le scoring et les interactions utilisateur. Elle utilise la classe `MoteurGraphique` pour le rendu graphique et les interactions.
+
+* Principales fonctionnalités
+
+- **Interface utilisateur :** Gère le menu principal, le menu des options et l'affichage du classement.
+- **Logique de jeu :** Gère le mouvement du serpent, la détection des collisions et le scoring.
+- **Interaction utilisateur :** Capture les entrées utilisateur via le clavier et la souris.
+- **Classement :** Affiche et met à jour les cinq meilleurs scores.
+- **Configuration :** Permet aux utilisateurs de personnaliser les paramètres du jeu, tels que le niveau de difficulté et la couleur du serpent.
+
+- **Utilisation :**
+
+Instanciez la classe `Gameplay` en utilisant `Gameplay.getInstance()` et utilisez ses méthodes pour contrôler le déroulement du jeu.
+
+```java
+Gameplay jeu = Gameplay.getInstance();
+jeu.showMainMenu();
+````
+
+
+#### <span style="color: #85BDB5"> Control
+
+La classe `Control` est le composant central du contrôle-commande du jeu vidéo. Elle agit comme un orchestrateur entre les différentes parties du jeu, en particulier la logique de jeu (classe `Gameplay`) et le moteur graphique (classe `MoteurGraphique`). Sa responsabilité principale est de faire fonctionner le jeu en coordonnant les interactions entre ces composants.
+
+- **Boucle de jeu :** La méthode `run` gère la boucle principale du jeu. À chaque itération de la boucle, elle s'occupe du mouvement du serpent, de la gestion des collisions, et de l'affichage des objets. La durée de chaque itération est contrôlée par la variable `frameLength`.
+
+- **Initialisation :** La classe `Control` est responsable de l'initialisation des instances de `Gameplay` et `MoteurGraphique` nécessaires au fonctionnement du jeu.
+
+- **Sortie du jeu :** La méthode `exitGame` permet de mettre fin à la boucle de jeu, arrêtant ainsi l'exécution du programme.
+
+- **Utilisation :**
+
+Pour utiliser la classe `Control`, instanciez-la en utilisant `Control.getInstance()` et appelez la méthode `run` pour démarrer la boucle de jeu.
+
+```java
+Control control = Control.getInstance();
+control.run();
+```
 
 # <span style="color: #086F61"> Gradle
 
