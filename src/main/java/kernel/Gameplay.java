@@ -8,8 +8,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 import static java.awt.event.KeyEvent.*;
 import static java.lang.Math.min;
@@ -41,6 +41,11 @@ public class Gameplay {
     Objet leaderboardTitle = new Objet(100, 100, new Rectangle(200,100), "btnLeaderboard.png", 200, 100);
     Objet[] leaderboard = new Objet[7];
     String pseudo;
+    String[] fnameBlocs = {"blocBleu.png",   "blocOrange.png",  "blocRose.png",
+            "blocJaune.png",  "bloc.png",        "blocViolet.png"};
+    String[] nomBlocs = {"bleu",   "orange",  "rose",
+            "jaune",  "rouge",        "violet"};
+    String fnameBloc = "bloc.png";
 
     Font font;
 
@@ -192,7 +197,13 @@ public class Gameplay {
      * logique associée à la configuration de la couleur du serpent.
      */
     public void chooseSnakeColor() {
-        // TODO
+        int n = JOptionPane.showOptionDialog(moteurGraphique.getMainFrame(), "Choisissez votre couleur", "Dialogue utilisateur",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, nomBlocs, nomBlocs[4]);
+        if (n == JOptionPane.CLOSED_OPTION)
+            JOptionPane.showMessageDialog(moteurGraphique.getMainFrame(), "Annulé.");
+        else
+            fnameBloc = fnameBlocs[n];
     }
 
     /**
@@ -432,7 +443,7 @@ public class Gameplay {
      * @return un bloc sous forme d'un Objet
      */
     public Objet createBlocSerpent(int x, int y) {
-        return new Objet(x, y, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "bloc.png", BLOCKSIZE, BLOCKSIZE);
+        return new Objet(x, y, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), fnameBloc, BLOCKSIZE, BLOCKSIZE);
     }
 
     /**
