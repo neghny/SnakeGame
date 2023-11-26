@@ -31,6 +31,8 @@ public class MoteurGraphique {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.addKeyListener(KeyListenerKernel.getInstance());
+        mainFrame.setBackground(Color.BLACK);
+
         mainFrame.setVisible(true);
     }
 

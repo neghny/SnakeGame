@@ -50,6 +50,7 @@ public class Gameplay {
     Font font;
 
     private final String fichierScores = "src/main/java/kernel/scores.txt";
+    private final Objet affichageScore = new Objet(0,0, new Rectangle(200,50), "blank.png", 200,50);
 
     private final LinkedList<Objet> snake;
     private final LinkedList<Objet> objets;
@@ -261,7 +262,6 @@ public class Gameplay {
      * une nouvelle partie dans le menu principal
      */
     public void startGame() {
-        // TODO : Recueillir informations joueur.
         for (Objet b : mainMenu) {
             b.setVisible(false);
             for (MouseListener l : b.getMouseListeners())
@@ -273,6 +273,7 @@ public class Gameplay {
                 b.removeMouseListener(l);
         }
         this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "red_apple.png", BLOCKSIZE, BLOCKSIZE);
+
         initializeLevel();
     }
 
@@ -413,9 +414,7 @@ public class Gameplay {
         }
     }
 
-    /**
-     * Référence : <a href="https://stackoverflow.com/questions/18852059/java-list-containsobject-with-field-value-equal-to-x">lien</a> premier code de première réponse
-     */
+
 
     /**
      * Réinitialiser le niveau.
@@ -423,6 +422,7 @@ public class Gameplay {
      */
     public void initializeLevel() {
         score = 0;
+        addObjet(affichageScore);
 
         Objet bloc1 = createBlocSerpent(5 * BLOCKSIZE, 5 * BLOCKSIZE);
         Objet bloc2 = createBlocSerpent(4 * BLOCKSIZE, 5 * BLOCKSIZE);
@@ -488,6 +488,9 @@ public class Gameplay {
         apple.setPosition(newWidth, newHeight);
     }
 
+    /**
+     * Référence : <a href="https://stackoverflow.com/questions/18852059/java-list-containsobject-with-field-value-equal-to-x">lien</a> premier code de première réponse
+     */
     public boolean doesNotContain(final List<Objet> l, final Objet ref) {
         return l.stream().noneMatch(o -> o.equals(ref));
     }
@@ -527,8 +530,8 @@ public class Gameplay {
     }
 
     /**
-     * Lit le fichier de scores pour récupérer les 10 meilleurs
-     * @return la liste des 10 meilleurs scores
+     * Lit le fichier de scores pour récupérer les 5 meilleurs
+     * @return la liste des 5 meilleurs scores
      */
     private List<Score> getBestScores(String fichierScores){
         List<Score> scores = new ArrayList<>();
@@ -554,6 +557,14 @@ public class Gameplay {
         return meilleursScores;
     }
 
+    public void updateScore(){
+        affichageScore.removeAll();
+        JLabel label = new JLabel(new Score(pseudo, score).toString());
+        label.setFont(font.deriveFont(Font.BOLD, 24));
+        affichageScore.add(label);
+        affichageScore.setVisible(false);
+        affichageScore.setVisible(true);
+    }
 
     /**
      * Que faire si le joueur perd.
@@ -573,9 +584,7 @@ public class Gameplay {
         objets.removeAll(temp);
         MoteurGraphique.getInstance().emptyWith(temp);
         snake.clear();
-        // TODO: Réctifier Affichage du Panel game_over.png
         System.out.println("Game Over!");
-        // TODO: Afficher le leaderboard
         registerScore(fichierScores);
         showLeaderboard(fichierScores);
         System.out.println("Score final : " + score);

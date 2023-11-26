@@ -42,6 +42,7 @@ public class Control {
             startTime = System.currentTimeMillis();
             expectedRestart = startTime + frameLength;
 
+
             gameplay.moveSnake();
             gameplay.handleCollision();
             //gameplay.printSnakePosition();
@@ -54,6 +55,7 @@ public class Control {
                 }
             }
             moteurGraphique.display(gameplay.getObjets());
+            gameplay.updateScore();
         }
         System.exit(0);
     }
