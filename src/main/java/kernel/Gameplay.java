@@ -24,24 +24,25 @@ public class Gameplay {
     int buttonWidth = 200;
     int buttonHeight = 100;
 
-    Objet playButton = new Objet(400, 100, new Rectangle(buttonWidth, buttonHeight), "btnJouer.png", buttonWidth, buttonHeight);
-    Objet tutorialButton = new Objet(400, 250, new Rectangle(buttonWidth, buttonHeight), "btnDidacticiel.png", buttonWidth, buttonHeight);
-    Objet optionButton = new Objet(400, 400, new Rectangle(buttonWidth, buttonHeight), "btnOptions.png", buttonWidth, buttonHeight);
-    Objet leaderboardButton = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnLeaderboard.png", buttonWidth, buttonHeight);
-    Objet exitButton = new Objet(400, 700, new Rectangle(buttonWidth, buttonHeight), "btnQuitter.png", buttonWidth, buttonHeight);
+    Objet bienvenue = new Objet(240, -150, null, "bienvenue.png", 520, 520);
+    Objet playButton = new Objet(400, 200, null, "btnJouer.png", buttonWidth, buttonHeight);
+    Objet tutorialButton = new Objet(400, 350, null, "btnDidacticiel.png", buttonWidth, buttonHeight);
+    Objet optionButton = new Objet(400, 500, null, "btnOptions.png", buttonWidth, buttonHeight);
+    Objet leaderboardButton = new Objet(400, 650, null, "btnLeaderboard.png", buttonWidth, buttonHeight);
+    Objet exitButton = new Objet(400, 800, null, "btnQuitter.png", buttonWidth, buttonHeight);
 
     Objet[] mainMenu = new Objet[]{playButton, tutorialButton, optionButton, leaderboardButton, exitButton};
 
     // Créer spinner difficulté
-    Objet difficultySpinner = new Objet(400, 350, new Rectangle(buttonWidth, buttonHeight), "btnDifficulte.png", buttonWidth, buttonHeight);
+    Objet difficultySpinner = new Objet(400, 350, null, "btnDifficulte.png", buttonWidth, buttonHeight);
     // Créer spinner couleur
-    Objet colorSpinner = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnCouleur.png", buttonWidth, buttonHeight);
-    Objet returnButton = new Objet(400, 750, new Rectangle(buttonWidth, buttonHeight), "btnRetour.png", buttonWidth, buttonHeight);
+    Objet colorSpinner = new Objet(400, 550, null, "btnCouleur.png", buttonWidth, buttonHeight);
+    Objet returnButton = new Objet(400, 750, null, "btnRetour.png", buttonWidth, buttonHeight);
 
     Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
-    Objet gameOver = new Objet((MoteurGraphique.getInstance().getWidth()-300) / 2, (moteurGraphique.getHeight()-72) / 2, new Rectangle(300, 72), "game_over.png", 300, 72);
+    Objet gameOver = new Objet((MoteurGraphique.getInstance().getWidth()-600) / 2, (moteurGraphique.getHeight()-144) / 2, null, "game_over.png", 600, 144);
 
-    Objet leaderboardTitle = new Objet(100, 100, new Rectangle(200,100), "btnLeaderboard.png", 200, 100);
+    Objet leaderboardTitle = new Objet(100, 0, null, "btnLeaderboard.png", 600, 300);
     Objet[] leaderboard = new Objet[7];
     String pseudo;
     String[] fnameBlocs = {"blocBleu.png",   "blocOrange.png",  "blocRose.png",
@@ -53,7 +54,7 @@ public class Gameplay {
     Font font;
 
     private final String fichierScores = "src/main/java/kernel/scores.txt";
-    private final Objet affichageScore = new Objet(0,0, new Rectangle(200,50), "blank.png", 200,50);
+    private final Objet affichageScore = new Objet(0,0, null, "blank.png", 200,50);
     private final JLabel HUDLabel = new JLabel();
 
     private final LinkedList<Objet> snake;
@@ -97,11 +98,11 @@ public class Gameplay {
      * @author Julien, Kawthar, Pauline
      */
     private Gameplay(){
-        pseudo = enterPseudo();
         growSnake = false;
         score = 0;
         snake = new LinkedList<>();
         objets = new LinkedList<>();
+        addObjet(bienvenue);
         for (Objet b : mainMenu) {
             addObjet(b);
         }
@@ -122,7 +123,7 @@ public class Gameplay {
         HUDLabel.setForeground(Color.WHITE);
         affichageScore.add(HUDLabel);
         for (int i = 0; i < 5; i++){
-            leaderboard[i+2] = new Objet(100, (i+2)*100, new Rectangle(400, 100), "blank.png", 400, 100);
+            leaderboard[i+2] = new Objet(100, (i+2)*100, null, "blank.png", 400, 100);
             JLabel label = new JLabel("");
             label.setFont(font.deriveFont(Font.BOLD, 36));
             label.setForeground(Color.WHITE);
@@ -155,6 +156,7 @@ public class Gameplay {
         }
         for (MouseListener l : gameOver.getMouseListeners())
             gameOver.removeMouseListener(l);
+        bienvenue.setVisible(true);
         for (Objet b : mainMenu) {
             b.setVisible(true);
             for (MouseListener l : b.getMouseListeners())
@@ -180,6 +182,7 @@ public class Gameplay {
             for (MouseListener l : i.getMouseListeners())
                 i.removeMouseListener(l);
         }
+        bienvenue.setVisible(false);
         for (Objet b : mainMenu) {
             b.setVisible(false);
             for (MouseListener l : b.getMouseListeners())
@@ -255,6 +258,7 @@ public class Gameplay {
         gameOver.setVisible(false);
         for (MouseListener l : gameOver.getMouseListeners())
             gameOver.removeMouseListener(l);
+        bienvenue.setVisible(false);
         for (Objet b : mainMenu) {
             b.setVisible(false);
             for (MouseListener l : b.getMouseListeners())
@@ -286,6 +290,8 @@ public class Gameplay {
      * @author Julien
      */
     public void startGame() {
+        pseudo = enterPseudo();
+        bienvenue.setVisible(false);
         for (Objet b : mainMenu) {
             b.setVisible(false);
             for (MouseListener l : b.getMouseListeners())
@@ -310,14 +316,14 @@ public class Gameplay {
 
         for (int i = 0; i < objets.size(); i++) {
             Objet objet1 = objets.get(i);
+            if (objet1.getForme() != null)
+                for (int j = i + 1; j < objets.size(); j++) {
+                    Objet objet2 = objets.get(j);
 
-            for (int j = i + 1; j < objets.size(); j++) {
-                Objet objet2 = objets.get(j);
-
-                if (objet1 != objet2 && objet1.percute(objet2)) {
-                    collisions.add(new Objet[]{objet1, objet2});
+                    if (objet2.getForme() != null && objet1 != objet2 && objet1.percute(objet2)) {
+                        collisions.add(new Objet[]{objet1, objet2});
+                    }
                 }
-            }
         }
         return collisions;
     }
@@ -629,7 +635,7 @@ public class Gameplay {
         gameOver.setVisible(true);
         gameOver.addMouseListener(KeyListenerKernel.getInstance());
         try {
-            sleep(2000);
+            sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
