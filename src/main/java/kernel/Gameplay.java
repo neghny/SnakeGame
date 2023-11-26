@@ -264,27 +264,33 @@ public class Gameplay {
     public void changeDirection(KeyEvent e) {
         if (snakeExists()) {
             Objet teteSerpent = getSnakeHead();
+            int h = teteSerpent.getHorizontalSpeed();
+            int v = teteSerpent.getVerticalSpeed();
 
             switch (e.getKeyCode()) {
-                case VK_RIGHT: {
+                case VK_RIGHT -> {
+                    if (h < 0)
+                        break;
                     teteSerpent.setHorizontalSpeed(BLOCKSIZE);
                     teteSerpent.setVerticalSpeed(0);
-                    break;
                 }
-                case VK_LEFT: {
+                case VK_LEFT -> {
+                    if (h > 0 || teteSerpent.getSpeed() == 0)
+                        break;
                     teteSerpent.setHorizontalSpeed(-BLOCKSIZE);
                     teteSerpent.setVerticalSpeed(0);
-                    break;
                 }
-                case VK_UP: {
+                case VK_UP -> {
+                    if (v > 0)
+                        break;
                     teteSerpent.setHorizontalSpeed(0);
                     teteSerpent.setVerticalSpeed(-BLOCKSIZE);
-                    break;
                 }
-                case VK_DOWN: {
+                case VK_DOWN -> {
+                    if (v < 0)
+                        break;
                     teteSerpent.setHorizontalSpeed(0);
                     teteSerpent.setVerticalSpeed(BLOCKSIZE);
-                    break;
                 }
             }
         }
@@ -382,10 +388,6 @@ public class Gameplay {
         objets.removeAll(temp);
         MoteurGraphique.getInstance().emptyWith(temp);
         snake.clear();
-        for (var o : objets)
-            System.out.print(o.pathImage);
-        System.out.println();
-        System.out.println(gameOver.getX() + "" + gameOver.getY() + "" + gameOver.getSizeImageX() + "" + gameOver.getSizeImageY());
         // TODO: Réctifier Affichage du Panel game_over.png
         System.out.println("Game Over!");
         // TODO: Afficher le leaderboard
