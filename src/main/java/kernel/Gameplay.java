@@ -13,6 +13,7 @@ import java.util.List;
 
 import static java.awt.event.KeyEvent.*;
 import static java.lang.Math.min;
+import static java.lang.Thread.sleep;
 
 public class Gameplay {
     private static Gameplay INSTANCE;
@@ -529,6 +530,11 @@ public class Gameplay {
     public void gameOver() {
         gameOver.setVisible(true);
         gameOver.addMouseListener(KeyListenerKernel.getInstance());
+        try {
+            sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         LinkedList<Objet> temp = new LinkedList<>();
         for (Objet o : objets)
             if (doesNotContain(List.of(mainMenu), o) && doesNotContain(List.of(optionMenu), o) && !o.equals(gameOver))
