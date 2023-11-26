@@ -84,6 +84,7 @@ public class Objet extends JPanel {
 
     /**
      * Avancer l'objet le temps d'un pas.
+     * @author Sellou, Julien
      */
     public void updatePosition() {
         x += horizontalSpeed;
@@ -105,6 +106,7 @@ public class Objet extends JPanel {
      * Surcharge de la méthode paintComponent pour l'affichage graphique de l'objet.
      *
      * @param g Graphics utilisé pour le rendu.
+     * @author Kawthar, Nesrine
      */
     @Override
     protected void paintComponent(Graphics g) {
@@ -124,6 +126,7 @@ public class Objet extends JPanel {
      *
      * @param other Objet avec lequel vérifier la collision.
      * @return true si collision, sinon false.
+     * @author Sellou, Julien
      */
     public boolean percute(Objet other) {
         return forme.percute(this, other);
