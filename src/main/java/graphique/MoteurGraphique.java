@@ -8,6 +8,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Le moteur graphique permet de gérer l’affichage du jeu. Il prend en charge la représentation visuelle des objets, le
+ * rendu de la scène, et la mise à jour des éléments graphiques à chaque frame. Son rôle principal est d'assurer une
+ * présentation fluide du jeu.
+ */
 public class MoteurGraphique {
     private static MoteurGraphique INSTANCE;
     private final int WIDTH = 1000;
@@ -15,6 +20,10 @@ public class MoteurGraphique {
 
     private final JFrame mainFrame;
 
+    /**
+     * Constructeur de la fenêtre principale et initialisation de ses caractéristiques
+     * @author Nesrine, Kawthar, Pauline
+     */
     public MoteurGraphique() {
         mainFrame = new JFrame("Jeu");
         init_mainFrame();
@@ -24,6 +33,10 @@ public class MoteurGraphique {
         return mainFrame;
     }
 
+    /**
+     * Initialisation des caractéristiques de la fenêtre principale (taille, couleur)
+     * @author Nesrine, Kawthar, Pauline
+     */
     public void init_mainFrame() {
         mainFrame.setLayout(null);
         mainFrame.setSize(WIDTH, HEIGHT);
@@ -53,8 +66,8 @@ public class MoteurGraphique {
 
     /**
      * Ajoute un objet à la fenêtre
-     *
      * @param objet objet à ajouter
+     * @author Nesrine, Kawthar, Pauline
      */
     public void addObjet(Objet objet) { // affiche un objet
         mainFrame.add(objet);
@@ -63,6 +76,7 @@ public class MoteurGraphique {
 
     /**
      * source : http://www.java2s.com/Code/Java/Swing-JFC/GetAllComponentsinacontainer.htm
+     * @author Julien
      */
     public static ArrayList<Component> getAllComponents(final Container c) {
         Component[] comps = c.getComponents();
@@ -75,6 +89,9 @@ public class MoteurGraphique {
         return compList;
     }
 
+    /**
+     * @author Julien
+     */
     public void empty_mainFrame() {
         // mainFrame.getContentPane().removeAll();
         for (Component comp : getAllComponents(mainFrame))
@@ -82,6 +99,9 @@ public class MoteurGraphique {
                 comp.setVisible(false);
     }
 
+    /**
+     * @author Julien
+     */
     public void emptyWith(LinkedList<Objet> l) {
         // mainFrame.getContentPane().removeAll();
         for (Component comp : l)
@@ -92,6 +112,7 @@ public class MoteurGraphique {
      * Affiche tous les objets de la liste dans l'ordre inverse d'ajout à la liste, prenant en compte leurs tailles et positions
      *
      * @param objets liste d'objets à afficher
+     * @author Nesrine, Kawthar, Pauline
      */
     public void init_display(LinkedList<Objet> objets) {
         empty_mainFrame();
@@ -102,6 +123,10 @@ public class MoteurGraphique {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Mise à jour des objets à l'écran
+     * @author Nesrine, Kawthar, Pauline
+     */
     public void display(LinkedList<Objet> objects) {
         for (Objet o : objects) {
             o.setBounds(o.getXposition(), o.getYposition(), o.getSizeImageX(), o.getSizeImageY());
