@@ -102,18 +102,18 @@ public class Gameplay {
         }
         addObjet(gameOver);
 
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("Orbitron.ttf")));
+        } catch (FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
         leaderboard[0] = returnButton;
         leaderboard[1] = leaderboardTitle;
         HUDLabel.setFont(font.deriveFont(Font.BOLD, 24));
         HUDLabel.setForeground(Color.WHITE);
         affichageScore.add(HUDLabel);
         //leaderboard[1].add(new JLabel("Leaderboard"));
-
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("Orbitron.ttf")));
-        } catch (FontFormatException | IOException e) {
-            throw new RuntimeException(e);
-        }
         for (int i = 0; i < 5; i++){
             leaderboard[i+2] = new Objet(100, (i+2)*100, new Rectangle(400, 100), "blank.png", 400, 100);
             JLabel label = new JLabel("");
