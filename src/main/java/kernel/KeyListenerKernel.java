@@ -43,7 +43,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListe
         if (objet.equals(gp.playButton)) gp.startGame();
         if (objet.equals(gp.tutorialButton)) gp.showInstruction();
         if (objet.equals(gp.optionButton)) gp.showOptionMenu();
-        if (objet.equals(gp.leaderboardButton)) gp.showLeaderboard();
+        if (objet.equals(gp.leaderboardButton)) gp.showLeaderboard(gp.getScoresFilePath());
         if (objet.equals(gp.exitButton)) Control.getInstance().exitGame();;
         if (objet.equals(gp.difficultySpinner)) gp.chooseDifficultyLevel();
         if (objet.equals(gp.colorSpinner)) gp.chooseSnakeColor();

@@ -36,6 +36,8 @@ public class Gameplay {
     Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
     Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
 
+    private final String fichierScores = "scores.txt";
+
     private final LinkedList<Objet> snake;
     private final LinkedList<Objet> objets;
     private Objet apple;
@@ -384,7 +386,6 @@ public class Gameplay {
 
     /**
      * Enregister un nouveau score dans le leaderboard
-     * @param fichierScores chemin d'accès vers le fichier de scores
      */
     private void registerScore(String fichierScores){
         String nom = getPseudo();
@@ -395,11 +396,11 @@ public class Gameplay {
      * Inscrit un nouveau score dans le fichier de scores
      * @param nom pseudo de la personne qui joue
      * @param score score de la partie achevée
-     * @param cheminAcces chemin d'accès vers le fichier de scores
+     * @param fichierScores chemin d'accès vers le fichier de scores
      */
-    private void writeScore(String nom, int score, String cheminAcces){
+    private void writeScore(String nom, int score, String fichierScores){
         try {
-            BufferedWriter ecrireScores = new BufferedWriter(new FileWriter(cheminAcces, true));
+            BufferedWriter ecrireScores = new BufferedWriter(new FileWriter(fichierScores, true));
             ecrireScores.write(nom + " " + score);
             ecrireScores.newLine();
             ecrireScores.flush();
@@ -411,14 +412,13 @@ public class Gameplay {
 
     /**
      * Lit le fichier de scores pour récupérer les 10 meilleurs
-     * @param cheminAcces chemin d'accès vers le fichier de scores
      * @return la liste des 10 meilleurs scores
      */
-    private List<Score> getBestScores(String cheminAcces){
+    private List<Score> getBestScores(String fichierScores){
         List<Score> scores = new ArrayList<>();
         List<Score> meilleursScores = new ArrayList<>();
         try {
-            BufferedReader lireScores = new BufferedReader(new FileReader(cheminAcces));
+            BufferedReader lireScores = new BufferedReader(new FileReader(fichierScores));
             String ligne = lireScores.readLine();
             while (ligne != null){
                 String[] contenu = ligne.split(" ");
@@ -443,7 +443,7 @@ public class Gameplay {
      * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
      * qu'aucun classement n'est disponible.
      */
-    public void showLeaderboard(){
+    public void showLeaderboard(String fichierScores){
         List<Score> meilleursScores = getBestScores(fichierScores);
         for (Score s : meilleursScores){ // affichage dans le terminal pour l'instant TODO à changer
             System.out.println(s);
@@ -467,8 +467,8 @@ public class Gameplay {
         // TODO: Réctifier Affichage du Panel game_over.png
         System.out.println("Game Over!");
         // TODO: Afficher le leaderboard
-        registerScore("scores.txt");
-        showLeaderboard();
+        registerScore(fichierScores);
+        showLeaderboard(fichierScores);
         System.out.println("Score final : " + score);
     }
 
@@ -513,5 +513,9 @@ public class Gameplay {
 
     public void setGrowSnake(boolean growSnake) {
         this.growSnake = growSnake;
+    }
+
+    public String getScoresFilePath(){
+        return fichierScores;
     }
 }
