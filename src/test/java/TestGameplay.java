@@ -13,6 +13,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+
 public class TestGameplay {
 
     private Gameplay testGameplay;
@@ -49,8 +50,7 @@ public class TestGameplay {
     /**
      * Permet de vérifier que lorsqu'il y a collision entre le serpent et une pomme :
      * - Le serpent doit grandir
-     * - Le score augmente
-     *
+     * - Le score augment
      */
     @Test
     void testCollisionSerpentPomme() {
@@ -159,16 +159,4 @@ public class TestGameplay {
         assertEquals(lastSizeSerpent + 1, testGameplay.getSnake().size());
     }
 
-    /**
-     * Julien a enlevé ce test pour pouvoir push.
-     *
-    @Test
-    void testGameOver (){
-        int lastSize = testGameplay.getObjets().size();
-        Objet expectedGameOver = new Objet(MoteurGraphique.getInstance().getWidth()/ 2, MoteurGraphique.getInstance().getHeight() / 2, new Rectangle(100, 100), "game_over.png", 100, 100);
-        testGameplay.gameOver();
-        //assertEquals(expectedGameOver, testGameplay.getObjets().getLast());
-        assertEquals(lastSize + 1, testGameplay.getObjets().size());
-    }
-    */
 }
