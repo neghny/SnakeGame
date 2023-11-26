@@ -1,4 +1,5 @@
 # <span style="color: #086F61"> Projet Génie Logiciel : Game Engine
+<span style="color: #85BDB5"> ReadMe author : Kawthar
 
 #### <span style="color: #086F61"> Membres de l'équipe 35 :
 
