@@ -90,7 +90,6 @@ public class Gameplay {
     }
 
     private Gameplay(){
-        pseudo = enterPseudo();
         growSnake = false;
         score = 0;
         snake = new LinkedList<>();
@@ -273,6 +272,7 @@ public class Gameplay {
      * une nouvelle partie dans le menu principal
      */
     public void startGame() {
+        pseudo = enterPseudo();
         bienvenue.setVisible(false);
         for (Objet b : mainMenu) {
             b.setVisible(false);
