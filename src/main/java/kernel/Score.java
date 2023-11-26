@@ -2,6 +2,7 @@ package kernel;
 
 /**
  * Association d'un pseudo et d'un score
+ * @author Pauline
  */
 public class Score implements Comparable<Score>{
     private final String name;
