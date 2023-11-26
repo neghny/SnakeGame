@@ -36,7 +36,7 @@ public class Gameplay {
     Objet returnButton = new Objet(400, 750, new Rectangle(buttonWidth, buttonHeight), "btnRetour.png", buttonWidth, buttonHeight);
 
     Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
-    Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
+    Objet gameOver = new Objet((MoteurGraphique.getInstance().getWidth()-300) / 2, (moteurGraphique.getHeight()-72) / 2, new Rectangle(300, 72), "game_over.png", 300, 72);
 
     Objet leaderboardTitle = new Objet(100, 100, new Rectangle(200,100), "btnLeaderboard.png", 200, 100);
     Objet[] leaderboard = new Objet[7];
