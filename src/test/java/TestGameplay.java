@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import physique.Rectangle;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +18,7 @@ public class TestGameplay {
     private Gameplay testGameplay;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException, FontFormatException {
         testGameplay = Gameplay.getInstance();
     }
 

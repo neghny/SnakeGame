@@ -3,13 +3,13 @@ package kernel;
 import graphique.MoteurGraphique;
 import physique.Rectangle;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 import static java.lang.Math.min;
@@ -37,6 +37,11 @@ public class Gameplay {
     Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
     Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
 
+    Objet leaderboardTitle = new Objet(100, 100, new Rectangle(200,100), "btnLeaderboard.png", 200, 100);
+    Objet[] leaderboard = new Objet[7];
+
+    Font font;
+
     private final String fichierScores = "src/main/java/kernel/scores.txt";
 
     private final LinkedList<Objet> snake;
@@ -50,7 +55,7 @@ public class Gameplay {
      */
     private boolean growSnake;
 
-    private Gameplay() {
+    private Gameplay(){
         growSnake = false;
         score = 0;
         snake = new LinkedList<>();
@@ -60,6 +65,22 @@ public class Gameplay {
         for (Objet b : optionMenu)
             addObjet(b);
         addObjet(gameOver);
+
+        leaderboard[0] = returnButton;
+        leaderboard[1] = leaderboardTitle;
+        //leaderboard[1].add(new JLabel("Leaderboard"));
+        for (int i = 0; i < 5; i++){
+            leaderboard[i+2] = new Objet(100, (i+2)*100, new Rectangle(400, 100), "blank.png", 400, 100);
+        }
+        for (int i = 1; i < 7; i++){
+            addObjet(leaderboard[i]);
+        }
+
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("Orbitron.ttf")));
+        } catch (FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static Gameplay getInstance() {
@@ -71,6 +92,11 @@ public class Gameplay {
 
     public void showMainMenu() {
         gameOver.setVisible(false);
+        for (Objet i : leaderboard){
+            i.setVisible(false);
+            for (MouseListener l : leaderboard[0].getMouseListeners())
+                gameOver.removeMouseListener(l);
+        }
         for (MouseListener l : gameOver.getMouseListeners())
             gameOver.removeMouseListener(l);
         for (Objet b : mainMenu) {
@@ -93,6 +119,11 @@ public class Gameplay {
      */
     @SuppressWarnings("unused")
     public void showOptionMenu() {
+        for (Objet i : leaderboard){
+            i.setVisible(false);
+            for (MouseListener l : leaderboard[0].getMouseListeners())
+                gameOver.removeMouseListener(l);
+        }
         for (Objet b : mainMenu) {
             b.setVisible(false);
             for (MouseListener l : b.getMouseListeners())
@@ -133,10 +164,41 @@ public class Gameplay {
     }
 
     /**
-     * affiche les meilleurs scores des joueurs, en triant la liste des joueurs en fonction de leurs scores et en
+     * affiche les meilleurs scores des joueur-euses, en triant la liste des joueur-euses en fonction de leurs scores et en
      * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
      * qu'aucun classement n'est disponible.
      */
+    public void showLeaderboard(String fichierScores){
+        gameOver.setVisible(false);
+        for (MouseListener l : gameOver.getMouseListeners())
+            gameOver.removeMouseListener(l);
+        for (Objet b : mainMenu) {
+            b.setVisible(false);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+            b.addMouseListener(KeyListenerKernel.getInstance());
+        }
+        for (Objet b : optionMenu) {
+            b.setVisible(false);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+        }
+
+        List<Score> meilleursScores = getBestScores(fichierScores);
+        for (int i = 0; i < meilleursScores.size(); i++){
+            //System.out.println(meilleursScores.get(i));
+            leaderboard[i+2].removeAll();
+            JLabel label = new JLabel(meilleursScores.get(i).toString());
+            label.setFont(font.deriveFont(Font.BOLD, 36));
+            leaderboard[i+2].add(label);
+
+        }
+        leaderboard[0].addMouseListener(KeyListenerKernel.getInstance());
+        for (Objet i : leaderboard){
+            i.setVisible(true);
+        }
+
+    }
 
 
     /**
@@ -430,7 +492,6 @@ public class Gameplay {
             }
             lireScores.close();
             scores.sort(null);
-            System.out.println(scores);
             for (int i = 0; i < min(5, scores.size()); i++){
                 meilleursScores.add(scores.get(scores.size() - 1 - i));
             }
@@ -438,18 +499,6 @@ public class Gameplay {
             throw new RuntimeException(e);
         }
         return meilleursScores;
-    }
-
-    /**
-     * affiche les meilleurs scores des joueur-euses, en triant la liste des joueur-euses en fonction de leurs scores et en
-     * affichant les cinq meilleurs scores. Si la liste des classements est vide, elle affiche un message indiquant
-     * qu'aucun classement n'est disponible.
-     */
-    public void showLeaderboard(String fichierScores){
-        List<Score> meilleursScores = getBestScores(fichierScores);
-        for (Score s : meilleursScores){ // affichage dans le terminal pour l'instant TODO à changer
-            System.out.println(s);
-        }
     }
 
 
