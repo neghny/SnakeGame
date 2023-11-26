@@ -20,6 +20,7 @@ public class TestGameplay {
     @BeforeEach
     void setUp() throws IOException, FontFormatException {
         testGameplay = Gameplay.getInstance();
+        testGameplay.startGame();
     }
 
     /**
