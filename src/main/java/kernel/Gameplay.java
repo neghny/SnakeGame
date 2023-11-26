@@ -56,6 +56,10 @@ public class Gameplay {
      */
     private boolean growSnake;
 
+    /**
+     * Source : https://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html section Getting the User's Input from a Dialog
+     * @return le pseudo
+     */
     public String enterPseudo() {
         for (;;) {
             String s = (String)JOptionPane.showInputDialog(
