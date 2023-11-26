@@ -6,8 +6,8 @@ import java.awt.event.MouseListener;
 
 /**
  * La classe KeyListenerKernel gère les événements liés au clavier et à la souris dans le contexte du noyau du jeu.
- * Elle implémente l'interface KeyListener pour la gestion des touches du clavier et MouseListener pour la gestion des clics de souris.
- * Cette classe suit le modèle de conception Singleton pour garantir une unique instance dans l'application.
+ * Elle implémente l'interface KeyListener pour la gestion des touches du clavier et MouseListener pour la gestion des
+ * clics de souris. Cette classe suit le modèle de conception Singleton pour garantir une unique instance dans l'application.
  */
 public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListener {
     private static KeyListenerKernel INSTANCE;
@@ -16,6 +16,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListe
      * Récupère l'instance unique de la classe KeyListenerKernel.
      *
      * @return L'instance unique de KeyListenerKernel.
+     * @author Matteo
      */
     public static KeyListenerKernel getInstance() {
         if (INSTANCE == null) {
@@ -32,6 +33,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListe
      * Déclenche le changement de direction dans la classe Gameplay en fonction de la touche enfoncée.
      *
      * @param e Événement KeyEvent associé à la touche enfoncée.
+     * @author Matteo
      */
     @Override
     public void keyPressed(KeyEvent e) {
@@ -43,6 +45,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListe
      * Si la touche relâchée est la touche "Escape" (VK_ESCAPE), appelle la méthode exitGame de la classe Control pour quitter le jeu.
      *
      * @param e Événement KeyEvent associé à la touche relâchée.
+     * @author Matteo
      */
     @Override
     public void keyReleased(KeyEvent e) {
@@ -58,6 +61,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListe
      * Cette méthode n'est pas utilisée dans l'implémentation actuelle.
      *
      * @param e Événement KeyEvent associé à la touche tapée.
+     * @author Matteo
      */
     @Override
     public void keyTyped(KeyEvent e) {
@@ -68,6 +72,7 @@ public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListe
      * Identifie l'objet graphique cliqué et déclenche différentes actions en conséquence.
      *
      * @param mouseEvent Événement MouseEvent associé au clic de souris.
+     * @author Matteo, Julien
      */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
