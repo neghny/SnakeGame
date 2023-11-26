@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
+import static java.lang.Math.min;
 
 public class Gameplay {
     private static Gameplay INSTANCE;
@@ -36,7 +37,7 @@ public class Gameplay {
     Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
     Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
 
-    private final String fichierScores = "scores.txt";
+    private final String fichierScores = "src/main/java/kernel/scores.txt";
 
     private final LinkedList<Objet> snake;
     private final LinkedList<Objet> objets;
@@ -429,8 +430,9 @@ public class Gameplay {
             }
             lireScores.close();
             scores.sort(null);
-            for (int i = 0; i < 5; i++){
-                meilleursScores.add(scores.get(i));
+            System.out.println(scores);
+            for (int i = 0; i < min(5, scores.size()); i++){
+                meilleursScores.add(scores.get(scores.size() - 1 - i));
             }
         } catch (IOException e){
             throw new RuntimeException(e);
