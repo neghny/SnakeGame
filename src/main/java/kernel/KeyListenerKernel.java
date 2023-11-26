@@ -1,6 +1,5 @@
 package kernel;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -42,6 +41,13 @@ public class KeyListenerKernel implements java.awt.event.KeyListener, MouseListe
         System.out.println(objet.pathImage);
         Gameplay gp = Gameplay.getInstance();
         if (objet.equals(gp.playButton)) gp.startGame();
+        if (objet.equals(gp.tutorialButton)) gp.showInstruction();
+        if (objet.equals(gp.optionButton)) gp.showOptionMenu();
+        if (objet.equals(gp.leaderboardButton)) gp.showLeaderboard();
+        if (objet.equals(gp.exitButton)) Control.getInstance().exitGame();;
+        if (objet.equals(gp.difficultySpinner)) gp.chooseDifficultyLevel();
+        if (objet.equals(gp.colorSpinner)) gp.chooseSnakeColor();
+        if (objet.equals(gp.returnButton) || objet.equals(gp.gameOver)) gp.showMainMenu();
     }
 
     @Override

@@ -80,6 +80,12 @@ public class MoteurGraphique {
                 comp.setVisible(false);
     }
 
+    public void emptyWith(LinkedList<Objet> l) {
+        // mainFrame.getContentPane().removeAll();
+        for (Component comp : l)
+            comp.setVisible(false);
+    }
+
     /**
      * Affiche tous les objets de la liste dans l'ordre inverse d'ajout à la liste, prenant en compte leurs tailles et positions
      *

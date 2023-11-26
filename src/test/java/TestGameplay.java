@@ -113,7 +113,7 @@ public class TestGameplay {
         testGameplay.getApple().setPosition(random.nextInt(1000 / testGameplay.getBLOCKSIZE()) * testGameplay.getBLOCKSIZE(), random.nextInt(1000 / testGameplay.getBLOCKSIZE()) * testGameplay.getBLOCKSIZE());
         double lastXposition = testGameplay.getApple().getXposition();
         double lastYposition = testGameplay.getApple().getYposition();
-        testGameplay.resetLevel();
+        testGameplay.initializeLevel();
         assertEquals(0, testGameplay.getScore());
         assertEquals(3, testGameplay.getSnake().size());
         assertNotEquals(lastXposition, testGameplay.getApple().getXposition());

@@ -14,7 +14,7 @@ import static java.awt.event.KeyEvent.*;
 
 public class Gameplay {
     private static Gameplay INSTANCE;
-    private final MoteurGraphique moteurGraphique;
+    private final MoteurGraphique moteurGraphique = MoteurGraphique.getInstance();
     int buttonWidth = 200;
     int buttonHeight = 100;
 
@@ -30,8 +30,10 @@ public class Gameplay {
     Objet difficultySpinner = new Objet(400, 350, new Rectangle(buttonWidth, buttonHeight), "btnDifficulte.png", buttonWidth, buttonHeight);
     // Créer spinner couleur
     Objet colorSpinner = new Objet(400, 550, new Rectangle(buttonWidth, buttonHeight), "btnCouleur.png", buttonWidth, buttonHeight);
+    Objet returnButton = new Objet(400, 750, new Rectangle(buttonWidth, buttonHeight), "btnRetour.png", buttonWidth, buttonHeight);
 
-    Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner};
+    Objet[] optionMenu = new Objet[]{difficultySpinner, colorSpinner, returnButton};
+    Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
 
     private final LinkedList<Objet> snake;
     private final LinkedList<Objet> objets;
@@ -45,7 +47,6 @@ public class Gameplay {
     private boolean growSnake;
 
     private Gameplay() {
-        moteurGraphique = MoteurGraphique.getInstance();
         growSnake = false;
         score = 0;
         snake = new LinkedList<>();
@@ -54,6 +55,7 @@ public class Gameplay {
             addObjet(b);
         for (Objet b : optionMenu)
             addObjet(b);
+        addObjet(gameOver);
     }
 
     public static Gameplay getInstance() {
@@ -64,6 +66,9 @@ public class Gameplay {
     }
 
     public void showMainMenu() {
+        gameOver.setVisible(false);
+        for (MouseListener l : gameOver.getMouseListeners())
+            gameOver.removeMouseListener(l);
         for (Objet b : mainMenu) {
             b.setVisible(true);
             for (MouseListener l : b.getMouseListeners())
@@ -140,8 +145,18 @@ public class Gameplay {
      */
     public void startGame() {
         // TODO : Recueillir informations joueur.
+        for (Objet b : mainMenu) {
+            b.setVisible(false);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+        }
+        for (Objet b : optionMenu) {
+            b.setVisible(false);
+            for (MouseListener l : b.getMouseListeners())
+                b.removeMouseListener(l);
+        }
         this.apple = new Objet(0, 0, new Rectangle(BLOCKSIZE - 2, BLOCKSIZE - 2), "red_apple.png", BLOCKSIZE, BLOCKSIZE);
-        resetLevel();
+        initializeLevel();
     }
 
     private List<Objet[]> getCollisions() {
@@ -276,14 +291,15 @@ public class Gameplay {
     }
 
     /**
+     * Référence : <a href="https://stackoverflow.com/questions/18852059/java-list-containsobject-with-field-value-equal-to-x">lien</a> premier code de première réponse
+     */
+
+    /**
      * Réinitialiser le niveau.
      * Est aussi utilisé pour initialiser le niveau au début du jeu.
      */
-    public void resetLevel() {
+    public void initializeLevel() {
         score = 0;
-        MoteurGraphique.getInstance().empty_mainFrame();
-        objets.clear();
-        snake.clear();
 
         Objet bloc1 = createBlocSerpent(5 * BLOCKSIZE, 5 * BLOCKSIZE);
         Objet bloc2 = createBlocSerpent(4 * BLOCKSIZE, 5 * BLOCKSIZE);
@@ -349,17 +365,31 @@ public class Gameplay {
         apple.setPosition(newWidth, newHeight);
     }
 
+    public boolean doesNotContain(final List<Objet> l, final Objet ref) {
+        return l.stream().noneMatch(o -> o.equals(ref));
+    }
+
     /**
      * Que faire si le joueur perd.
      */
     public void gameOver() {
+        gameOver.setVisible(true);
+        gameOver.addMouseListener(KeyListenerKernel.getInstance());
+        LinkedList<Objet> temp = new LinkedList<>();
+        for (Objet o : objets)
+            if (doesNotContain(List.of(mainMenu), o) && doesNotContain(List.of(optionMenu), o) && !o.equals(gameOver))
+                temp.add(o);
+        objets.removeAll(temp);
+        MoteurGraphique.getInstance().emptyWith(temp);
+        snake.clear();
+        for (var o : objets)
+            System.out.print(o.pathImage);
+        System.out.println();
+        System.out.println(gameOver.getX() + "" + gameOver.getY() + "" + gameOver.getSizeImageX() + "" + gameOver.getSizeImageY());
         // TODO: Réctifier Affichage du Panel game_over.png
-        Objet gameOver = new Objet(MoteurGraphique.getInstance().getWidth() / 2, moteurGraphique.getHeight() / 2, new Rectangle(300, 300), "game_over.png", 300, 300);
-        addObjet(gameOver);
         System.out.println("Game Over!");
         // TODO: Afficher le leaderboard
         System.out.println("Score final : " + score);
-        //resetLevel();
     }
 
 
