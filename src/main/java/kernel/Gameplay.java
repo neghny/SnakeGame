@@ -184,9 +184,12 @@ public class Gameplay {
     /**
      * cette méthode permet juste d’afficher les instructions/Règles du jeu.
      */
-    @SuppressWarnings("unused")
     public void showInstruction() {
-        // TODO
+        JOptionPane.showMessageDialog(moteurGraphique.getMainFrame(), "1. Contrôlez le serpent avec les touches directionnelles." + System.lineSeparator() +
+                "2. Mangez les fruits pour marquer des points." + System.lineSeparator() +
+                "3. Évitez de heurter les bords de l'écran ou le  corps du serpent." + System.lineSeparator() +
+                "4. Plus vous mangez de fruits, plus votre serpent grandit." + System.lineSeparator() +
+                "5. \"Bonne chance!\"");
     }
 
     /**
