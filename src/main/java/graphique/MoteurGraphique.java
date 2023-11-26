@@ -69,7 +69,7 @@ public class MoteurGraphique {
      * @param objet objet à ajouter
      * @author Nesrine, Kawthar, Pauline
      */
-    public void addObjet(Objet objet) { // affiche un objet
+    public void addObjet(Objet objet) {
         mainFrame.add(objet);
         objet.setVisible(true);
     }
@@ -93,7 +93,6 @@ public class MoteurGraphique {
      * @author Julien
      */
     public void empty_mainFrame() {
-        // mainFrame.getContentPane().removeAll();
         for (Component comp : getAllComponents(mainFrame))
             if (comp instanceof Objet)
                 comp.setVisible(false);
@@ -103,7 +102,6 @@ public class MoteurGraphique {
      * @author Julien
      */
     public void emptyWith(LinkedList<Objet> l) {
-        // mainFrame.getContentPane().removeAll();
         for (Component comp : l)
             comp.setVisible(false);
     }
