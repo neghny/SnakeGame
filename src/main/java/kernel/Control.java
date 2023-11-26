@@ -3,9 +3,9 @@ package kernel;
 import graphique.MoteurGraphique;
 
 /**
- * Control est le contrôle-commande du jeu-vidéo.
- * Il permet de mettre ensemble les différentes parties du jeu (physique, graphique).
- * Il est responsable de faire tourner le jeu.
+ * Le core-kernel est le cœur du moteur de jeu. Il agit comme une couche intermédiaire entre les moteurs graphique et
+ * physique, coordonnant l'ensemble des modules du jeu. Ses principales responsabilités comprennent la réception des
+ * entrées clavier provenant de l'interface utilisateur et les collisions du moteur physique.
  */
 public class Control {
     private static Control INSTANCE;
@@ -14,12 +14,18 @@ public class Control {
     private boolean running;
     public int frameLength = 100;
 
+    /**
+     * @author Matteo
+     */
     private Control() {
         running = true;
         moteurGraphique = MoteurGraphique.getInstance();
         gameplay = Gameplay.getInstance();
     }
 
+    /**
+     * @author Matteo
+     */
     public static Control getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Control();
@@ -45,7 +51,6 @@ public class Control {
 
             gameplay.moveSnake();
             gameplay.handleCollision();
-            //gameplay.printSnakePosition();
 
             if (expectedRestart > System.currentTimeMillis()) {
                 try {
@@ -60,12 +65,16 @@ public class Control {
         System.exit(0);
     }
 
+    /**
+     * @author Matteo
+     */
     public void exitGame() {
         this.running = false;
     }
 
     /**
      * C'est l'entrée principale du jeu.
+     * @author Julien
      */
     public static void main(String[] args) {
         Control.getInstance().run();
